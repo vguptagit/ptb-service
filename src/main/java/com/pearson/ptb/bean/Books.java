@@ -15,12 +15,12 @@ public class Books extends Book {
 	@JsonProperty("nodes")
 	@SerializedName("nodes")
 	private List<Containers> containers;
-	
+
 	/** Set {@see #container}. @param {@link #container}. */
 	public void setContainers(List<Containers> container) {
 		this.containers = container;
 	}
-		
+
 	/** Get {@see #containers}. @return {@link #containers}. */
 	public List<Containers> getContainers() {
 		return containers;

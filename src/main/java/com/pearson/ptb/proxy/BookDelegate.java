@@ -28,7 +28,7 @@ public interface BookDelegate {
 	 *             Books not found custom exception
 	 */
 	List<Book> getBooks(Map<String, String> criteria);
-	
+
 	List<Book> getBooksByDisciplines(List<String> disciplines);
 
 	/**
@@ -44,7 +44,9 @@ public interface BookDelegate {
 
 	/**
 	 * Get Title of the book
-	 * @param bookID, Book id of the book bean
+	 * 
+	 * @param bookID,
+	 *            Book id of the book bean
 	 * @return title of the book
 	 * @throws NotFoundException
 	 */
@@ -52,15 +54,16 @@ public interface BookDelegate {
 
 	/**
 	 * Get distinct disciplines from Books collection
+	 * 
 	 * @return
 	 */
 	List<String> getDisciplines();
 
 	/**
 	 * Saving the imported book
+	 * 
 	 * @param book
 	 */
 	void save(Book book);
 
- 
 }

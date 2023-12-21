@@ -19,7 +19,8 @@ import com.pearson.ptb.framework.QTIParser;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.util.QuestionTypes;
 /**
- * This <code>BlackboardQTI</code> is responsible for support black board QTI format for all type of questions.
+ * This <code>BlackboardQTI</code> is responsible for support black board QTI
+ * format for all type of questions.
  */
 public class BlackboardQTI {
 
@@ -27,10 +28,11 @@ public class BlackboardQTI {
 	DownloadInfo testInfo;
 	DownloadFormat format;
 	QTIParser qtiParser;
-	
+
 	/**
 	 * Constructor which expects blackboard format i.e. Pool manager and Test
-	 * manager. downloadInfo which contains information of the test title print settings and questions.
+	 * manager. downloadInfo which contains information of the test title print
+	 * settings and questions.
 	 */
 	public BlackboardQTI(DownloadFormat bbFormat, DownloadInfo downloadInfo) {
 		testInfo = downloadInfo;
@@ -91,32 +93,32 @@ public class BlackboardQTI {
 			int sequence, String ptbQuestionXML) {
 		BlackboardQTIConvert blackboardQTIConvert = null;
 		switch (questionType) {
-		case ESSAY:
-			blackboardQTIConvert = new BlackboardEssay(format, sequence,
-					ptbQuestionXML);
-			break;
-		case TRUEFALSE:
-			blackboardQTIConvert = new BlackboardTrueFalse(format, sequence,
-					ptbQuestionXML);
-			break;
-		case FILLINBLANKS:
-			blackboardQTIConvert = new BlackboardFillInBlank(format, sequence,
-					ptbQuestionXML);
-			break;
-		case MATCHING:
-			blackboardQTIConvert = new BlackboardMatching(format, sequence,
-					ptbQuestionXML);
-			break;
-		case MULTIPLECHOICE:
-			blackboardQTIConvert = new BlackboardMultipleChoice(format,
-					sequence, ptbQuestionXML);
-			break;
-		case MULTIPLERESPONSE:
-			blackboardQTIConvert = new BlackboardMultipleResponse(format,
-					sequence, ptbQuestionXML);
-			break;
-		default:
-			break;
+			case ESSAY :
+				blackboardQTIConvert = new BlackboardEssay(format, sequence,
+						ptbQuestionXML);
+				break;
+			case TRUEFALSE :
+				blackboardQTIConvert = new BlackboardTrueFalse(format, sequence,
+						ptbQuestionXML);
+				break;
+			case FILLINBLANKS :
+				blackboardQTIConvert = new BlackboardFillInBlank(format,
+						sequence, ptbQuestionXML);
+				break;
+			case MATCHING :
+				blackboardQTIConvert = new BlackboardMatching(format, sequence,
+						ptbQuestionXML);
+				break;
+			case MULTIPLECHOICE :
+				blackboardQTIConvert = new BlackboardMultipleChoice(format,
+						sequence, ptbQuestionXML);
+				break;
+			case MULTIPLERESPONSE :
+				blackboardQTIConvert = new BlackboardMultipleResponse(format,
+						sequence, ptbQuestionXML);
+				break;
+			default :
+				break;
 		}
 		return blackboardQTIConvert;
 	}
@@ -125,20 +127,21 @@ public class BlackboardQTI {
 		Document testXML;
 		try {
 			String templatePath = "/BlackboardTemplates/Blackboard_TestTemplate.xml";
-			File inputFile = new File(this.getClass().getResource(templatePath)
-					.getPath());
+			File inputFile = new File(
+					this.getClass().getResource(templatePath).getPath());
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			testXML = docBuilder.parse(inputFile);
 		} catch (Exception e) {
-			throw new InternalException(
-					"Exception while getting test template", e);
+			throw new InternalException("Exception while getting test template",
+					e);
 		}
 		return testXML;
 	}
 
-	private Node getXMLNode(Document testXML, String identifier, boolean byXPath) {
+	private Node getXMLNode(Document testXML, String identifier,
+			boolean byXPath) {
 		try {
 			if (byXPath) {
 				return (Node) xpath.evaluate(identifier, testXML,
@@ -169,7 +172,7 @@ public class BlackboardQTI {
 		String exportType = "";
 		if (format == DownloadFormat.bbpm) {
 			exportType = "Pool";
-		}else if (format == DownloadFormat.bbtm) {
+		} else if (format == DownloadFormat.bbtm) {
 			exportType = "Test";
 		}
 

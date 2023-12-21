@@ -19,7 +19,7 @@ public class UserBookRepo implements UserBookDelegate {
 	@Override
 	public void saveUserBooks(List<UserBook> userBooks) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -31,14 +31,15 @@ public class UserBookRepo implements UserBookDelegate {
 	@Override
 	public void saveUserBook(UserBook userBook) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/*
 	 * private DataAccessHelper<UserBook> accessor;
 	 * 
 	 *//**
-		 * Constructor to access DataAccessHelper to perform user book operation.
+		 * Constructor to access DataAccessHelper to perform user book
+		 * operation.
 		 * 
 		 */
 	/*
@@ -48,7 +49,8 @@ public class UserBookRepo implements UserBookDelegate {
 	 *//**
 		 * This method will get the user books from database.
 		 * 
-		 * @param userId , represents the user.
+		 * @param userId
+		 *            , represents the user.
 		 * @return list of user books.
 		 */
 	/*
@@ -62,7 +64,8 @@ public class UserBookRepo implements UserBookDelegate {
 	 *//**
 		 * This method will get the user book from database.
 		 * 
-		 * @param userId , represents the user.
+		 * @param userId
+		 *            , represents the user.
 		 * @return UserBook.
 		 */
 	/*
@@ -75,7 +78,8 @@ public class UserBookRepo implements UserBookDelegate {
 	 *//**
 		 * This method will save the user books to database.
 		 * 
-		 * @param userBooks , represents the books which belongs to user.
+		 * @param userBooks
+		 *            , represents the books which belongs to user.
 		 */
 	/*
 	 * @Override public void saveUserBooks(List<UserBook> userBooks) {
@@ -84,7 +88,8 @@ public class UserBookRepo implements UserBookDelegate {
 	 *//**
 		 * This method will save the user book to database.
 		 * 
-		 * @param userBooks , represents the book which belongs to user.
+		 * @param userBooks
+		 *            , represents the book which belongs to user.
 		 *//*
 			 * @Override public void saveUserBook(UserBook userBook) {
 			 * accessor.save(userBook); }

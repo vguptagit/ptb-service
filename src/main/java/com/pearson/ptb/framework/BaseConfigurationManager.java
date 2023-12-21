@@ -23,9 +23,8 @@ public abstract class BaseConfigurationManager {
 	 * @author
 	 */
 	protected static String SPECIAL_CHARACTER_STRING = "\\s+";
-	
-	protected static String HEALTH_SPECIAL_CHARACTER = "_";
 
+	protected static String HEALTH_SPECIAL_CHARACTER = "_";
 
 	/**
 	 * This is a lock object.
@@ -40,9 +39,9 @@ public abstract class BaseConfigurationManager {
 	 * ConfigurationManager as a singleton
 	 * </p>
 	 * 
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
-	protected BaseConfigurationManager(){
+	protected BaseConfigurationManager() {
 		// load all properties from properties file
 		loadPropertyFile();
 	}
@@ -55,9 +54,9 @@ public abstract class BaseConfigurationManager {
 	 * initialize configurationProperties map
 	 * </p>
 	 * 
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
-	private void loadPropertyFile(){
+	private void loadPropertyFile() {
 
 		// create Properties object
 		Properties properties = new Properties();
@@ -67,11 +66,12 @@ public abstract class BaseConfigurationManager {
 		Enumeration enumeration = null;
 
 		try {
-			
+
 			// loads configuration property file
-			properties.load(this.getClass().getResourceAsStream(getConfigPath()));
-		} catch(IOException ex) {
-			
+			properties
+					.load(this.getClass().getResourceAsStream(getConfigPath()));
+		} catch (IOException ex) {
+
 			throw new ConfigException("Unable to read config file", ex);
 		}
 		// Store all the keys of property file in Enumeration
@@ -83,8 +83,8 @@ public abstract class BaseConfigurationManager {
 			// fetch key from Enumeration
 			key = (String) enumeration.nextElement();
 			// fetch value from Enumeration
-			value = ((String) properties.get(key)).replace(
-					SPECIAL_CHARACTER_STRING, "");
+			value = ((String) properties.get(key))
+					.replace(SPECIAL_CHARACTER_STRING, "");
 			// put the key value pair in configurationProperties map
 			configurationProperties.put(key, value);
 		}

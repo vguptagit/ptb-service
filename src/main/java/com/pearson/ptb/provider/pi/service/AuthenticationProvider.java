@@ -26,17 +26,17 @@ public class AuthenticationProvider {
 	 */
 	private static Object mutex = new Object();
 
-	private static TokenAuthenticator tokenAuthenticator = null;		
+	private static TokenAuthenticator tokenAuthenticator = null;
 
 	/**
 	 * @return The token authenticator object.
-	 * @throws AuthTokenException 
+	 * @throws AuthTokenException
 	 * @throws IOException
 	 *             In case unable to connect to the database.
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
-	private void setTokenAuthenticator(){
-		
+	private void setTokenAuthenticator() {
+
 		try {
 			ConfigurationManager config = ConfigurationManager.getInstance();
 
@@ -55,39 +55,45 @@ public class AuthenticationProvider {
 								connectionTimeout);
 
 						String keyMoniker = config.getKeyMoniker();
-						String keyMap =config.getKeyMap();
+						String keyMap = config.getKeyMap();
 
 						com.pearson.ed.pi.encryption.Keymap keymap = new com.pearson.ed.pi.encryption.Keymap(
 								decrptor, keyMoniker, keyMap);
-						
-                        JWKSSource jwksSource = new JWKSStoreProxy(config.getTokenUrl(), connectionTimeout, socketTimeout);
-                        tokenAuthenticator = new TokenAuthenticator(keymap, jwksSource);
+
+						JWKSSource jwksSource = new JWKSStoreProxy(
+								config.getTokenUrl(), connectionTimeout,
+								socketTimeout);
+						tokenAuthenticator = new TokenAuthenticator(keymap,
+								jwksSource);
 
 					}
 				}
 			}
-		} catch(ConfigException ex) {
-			throw new AuthTokenException("Exception while reading config in method setTokenAutheticator", ex);
-		} catch(RemoteCallException ex) {
+		} catch (ConfigException ex) {
+			throw new AuthTokenException(
+					"Exception while reading config in method setTokenAutheticator",
+					ex);
+		} catch (RemoteCallException ex) {
 			throw ex;
-		} catch(Exception ex) {
-			throw new AuthTokenException("Exception in method setTokenAutheticator", ex);
-		}		
+		} catch (Exception ex) {
+			throw new AuthTokenException(
+					"Exception in method setTokenAutheticator", ex);
+		}
 	}
 	/**
 	 * this method authenticates the pi auth token with the existing user id
 	 * 
 	 * @return existing user as a string
 	 */
-	public String authenticate(String piAuthtoken){
+	public String authenticate(String piAuthtoken) {
 
-		String extUserId = null;	
+		String extUserId = null;
 
 		setTokenAuthenticator();
 		extUserId = tokenAuthenticator
-				.validateTokenAndDetermineIdentityForSystem(piAuthtoken, "piid");
-		
-		
+				.validateTokenAndDetermineIdentityForSystem(piAuthtoken,
+						"piid");
+
 		return extUserId;
 
 	}

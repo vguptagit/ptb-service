@@ -11,12 +11,13 @@ import com.google.gson.annotations.SerializedName;
 import com.googlecode.jmapper.annotations.JMap;
 
 /**
- *  This <code>Activity</code> is entity of PAF to represents the details of the book and chapter such as book title
- *  author, ISBN, edition number, subject and description.
+ * This <code>Activity</code> is entity of PAF to represents the details of the
+ * book and chapter such as book title author, ISBN, edition number, subject and
+ * description.
  *
  */
 public class Activity extends BaseActivity {
-	
+
 	/**
 	 * Indicates the activity crawlable
 	 */
@@ -76,7 +77,7 @@ public class Activity extends BaseActivity {
 	/**
 	 * The content type tier1 value and it would be (AssessmentItem, Assignment)
 	 */
-	private String[] contentTypeTier2 = new String[] {"AssessmentItem"};
+	private String[] contentTypeTier2 = new String[]{"AssessmentItem"};
 
 	/**
 	 * The time required take the activity
@@ -94,14 +95,13 @@ public class Activity extends BaseActivity {
 	 * The last modified activity date
 	 */
 	@JMap
-	private String modified ;
+	private String modified;
 
 	/**
 	 * The format for a activity
 	 */
-	private String[] format = new String[] {"application/vnd.pearson.qti.v2p1.asi+xml"};
-
-
+	private String[] format = new String[]{
+			"application/vnd.pearson.qti.v2p1.asi+xml"};
 
 	/**
 	 * Indicates the activity is deleted or not
@@ -143,7 +143,7 @@ public class Activity extends BaseActivity {
 	 */
 	@SerializedName("@type")
 	@JsonProperty("@type")
-	private String type ="Metadata";
+	private String type = "Metadata";
 
 	/** Get {@see #bookTitle}. @return {@link #bookTitle}. */
 	public String getBookTitle() {

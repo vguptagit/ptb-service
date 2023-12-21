@@ -39,12 +39,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class MyTestsController extends BaseController {
 
 	@Autowired
-
 	@Qualifier("myTestService")
 	private MyTestService myTestService;
 
 	@Autowired
-
 	@Qualifier("testVersionService")
 	private TestVersionService testVersionService;
 
@@ -67,8 +65,10 @@ public class MyTestsController extends BaseController {
 
 			@ApiParam(name = "body") @RequestBody TestEnvelop testEnvelop,
 
-			@PathVariable String folderId, HttpServletRequest request, HttpServletResponse response) {
-		TestResult result = myTestService.saveTest(testEnvelop, UserHelper.getUserId(request), folderId);
+			@PathVariable String folderId, HttpServletRequest request,
+			HttpServletResponse response) {
+		TestResult result = myTestService.saveTest(testEnvelop,
+				UserHelper.getUserId(request), folderId);
 		response.setStatus(HttpServletResponse.SC_CREATED);
 		return result;
 	}
@@ -87,9 +87,10 @@ public class MyTestsController extends BaseController {
 	@RequestMapping(value = "my/folders/{folderId}/tests", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<TestMetadata> getMyFolderTests(@PathVariable String folderId, HttpServletRequest request,
-			boolean flat) {
-		return myTestService.getMyFolderTests(UserHelper.getUserId(request), folderId, flat);
+	public List<TestMetadata> getMyFolderTests(@PathVariable String folderId,
+			HttpServletRequest request, boolean flat) {
+		return myTestService.getMyFolderTests(UserHelper.getUserId(request),
+				folderId, flat);
 	}
 
 	/**
@@ -112,10 +113,11 @@ public class MyTestsController extends BaseController {
 
 			@ApiParam(name = "body") @RequestBody TestVersionInfo versionInfo,
 
-			@PathVariable String testId, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable String testId, HttpServletRequest request,
+			HttpServletResponse response) {
 
-		List<TestResult> result = testVersionService.createVersionTests(versionInfo, testId,
-				UserHelper.getUserId(request));
+		List<TestResult> result = testVersionService.createVersionTests(
+				versionInfo, testId, UserHelper.getUserId(request));
 		response.setStatus(HttpServletResponse.SC_CREATED);
 
 		return result;
@@ -134,7 +136,8 @@ public class MyTestsController extends BaseController {
 	@RequestMapping(value = "my/folders/{folderId}/tests/import", method = RequestMethod.POST)
 
 	@ResponseBody
-	public TestResult importTest(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+	public TestResult importTest(@RequestParam("file") MultipartFile file,
+			HttpServletRequest request) {
 		return myTestService.importTest(file, UserHelper.getUserId(request));
 	}
 

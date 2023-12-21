@@ -49,15 +49,17 @@ public class TestDownloadController extends BaseController {
 	/**
 	 * To download the specific test
 	 * 
-	 * @param id       testId
+	 * @param id
+	 *            testId
 	 * @param format
 	 * @param data
 	 * @param response
 	 */
-	//@ApiOperation(value = "Download test", notes = Swagger.GET_TESTS_NOTE)
+	// @ApiOperation(value = "Download test", notes = Swagger.GET_TESTS_NOTE)
 	@RequestMapping(value = "/tests/{id}/download/{format}", method = RequestMethod.GET)
 	@ResponseBody
-	public void downloadTest(@PathVariable String id, @PathVariable DownloadFormat format,
+	public void downloadTest(@PathVariable String id,
+			@PathVariable DownloadFormat format,
 			@RequestParam(required = false) String data,
 
 			HttpServletResponse response) {
@@ -66,7 +68,8 @@ public class TestDownloadController extends BaseController {
 
 			Map<String, String> map = new HashMap<String, String>();
 
-			String decodedURL = StringUtils.newStringUtf8(Base64.decodeBase64(data));
+			String decodedURL = StringUtils
+					.newStringUtf8(Base64.decodeBase64(data));
 
 			getDownloadParams(map, decodedURL);
 
@@ -80,33 +83,47 @@ public class TestDownloadController extends BaseController {
 		} catch (ExpectationException e) {
 			throw e;
 		} catch (IOException e) {
-			throw new InternalException("Exception while rendering the document", e);
+			throw new InternalException(
+					"Exception while rendering the document", e);
 		}
 
 	}
 
-	private void doDownload(String id, DownloadFormat format, HttpServletResponse response, Map<String, String> map,
+	private void doDownload(String id, DownloadFormat format,
+			HttpServletResponse response, Map<String, String> map,
 			String authenticateUser) throws IOException {
 
 		DownloadOutput output = null;
 		ByteArrayOutputStream dstStream = new ByteArrayOutputStream();
 
-		AnswerKeys answerkeys = map.get("answerKey") == null ? null : AnswerKeys.valueOf(map.get("answerKey"));
-		AnswerAreas answerareas = map.get("answerArea") == null ? null : AnswerAreas.valueOf(map.get("answerArea"));
-		PageNumberDisplay pageNumberDisplay = map.get("pageNumberDisplay") == null ? null
-				: PageNumberDisplay.valueOf(map.get("pageNumberDisplay"));
+		AnswerKeys answerkeys = map.get("answerKey") == null
+				? null
+				: AnswerKeys.valueOf(map.get("answerKey"));
+		AnswerAreas answerareas = map.get("answerArea") == null
+				? null
+				: AnswerAreas.valueOf(map.get("answerArea"));
+		PageNumberDisplay pageNumberDisplay = map
+				.get("pageNumberDisplay") == null
+						? null
+						: PageNumberDisplay
+								.valueOf(map.get("pageNumberDisplay"));
 		try {
-			output = downloadService.downloadTest(dstStream, id, authenticateUser, format, answerkeys, answerareas,
+			output = downloadService.downloadTest(dstStream, id,
+					authenticateUser, format, answerkeys, answerareas,
 					Boolean.parseBoolean(map.get("includeRandomizedTests")),
-					Boolean.parseBoolean(map.get("includeStudentName")), Boolean.parseBoolean(map.get("saveSettings")),
+					Boolean.parseBoolean(map.get("includeStudentName")),
+					Boolean.parseBoolean(map.get("saveSettings")),
 					map.get("margin"), pageNumberDisplay);
-			response.addHeader("contentType", "application/" + output.getContentType());
-			response.addHeader("content-disposition", "attachment; filename=\"" + output.getFileName() + "\"");
+			response.addHeader("contentType",
+					"application/" + output.getContentType());
+			response.addHeader("content-disposition",
+					"attachment; filename=\"" + output.getFileName() + "\"");
 			response.getOutputStream().write(dstStream.toByteArray());
 		} catch (ExpectationException e) { // NOSONAR
 
 			response.addHeader("contentType", "text/html");
-			response.getOutputStream().write("No versions are there for this test".getBytes());
+			response.getOutputStream()
+					.write("No versions are there for this test".getBytes());
 		} finally {
 			dstStream.close();
 		}
@@ -122,7 +139,8 @@ public class TestDownloadController extends BaseController {
 			authenticateUser = authProvider.authenticate(authToken);
 
 		} catch (AuthTokenException e) {
-			throw new InternalException("Exception while authenticating user ID:", e);
+			throw new InternalException(
+					"Exception while authenticating user ID:", e);
 
 		}
 		return authenticateUser;
@@ -137,7 +155,8 @@ public class TestDownloadController extends BaseController {
 				map.put(name, value);
 			} else {
 				String name = param.split("=", PARAMETER_LENGTH)[0];
-				String value = param.substring(param.split("=", PARAMETER_LENGTH)[0].length() + 1);
+				String value = param.substring(
+						param.split("=", PARAMETER_LENGTH)[0].length() + 1);
 				map.put(name, value);
 			}
 

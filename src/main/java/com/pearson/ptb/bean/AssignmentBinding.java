@@ -69,7 +69,7 @@ public class AssignmentBinding implements Serializable {
 	 * @throws InternalException
 	 */
 	@JsonProperty("boundActivity")
-	public String getBoundActivity(){
+	public String getBoundActivity() {
 		try {
 			return String.format(Common.QUESTION_END_POINT_FORMAT,
 					ConfigurationManager.getInstance().getMyTestBaseUrl(),

@@ -1,16 +1,20 @@
 package com.pearson.ptb.proxy.repo;
 
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 //import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.pearson.ptb.bean.UserFolder;
 import com.pearson.ptb.bean.UserQuestionsFolder;
-import com.pearson.ptb.framework.exception.ConfigException;
+import com.pearson.ptb.dataaccess.GenericMongoRepository;
 import com.pearson.ptb.proxy.UserFoldersDelegate;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Implementation class which got implemented from interface UserFoldersDelegate
@@ -19,48 +23,73 @@ import com.pearson.ptb.proxy.UserFoldersDelegate;
  *
  */
 @Repository("userFoldersRepo")
+@RequiredArgsConstructor
 public class UserFoldersRepo implements UserFoldersDelegate {
+
+	private final GenericMongoRepository<UserFolder, String> genericMongoRepository;
 
 	@Override
 	public void saveFolders(List<UserFolder> folders) {
-		// TODO Auto-generated method stub
-		
+		genericMongoRepository.saveAll(folders);
+
 	}
 
 	@Override
 	public void saveUserQuestionFolders(List<UserQuestionsFolder> folders) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public UserFolder getFolder(String folderId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		return genericMongoRepository.findOne(
+				query.addCriteria(
+						Criteria.where(QueryFields.GUID).is(folderId)),
+				UserFolder.class);
 	}
-
 	@Override
 	public void deleteFolders(List<String> ids) {
-		// TODO Auto-generated method stub
-		
+		genericMongoRepository.delete(ids);
+
 	}
 
 	@Override
 	public void saveFolder(UserFolder folder) {
-		// TODO Auto-generated method stub
-		
+
+		genericMongoRepository.save(folder);
 	}
 
 	@Override
 	public void deleteFolder(String id) {
-		// TODO Auto-generated method stub
-		
+
+		genericMongoRepository.deleteById(id);
 	}
 
 	@Override
 	public UserFolder getMyTestRoot(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(
+				Criteria.where("USERID").is(userID).and("PARENTID").is(userID));
+
+		UserFolder rootFolder = genericMongoRepository.findOne(query,
+				UserFolder.class);
+
+		if (rootFolder == null) {
+			UserFolder folder = new UserFolder();
+
+			folder.setGuid(UUID.randomUUID().toString());
+			folder.setUserID(userID);
+			folder.setParentId(userID);
+			folder.setSequence(1.0);
+			genericMongoRepository.save(folder);
+
+			rootFolder = genericMongoRepository.findOne(query,
+					UserFolder.class);
+		}
+
+		return rootFolder;
+
 	}
 
 	@Override
@@ -76,13 +105,19 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	}
 
 	@Override
-	public UserFolder getFolderByTitle(String title, String parentId, String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserFolder getFolderByTitle(String title, String parentId,
+			String userId) {
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.USERID).is(userId)
+				.and(QueryFields.PARENTID).is(parentId).and(QueryFields.TITLE)
+				.is(title));
+
+		return genericMongoRepository.findOne(query, UserFolder.class);
 	}
 
 	@Override
-	public UserQuestionsFolder getQuestionsFolderByTitle(String title, String parentId, String userId) {
+	public UserQuestionsFolder getQuestionsFolderByTitle(String title,
+			String parentId, String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -94,19 +129,25 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	}
 
 	@Override
-	public List<UserFolder> getChildFolders(String userID, String parentFolderId) {
+	public List<UserFolder> getChildFolders(String userID,
+			String parentFolderId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<UserFolder> getChildFolders(String parentFolderId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(
+				Criteria.where(QueryFields.PARENTID).is(parentFolderId));
+		query.with(Sort.by(QueryFields.SEQUENCE));
+
+		return genericMongoRepository.findAll(query, UserFolder.class);
 	}
 
 	@Override
-	public UserQuestionsFolder getMyQuestionsFolder(String userID, String folderid) {
+	public UserQuestionsFolder getMyQuestionsFolder(String userID,
+			String folderid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -138,32 +179,36 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 * 
 	 * private DataAccessHelper<UserFolder> accessor;
 	 * 
-	 * private DataAccessHelper<UserQuestionsFolder> accessorUserQuestionsFolder;
+	 * private DataAccessHelper<UserQuestionsFolder>
+	 * accessorUserQuestionsFolder;
 	 * 
 	 * 
 	 * 
 	 *//**
-		 * Constructor to access DataAccessHelper to perform Container operation.
+		 * Constructor to access DataAccessHelper to perform Container
+		 * operation.
 		 * 
 		 * @throws ConfigException
 		 * @throws UnknownHostException
 		 */
 	/*
 	 * public UserFoldersRepo(){ // accessor = new
-	 * DataAccessHelper<UserFolder>(UserFolder.class); //accessorUserQuestionsFolder
-	 * = new DataAccessHelper<UserQuestionsFolder>(UserQuestionsFolder.class); }
+	 * DataAccessHelper<UserFolder>(UserFolder.class);
+	 * //accessorUserQuestionsFolder = new
+	 * DataAccessHelper<UserQuestionsFolder>(UserQuestionsFolder.class); }
 	 * 
 	 *//**
 		 * This method will get the root folder of the test.
 		 * 
-		 * @param userId represents the user.
+		 * @param userId
+		 *            represents the user.
 		 * @return UserFolder.
 		 */
 	/*
 	 * @Override public UserFolder getMyTestRoot(String userID){
 	 * 
-	 * Query<UserFolder> query = accessor.getDataQuery(); UserFolder rootFolder =
-	 * query .filter(QueryFields.USERID, userID) .filter(QueryFields.PARENTID,
+	 * Query<UserFolder> query = accessor.getDataQuery(); UserFolder rootFolder
+	 * = query .filter(QueryFields.USERID, userID) .filter(QueryFields.PARENTID,
 	 * userID) .get();
 	 * 
 	 * if(rootFolder == null) {
@@ -181,16 +226,17 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 *//**
 		 * This method will get root folder of the user created questions.
 		 * 
-		 * @param userId represents the user.
+		 * @param userId
+		 *            represents the user.
 		 * @return UserQuestionsFolder.
 		 */
 	/*
 	 * @Override public UserQuestionsFolder getMyQuestionRoot(String userID){
 	 * 
 	 * Query<UserQuestionsFolder> query =
-	 * accessorUserQuestionsFolder.getDataQuery(); UserQuestionsFolder rootFolder =
-	 * query .filter(QueryFields.USERID, userID) .filter(QueryFields.PARENTID,
-	 * userID) .get();
+	 * accessorUserQuestionsFolder.getDataQuery(); UserQuestionsFolder
+	 * rootFolder = query .filter(QueryFields.USERID, userID)
+	 * .filter(QueryFields.PARENTID, userID) .get();
 	 * 
 	 * if(rootFolder == null) {
 	 * 
@@ -205,12 +251,14 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 * return rootFolder; }
 	 * 
 	 *//**
-		 * This method will get the folder of the user created questions based on folder
-		 * id.
+		 * This method will get the folder of the user created questions based
+		 * on folder id.
 		 * 
-		 * @param userId   , represents the user.
-		 * @param folderid , represents the folder which user questions folder belongs
-		 *                 to.
+		 * @param userId
+		 *            , represents the user.
+		 * @param folderid
+		 *            , represents the folder which user questions folder
+		 *            belongs to.
 		 * @return UserQuestionsFolder.
 		 */
 	/*
@@ -228,8 +276,8 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 * accessorUserQuestionsFolder.getDataQuery();
 	 * 
 	 * return query .filter(QueryFields.PARENTID,
-	 * getMyQuestionRoot(userID).getGuid()) .order(QueryFields.SEQUENCE) .asList();
-	 * }
+	 * getMyQuestionRoot(userID).getGuid()) .order(QueryFields.SEQUENCE)
+	 * .asList(); }
 	 * 
 	 * @Override public List<UserQuestionsFolder> getChildQuestionFolders(String
 	 * folderid) { Query<UserQuestionsFolder> query =
@@ -251,22 +299,22 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 * .filter(QueryFields.PARENTID, parentFolderId)
 	 * .order(QueryFields.SEQUENCE).asList(); }
 	 * 
-	 * @Override public UserFolder getFolderByTitle(String title, String parentId,
-	 * String userId){
+	 * @Override public UserFolder getFolderByTitle(String title, String
+	 * parentId, String userId){
 	 * 
-	 * UserFolder folder = null; Query<UserFolder> query = accessor.getDataQuery();
-	 * folder = query .filter(QueryFields.USERID, userId)
-	 * .filter(QueryFields.PARENTID, parentId) .filter(QueryFields.TITLE, title)
-	 * .get();
+	 * UserFolder folder = null; Query<UserFolder> query =
+	 * accessor.getDataQuery(); folder = query .filter(QueryFields.USERID,
+	 * userId) .filter(QueryFields.PARENTID, parentId)
+	 * .filter(QueryFields.TITLE, title) .get();
 	 * 
 	 * return folder; }
 	 * 
 	 * @Override public double getUserFolderMinSeq(String userId){
 	 * 
-	 * Query<UserFolder> query = accessor.getDataQuery(); UserFolder folder = query
-	 * .filter(QueryFields.USERID, userId) .filter(QueryFields.PARENTID, null)
-	 * .order(QueryFields.SEQUENCE).limit(1).get(); if(folder == null) { return 1.0;
-	 * } else { return folder.getSequence(); } }
+	 * Query<UserFolder> query = accessor.getDataQuery(); UserFolder folder =
+	 * query .filter(QueryFields.USERID, userId) .filter(QueryFields.PARENTID,
+	 * null) .order(QueryFields.SEQUENCE).limit(1).get(); if(folder == null) {
+	 * return 1.0; } else { return folder.getSequence(); } }
 	 * 
 	 * @Override public double getUserQuestionsFolderMinSeq(String userId){
 	 * 
@@ -275,8 +323,9 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 * Query<UserQuestionsFolder> query =
 	 * accessorUserQuestionsFolder.getDataQuery(); UserQuestionsFolder folder =
 	 * query .filter(QueryFields.USERID, userId) .filter(QueryFields.PARENTID,
-	 * rootFolder.getGuid()) .order(QueryFields.SEQUENCE).limit(1).get(); if(folder
-	 * == null) { return 1.0; } else { return folder.getSequence(); } }
+	 * rootFolder.getGuid()) .order(QueryFields.SEQUENCE).limit(1).get();
+	 * if(folder == null) { return 1.0; } else { return folder.getSequence(); }
+	 * }
 	 * 
 	 * @Override public UserFolder getFolder(String folderId){
 	 * 
@@ -291,16 +340,16 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 * @Override public void saveFolders(List<UserFolder> folders) {
 	 * accessor.save(folders); }
 	 * 
-	 * @Override public void saveFolder(UserFolder folder) { accessor.save(folder);
-	 * }
+	 * @Override public void saveFolder(UserFolder folder) {
+	 * accessor.save(folder); }
 	 * 
-	 * @Override public void deleteFolders(List<String> ids) { accessor.delete(ids);
-	 * }
+	 * @Override public void deleteFolders(List<String> ids) {
+	 * accessor.delete(ids); }
 	 * 
 	 * @Override public void deleteFolder(String id) { accessor.delete(id); }
 	 * 
-	 * @Override public UserQuestionsFolder getQuestionFoldersRoot(String userID) {
-	 * Query<UserQuestionsFolder> query =
+	 * @Override public UserQuestionsFolder getQuestionFoldersRoot(String
+	 * userID) { Query<UserQuestionsFolder> query =
 	 * accessorUserQuestionsFolder.getDataQuery(); return query
 	 * .filter(QueryFields.USERID, userID) .filter(QueryFields.PARENTID, userID)
 	 * .get(); }
@@ -308,7 +357,8 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 *//**
 		 * This method will save the user questions folder to the database.
 		 * 
-		 * @param folders , represents the user question folders.
+		 * @param folders
+		 *            , represents the user question folders.
 		 */
 	/*
 	 * @Override public void saveUserQuestionFolders(List<UserQuestionsFolder>
@@ -319,12 +369,14 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	 *//**
 		 * Getting the questions folder by title parentid and userid
 		 *//*
-			 * @Override public UserQuestionsFolder getQuestionsFolderByTitle(String title,
-			 * String parentId, String userId){
+			 * @Override public UserQuestionsFolder
+			 * getQuestionsFolderByTitle(String title, String parentId, String
+			 * userId){
 			 * 
-			 * UserQuestionsFolder folder = null; Query<UserQuestionsFolder> query =
-			 * accessorUserQuestionsFolder.getDataQuery(); folder = query
-			 * .filter(QueryFields.USERID, userId) .filter(QueryFields.PARENTID, parentId)
+			 * UserQuestionsFolder folder = null; Query<UserQuestionsFolder>
+			 * query = accessorUserQuestionsFolder.getDataQuery(); folder =
+			 * query .filter(QueryFields.USERID, userId)
+			 * .filter(QueryFields.PARENTID, parentId)
 			 * .filter(QueryFields.TITLE, title) .get();
 			 * 
 			 * return folder; }

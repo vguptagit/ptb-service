@@ -17,9 +17,10 @@ import com.pearson.ptb.framework.exception.NotFoundException;
  */
 public interface QuestionDelegate {
 
-	
 	/**
-	 * This method will get all questions of quiz types passed for a given course.
+	 * This method will get all questions of quiz types passed for a given
+	 * course.
+	 * 
 	 * @param bookID
 	 * @return list of question meta data
 	 */
@@ -37,7 +38,7 @@ public interface QuestionDelegate {
 	 *             The application custom exceptions
 	 */
 	String getQuestionXmlById(String questionId);
-	
+
 	/**
 	 * Save the question
 	 * <code>question<code> under Container having id <code>ContainerID</code>
@@ -47,10 +48,11 @@ public interface QuestionDelegate {
 	 *            create
 	 * @param question
 	 *            Question details which will going to save in repository
-	 * @return 
-	 * @throws NotFoundException 
+	 * @return
+	 * @throws NotFoundException
 	 * @throws InternalException
 	 *             The application custom exceptions
 	 */
-	String saveQuestion(QuestionEnvelop question, String bookTitle, String chapterTitle);
+	String saveQuestion(QuestionEnvelop question, String bookTitle,
+			String chapterTitle);
 }

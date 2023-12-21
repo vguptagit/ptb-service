@@ -5,7 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * The  <code>HealthApis</code> bean is responsible to hold the Health information of the application
+ * The <code>HealthApis</code> bean is responsible to hold the Health
+ * information of the application
  *
  */
 public class HealthApis {
@@ -13,7 +14,7 @@ public class HealthApis {
 	/**
 	 * Indicates healthInfo
 	 */
-	private List<Health> healthInfo;		
+	private List<Health> healthInfo;
 
 	/** Get {@see #healthInfo}. @return {@link #healthInfo}. */
 	@JsonProperty("apis")
@@ -24,6 +25,6 @@ public class HealthApis {
 	/** Set {@see #healthInfo}. @param {@link #healthInfo}. */
 	public void setHealthApi(List<Health> healthInfo) {
 		this.healthInfo = healthInfo;
-	}	
+	}
 
 }

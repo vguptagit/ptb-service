@@ -31,7 +31,8 @@ public class ServiceUnavailableException extends BaseException {
 	 * @param innerException
 	 *            The instance of the internal exception.
 	 */
-	public ServiceUnavailableException(String message, Exception innerException) {
+	public ServiceUnavailableException(String message,
+			Exception innerException) {
 		// Call the constructor of the BaseAMSException
 		super(message, innerException);
 	}

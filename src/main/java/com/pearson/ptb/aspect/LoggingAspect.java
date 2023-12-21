@@ -51,18 +51,20 @@ public class LoggingAspect {
 	 * 
 	 * @param joinPoint
 	 *            join point being logged. It contains the caller information
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
 	@Before("execution(* com.pearson.mytest.controller.*.*(..))")
-	public void traceEntry(JoinPoint joinPoint){
+	public void traceEntry(JoinPoint joinPoint) {
 
 		// if debug level logging is enabled
 		if (ConfigurationManager.getInstance().isDebugEnabled()) {
 			// log the class, method name and the method arguments
-			LoggingAspect.LOG.debug(String.format(
-					LoggingAspect.TRACE_ENTRY_LOG_TEMPLATE, joinPoint
-							.getTarget().getClass(), joinPoint.getSignature()
-							.getName(), Arrays.toString(joinPoint.getArgs()),RequestCorrelation.getId()));
+			LoggingAspect.LOG
+					.debug(String.format(LoggingAspect.TRACE_ENTRY_LOG_TEMPLATE,
+							joinPoint.getTarget().getClass(),
+							joinPoint.getSignature().getName(),
+							Arrays.toString(joinPoint.getArgs()),
+							RequestCorrelation.getId()));
 		}
 	}
 
@@ -74,18 +76,19 @@ public class LoggingAspect {
 	 *            join point being logged. It contains the caller information.
 	 * @param result
 	 *            result returned from the method.
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
 	@AfterReturning(pointcut = "execution(* com.pearson.mytest.controller.*.*(..))", returning = "result")
-	public void traceExit(JoinPoint joinPoint, Object result){
+	public void traceExit(JoinPoint joinPoint, Object result) {
 
 		// if debug level logging is enabled
 		if (ConfigurationManager.getInstance().isDebugEnabled()) {
 			// log the method details along with its results
-			LoggingAspect.LOG.debug(String.format(
-					LoggingAspect.EXIT_LOG_TEMPLATE, joinPoint.getTarget()
-							.getClass(), joinPoint.getSignature().getName(),
-					result,RequestCorrelation.getId()));
+			LoggingAspect.LOG
+					.debug(String.format(LoggingAspect.EXIT_LOG_TEMPLATE,
+							joinPoint.getTarget().getClass(),
+							joinPoint.getSignature().getName(), result,
+							RequestCorrelation.getId()));
 		}
 	}
 
@@ -106,8 +109,10 @@ public class LoggingAspect {
 
 		// log the method details along with the exception thrown
 		LoggingAspect.LOG.error(String.format(LoggingAspect.ERROR_LOG_TEMPLATE,
-				joinPoint.getTarget().getClass(), joinPoint.getSignature()
-						.getName(), this.convertStackTraceToString(throwable),RequestCorrelation.getId()));
+				joinPoint.getTarget().getClass(),
+				joinPoint.getSignature().getName(),
+				this.convertStackTraceToString(throwable),
+				RequestCorrelation.getId()));
 
 	}
 

@@ -2,18 +2,18 @@ package com.pearson.ptb.bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 /**
- * The <code>Health</code> class is responsible to hold the details of the application
+ * The <code>Health</code> class is responsible to hold the details of the
+ * application
  *
  */
-public class Health{
+public class Health {
 
 	/**
 	 * The Name of the application
 	 */
 	private String applicationName;
-	
+
 	/**
 	 * The Owner of the application
 	 */
@@ -22,8 +22,7 @@ public class Health{
 	/**
 	 * The Domain of the application
 	 */
-	private String applicationDomain;	
-	
+	private String applicationDomain;
 
 	/** Get {@see #applicationName}. @return {@link #applicationName}. */
 	@JsonProperty("name")
@@ -32,7 +31,7 @@ public class Health{
 	}
 
 	/** Set {@see #applicationName}. @param {@link #applicationName}. */
-	@JsonProperty("name")	
+	@JsonProperty("name")
 	public void setApplicationName(String applicationName) {
 		this.applicationName = applicationName;
 	}
@@ -50,7 +49,7 @@ public class Health{
 	}
 
 	/** Get {@see #applicationDomain}. @return {@link #applicationDomain}. */
-	@JsonProperty("domain")	
+	@JsonProperty("domain")
 	public String getApplicationDomain() {
 		return applicationDomain;
 	}
@@ -60,6 +59,5 @@ public class Health{
 	public void setApplicationDomain(String applicationDomain) {
 		this.applicationDomain = applicationDomain;
 	}
-
 
 }

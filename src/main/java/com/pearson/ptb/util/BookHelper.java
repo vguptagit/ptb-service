@@ -6,8 +6,7 @@ import java.util.Map;
 public class BookHelper {
 
 	private static Map<String, String> filtercriteriaMap = null;
-	
-	
+
 	private BookHelper() {
 
 	}

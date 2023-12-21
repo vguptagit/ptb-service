@@ -72,8 +72,8 @@ public abstract class BlackboardQTIConvert {
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			bbQuestionXML = docBuilder.parse(inputFile);
 		} catch (Exception e) {
-			throw new InternalException(
-					"Exception while getting test template", e);
+			throw new InternalException("Exception while getting test template",
+					e);
 		}
 		return bbQuestionXML;
 	}
@@ -107,7 +107,8 @@ public abstract class BlackboardQTIConvert {
 	protected Node getXMLNode(String identifier, boolean byXPath) {
 		try {
 			if (byXPath) {
-				return (Node) xpath.compile(identifier).evaluate(bbQuestionXML,XPathConstants.NODE);
+				return (Node) xpath.compile(identifier).evaluate(bbQuestionXML,
+						XPathConstants.NODE);
 			} else {
 				return bbQuestionXML.getElementsByTagName(identifier).item(0);
 			}
@@ -126,7 +127,8 @@ public abstract class BlackboardQTIConvert {
 	protected NodeList getXMLNodes(String identifier, boolean byXPath) {
 		try {
 			if (byXPath) {
-				return (NodeList) xpath.compile(identifier).evaluate(bbQuestionXML,XPathConstants.NODESET);
+				return (NodeList) xpath.compile(identifier)
+						.evaluate(bbQuestionXML, XPathConstants.NODESET);
 			} else {
 				return bbQuestionXML.getElementsByTagName(identifier);
 			}
@@ -158,7 +160,7 @@ public abstract class BlackboardQTIConvert {
 	}
 
 	protected void removeAllChild(Node node) {
-		while (node.hasChildNodes()){
+		while (node.hasChildNodes()) {
 			node.removeChild(node.getFirstChild());
 		}
 	}
@@ -175,8 +177,8 @@ public abstract class BlackboardQTIConvert {
 
 		NodeList sequenceList = getXMLNodes(SEQUENCE, false);
 		for (int i = 0; i < sequenceList.getLength(); i++) {
-			sequenceList.item(i).setTextContent(
-					Integer.toString(questionSequence));
+			sequenceList.item(i)
+					.setTextContent(Integer.toString(questionSequence));
 		}
 
 		NodeList questionTypeList = getXMLNodes(QUESTIONTYPE, false);
@@ -184,15 +186,15 @@ public abstract class BlackboardQTIConvert {
 			questionTypeList.item(i).setTextContent(currentQuestionType);
 		}
 
-		NodeList absolutescoreMaxscoreList = getXMLNodes(
-				ABSOLUTESCORE_MAXSCORE, false);
+		NodeList absolutescoreMaxscoreList = getXMLNodes(ABSOLUTESCORE_MAXSCORE,
+				false);
 		for (int i = 0; i < absolutescoreMaxscoreList.getLength(); i++) {
 			absolutescoreMaxscoreList.item(i)
 					.setTextContent(normalMaximumScore);
 		}
 
-		NodeList absolutescoreMinscoreList = getXMLNodes(
-				ABSOLUTESCORE_MINSCORE, false);
+		NodeList absolutescoreMinscoreList = getXMLNodes(ABSOLUTESCORE_MINSCORE,
+				false);
 		for (int i = 0; i < absolutescoreMinscoreList.getLength(); i++) {
 			absolutescoreMinscoreList.item(i).setTextContent("0");
 		}
@@ -200,8 +202,8 @@ public abstract class BlackboardQTIConvert {
 		NodeList absolutescoreScoreList = getXMLNodes(ABSOLUTESCORE_SCORE,
 				false);
 		for (int i = 0; i < absolutescoreScoreList.getLength(); i++) {
-			absolutescoreScoreList.item(i).setTextContent(
-					"0," + normalMaximumScore);
+			absolutescoreScoreList.item(i)
+					.setTextContent("0," + normalMaximumScore);
 		}
 	}
 
@@ -209,13 +211,10 @@ public abstract class BlackboardQTIConvert {
 	 * Updates the question text of blackboard question
 	 */
 	protected void updateQuestionText() {
-		Node matFormattedtext = getXMLNode(MAT_FORMATTEDTEXT,true);
-		((Element) matFormattedtext)
-				.getElementsByTagName("mat_formattedtext")
-				.item(0)
-				.appendChild(
-						bbQuestionXML.createCDATASection(ptbQTIParser
-								.getQuestionText()));
+		Node matFormattedtext = getXMLNode(MAT_FORMATTEDTEXT, true);
+		((Element) matFormattedtext).getElementsByTagName("mat_formattedtext")
+				.item(0).appendChild(bbQuestionXML
+						.createCDATASection(ptbQTIParser.getQuestionText()));
 	}
 
 	/**

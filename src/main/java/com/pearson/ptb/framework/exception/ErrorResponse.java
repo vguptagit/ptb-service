@@ -11,7 +11,7 @@ public class ErrorResponse implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * This is the message
 	 */
@@ -37,5 +37,5 @@ public class ErrorResponse implements Serializable {
 		// set the message
 		this.message = message;
 	}
-	
+
 }

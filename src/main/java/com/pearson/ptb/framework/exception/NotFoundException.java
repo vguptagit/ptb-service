@@ -2,8 +2,8 @@ package com.pearson.ptb.framework.exception;
 
 import org.springframework.http.HttpStatus;
 /**
- * This <code>NotFoundException</code> is used to create any custom exception to throw when expectation is not
- * met to perform the job.
+ * This <code>NotFoundException</code> is used to create any custom exception to
+ * throw when expectation is not met to perform the job.
  * 
  */
 @SuppressWarnings("serial")

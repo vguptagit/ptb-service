@@ -6,8 +6,8 @@ import com.pearson.ptb.framework.exception.BadDataException;
 import com.pearson.ptb.framework.exception.InternalException;
 
 /**
- * This interface defines the contract for create, update and delete of tests from PAF
- * repository
+ * This interface defines the contract for create, update and delete of tests
+ * from PAF repository
  */
 public interface MyTestDelegate {
 
@@ -44,7 +44,8 @@ public interface MyTestDelegate {
 	TestResult update(TestEnvelop test);
 
 	/**
-	 * Delete the test data based on test id in repository 
+	 * Delete the test data based on test id in repository
+	 * 
 	 * @param testId
 	 */
 	void delete(String testId);

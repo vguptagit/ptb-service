@@ -14,14 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 public class HealthService {
 
 	/**
-	 * This method will returns API Governance Health rule details.	
-	 * @return a string which contains Application Name, Owner details and domain details.
+	 * This method will returns API Governance Health rule details.
+	 * 
+	 * @return a string which contains Application Name, Owner details and
+	 *         domain details.
 	 */
-	public HealthApis getHealthInfo(HttpServletRequest request){
-		Health health=new Health();
-		health.setApplicationName(ConfigurationManager.getInstance().getHealthApplicationName());
-		health.setApplicationOwner(ConfigurationManager.getInstance().getHealthApplicationOwnerName());
-		health.setApplicationDomain(request.getServerName());	
+	public HealthApis getHealthInfo(HttpServletRequest request) {
+		Health health = new Health();
+		health.setApplicationName(
+				ConfigurationManager.getInstance().getHealthApplicationName());
+		health.setApplicationOwner(ConfigurationManager.getInstance()
+				.getHealthApplicationOwnerName());
+		health.setApplicationDomain(request.getServerName());
 
 		List<Health> healthData = new ArrayList<Health>();
 		healthData.add(health);
@@ -34,4 +38,3 @@ public class HealthService {
 	}
 
 }
-

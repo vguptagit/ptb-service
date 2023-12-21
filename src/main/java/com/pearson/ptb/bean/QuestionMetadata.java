@@ -9,7 +9,8 @@ import com.pearson.ptb.framework.exception.ConfigException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.util.Common;
 /**
- *  This <code>QuestionMetadata</code> is responsible to hold the meta data of the questions 
+ * This <code>QuestionMetadata</code> is responsible to hold the meta data of
+ * the questions
  *
  */
 public class QuestionMetadata extends Metadata implements Serializable {
@@ -18,23 +19,22 @@ public class QuestionMetadata extends Metadata implements Serializable {
 	 * Indicate the version id of serialization
 	 */
 	private static final long serialVersionUID = 1L;
-	
-    private List<String> questionHierarchy;
-    
-    /*
-     * to get the question hierarchy
-     */
-    public List<String> getQuestionHierarchy() {
-        return questionHierarchy;
-    }
 
-    /*
-     * to set the question hierarchy
-     */
-    public void setQuestionHierarchy(List<String> questionHierarchy) {
-        this.questionHierarchy = questionHierarchy;
-    }
+	private List<String> questionHierarchy;
 
+	/*
+	 * to get the question hierarchy
+	 */
+	public List<String> getQuestionHierarchy() {
+		return questionHierarchy;
+	}
+
+	/*
+	 * to set the question hierarchy
+	 */
+	public void setQuestionHierarchy(List<String> questionHierarchy) {
+		this.questionHierarchy = questionHierarchy;
+	}
 
 	@JsonProperty("@id")
 	public String getId() {
