@@ -12,14 +12,14 @@ import com.pearson.ptb.framework.ConfigurationManager;
 public class PIHelper {
 
 	/**
-	 * This method will get the token from PI 
+	 * This method will get the token from PI
 	 * 
 	 * @param username
-	 * 				 ,name of the user
+	 *            ,name of the user
 	 * @param password
-	 * 				 ,password of the user
+	 *            ,password of the user
 	 */
-	public String getPIToken(String username, String password){
+	public String getPIToken(String username, String password) {
 
 		String payload = "{\"userName\":\"%s\",\"password\":\"%s\"}";
 		String url = ConfigurationManager.getInstance().getSysToSysPITokenUrl();

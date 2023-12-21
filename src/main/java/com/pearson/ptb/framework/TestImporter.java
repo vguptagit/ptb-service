@@ -31,98 +31,105 @@ import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.util.QuestionTypes;
 
 public class TestImporter {
-	private Map<String, ZipEntry> zipMap ;
-	private Map<String,String> imageUrlMap ;
-	private Map<String,MultipartFile> imageFileMap;
+	private Map<String, ZipEntry> zipMap;
+	private Map<String, String> imageUrlMap;
+	private Map<String, MultipartFile> imageFileMap;
 	private ZipFile zipfile;
 	private NodeList resources;
 	File tempFile;
-	private static final Logger LOG = LogWrapper.getInstance(TestImporter.class);
-	
-	public TestImporter(MultipartFile file){
-		 zipMap = new HashMap<String, ZipEntry>();
-		 imageUrlMap = new HashMap<String, String>();
-		 imageFileMap = new HashMap<String, MultipartFile>();
-		 initialize(file);
+	private static final Logger LOG = LogWrapper
+			.getInstance(TestImporter.class);
+
+	public TestImporter(MultipartFile file) {
+		zipMap = new HashMap<String, ZipEntry>();
+		imageUrlMap = new HashMap<String, String>();
+		imageFileMap = new HashMap<String, MultipartFile>();
+		initialize(file);
 	}
 	/**
 	 * Getting the map consists of filename and multipart file object
 	 */
-	public Map<String,MultipartFile> getImageMap(){
+	public Map<String, MultipartFile> getImageMap() {
 		return imageFileMap;
 	}
 	/**
 	 * Adding the map item with key as filename and value as eps url.
 	 */
-	public void addImage(String key, String value){
+	public void addImage(String key, String value) {
 		imageUrlMap.put(key, value);
 	}
 	/**
-	 * Validate the package by checking the existence of files by parsing the imsmanifest file
+	 * Validate the package by checking the existence of files by parsing the
+	 * imsmanifest file
 	 */
-	public void validatePackage(){
+	public void validatePackage() {
 		ZipEntry entry = zipMap.get("imsmanifest.xml");
 		InputStream read = null;
-		try{
-				if(entry == null){
+		try {
+			if (entry == null) {
+				throw new BadDataException("Invalid Package");
+			}
+			read = zipfile.getInputStream(entry);
+
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			Document doc;
+
+			doc = factory.newDocumentBuilder().parse(read);
+			resources = doc.getElementsByTagName("resource");
+
+			NodeList fields;
+			String href, type;
+			for (int i = 0; i < resources.getLength(); i++) {
+				type = ((Element) resources.item(i)).getAttribute("type");
+				if (!type.equals("imsqti_item_xmlv2p1")
+						&& !type.equals("imsqti_test_xmlv2p1")) {
 					throw new BadDataException("Invalid Package");
 				}
-				read = zipfile.getInputStream(entry);
-			
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				Document doc;
-			
-				doc = factory.newDocumentBuilder().parse(read);
-				resources = doc.getElementsByTagName("resource");
-
-				NodeList fields;
-				String href,type;
-				for (int i = 0; i < resources.getLength(); i++) {
-					type = ((Element)resources.item(i)).getAttribute("type");
-					if(!type.equals("imsqti_item_xmlv2p1") && !type.equals("imsqti_test_xmlv2p1")){
+				fields = ((Element) resources.item(i))
+						.getElementsByTagName("file");
+				for (int j = 0; j < fields.getLength(); j++) {
+					href = ((Element) fields.item(j)).getAttribute("href");
+					if (!zipMap.containsKey(href)
+							&& !imageFileMap.containsKey(href)) {
 						throw new BadDataException("Invalid Package");
 					}
-					fields = ((Element)resources.item(i)).getElementsByTagName("file");
-					for (int j = 0; j < fields.getLength(); j++) {
-						href = ((Element)fields.item(j)).getAttribute("href");
-						if(!zipMap.containsKey(href) && !imageFileMap.containsKey(href)){
-							throw new BadDataException("Invalid Package");
-						}
-							
-					}
+
 				}
-		}catch(SAXException | IOException | ParserConfigurationException | BadDataException e){
-			
-			throw new BadDataException("Invalid Package",e);
-		}
-		finally{
+			}
+		} catch (SAXException | IOException | ParserConfigurationException
+				| BadDataException e) {
+
+			throw new BadDataException("Invalid Package", e);
+		} finally {
 			try {
-				if(read != null){
+				if (read != null) {
 					read.close();
 				}
 			} catch (IOException e) {
-				LOG.error("Unable to close the stream.",e);
+				LOG.error("Unable to close the stream.", e);
 			}
 		}
-		
+
 	}
 	/**
 	 * Get the list of question envelops.
 	 */
-	public java.util.List<QuestionEnvelop> getQuestions(){
+	public java.util.List<QuestionEnvelop> getQuestions() {
 		List<QuestionEnvelop> questions = new ArrayList<QuestionEnvelop>();
 		try {
-			String body,href,qti;
+			String body, href, qti;
 			for (int i = 0; i < resources.getLength(); i++) {
-				NodeList fields = ((Element)resources.item(i)).getElementsByTagName("file");
+				NodeList fields = ((Element) resources.item(i))
+						.getElementsByTagName("file");
 				body = null;
 				QTIParser qtiParser = null;
 				for (int j = 0; j < fields.getLength(); j++) {
-					href = ((Element)fields.item(j)).getAttribute("href");
-					if(!href.equals("imsasssessment.xml")){
-						if(href.contains("media/")){
+					href = ((Element) fields.item(j)).getAttribute("href");
+					if (!href.equals("imsasssessment.xml")) {
+						if (href.contains("media/")) {
 							body = addImageToBody(body, href);
-						}else{
+						} else {
 							qti = extractQTI(href);
 							qtiParser = new QTIParser();
 							qtiParser.setXMLDocument(qti);
@@ -130,47 +137,50 @@ public class TestImporter {
 						}
 					}
 				}
-				if(body != null){
+				if (body != null) {
 					QuestionEnvelop envelop = buildQuestionEnvelop(body,
 							qtiParser);
 					questions.add(envelop);
 				}
 			}
-			
+
 		} catch (IOException e) {
-			throw new InternalException("Error in building question envelope ",e);
+			throw new InternalException("Error in building question envelope ",
+					e);
 		}
 		return questions;
 	}
 	/**
 	 * Get the test title from imsassessment.xml
 	 */
-	public String getTestTitle(){
-		ZipEntry entry = zipMap.get("imsasssessment.xml"); 
+	public String getTestTitle() {
+		ZipEntry entry = zipMap.get("imsasssessment.xml");
 		String fileName = null;
 		InputStream read = null;
 		try {
-			read =  zipfile.getInputStream(entry);
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			read = zipfile.getInputStream(entry);
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
 			Document doc = factory.newDocumentBuilder().parse(read);
-			fileName = ((Node)doc.getElementsByTagName("assessmentTest").item(0)).getAttributes().getNamedItem("title").getNodeValue();
+			fileName = ((Node) doc.getElementsByTagName("assessmentTest")
+					.item(0)).getAttributes().getNamedItem("title")
+					.getNodeValue();
 			read.close();
 		} catch (IOException | SAXException | ParserConfigurationException e) {
-			throw new InternalException("Error in extracting test ",e);
-		} 
-		finally{
-			if(read != null){
+			throw new InternalException("Error in extracting test ", e);
+		} finally {
+			if (read != null) {
 				try {
 					read.close();
 				} catch (IOException e) {
-					LOG.error("Unable to close the stream.",e);
-				}	
+					LOG.error("Unable to close the stream.", e);
+				}
 			}
 		}
 		return fileName;
 	}
-	
-	public void clearData(){
+
+	public void clearData() {
 		zipMap = null;
 		imageUrlMap = null;
 		imageFileMap = null;
@@ -178,10 +188,10 @@ public class TestImporter {
 			zipfile.close();
 			tempFile.delete();
 		} catch (IOException e) {
-			throw new InternalException("Unable to close the file ",e);
+			throw new InternalException("Unable to close the file ", e);
 		}
 	}
-	
+
 	/**
 	 * Initialise the zip file
 	 */
@@ -196,34 +206,35 @@ public class TestImporter {
 			tempFile = File.createTempFile("import", null);
 			file.transferTo(tempFile);
 			zipfile = new ZipFile(tempFile);
-			
-			
-			for(ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry()){
-				if(ze.getName().contains("media/")){
+
+			for (ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry()) {
+				if (ze.getName().contains("media/")) {
 					question = zipfile.getInputStream(ze);
-				//	MultipartFile image = new MockMultipartFile("file",ze.getName().substring("media/".length()),"*/*", question);
-					//imageFileMap.put(ze.getName(), image);
+					// MultipartFile image = new
+					// MockMultipartFile("file",ze.getName().substring("media/".length()),"*/*",
+					// question);
+					// imageFileMap.put(ze.getName(), image);
 					question.close();
-				}else{
+				} else {
 					zipMap.put(ze.getName(), ze);
 				}
 			}
 
 		} catch (IOException e) {
-			throw new InternalException("Error in extracting file ",e);
-		}
-		finally{
-			if(question != null){
+			throw new InternalException("Error in extracting file ", e);
+		} finally {
+			if (question != null) {
 				try {
 					question.close();
 				} catch (IOException e) {
-					LOG.error("Unable to close the stream.",e);
-				}	
+					LOG.error("Unable to close the stream.", e);
+				}
 			}
 		}
 	}
 	/**
 	 * Building the question envelop for saving the questions
+	 * 
 	 * @param body
 	 * @param qtiParser
 	 * @return
@@ -242,6 +253,7 @@ public class TestImporter {
 
 	/**
 	 * Extracting the qti from zip file
+	 * 
 	 * @param href
 	 * @return
 	 * @throws IOException
@@ -250,36 +262,38 @@ public class TestImporter {
 		InputStream question = zipfile.getInputStream(zipMap.get(href));
 		String qti = IOUtils.toString(question);
 		question.close();
-		if(qti.indexOf("<![CDATA[") > 0)
+		if (qti.indexOf("<![CDATA[") > 0)
 			return qti;
 		qti = qti.replaceAll("<br>", "<br/>");
-		qti = qti.trim().replaceFirst("^([\\W]+)<","<");
-		
+		qti = qti.trim().replaceFirst("^([\\W]+)<", "<");
+
 		int index = qti.indexOf("<img", 0);
-		String temp,temp1;
-		while(index != -1){
+		String temp, temp1;
+		while (index != -1) {
 			temp = qti.substring(index);
 			int anotherIndex = temp.indexOf(">");
 			temp1 = temp.substring(0, anotherIndex + 1);
-			if(temp1.indexOf("/>") == -1)
-				qti = qti.replaceFirst(temp1, temp.substring(0, anotherIndex) + "/>");
+			if (temp1.indexOf("/>") == -1)
+				qti = qti.replaceFirst(temp1,
+						temp.substring(0, anotherIndex) + "/>");
 			index = qti.indexOf("<img", index + temp1.length());
 		}
-		
+
 		qti = qti.replaceAll("&nbsp;", " ");
-		
+
 		qti = qti.replaceAll("w:st", "wst");
 		return qti;
 	}
 
 	/**
 	 * Replace image in the qti with eps url
+	 * 
 	 * @param body
 	 * @param href
 	 * @return
 	 */
 	private String addImageToBody(String body, String href) {
-		if(body != null){
+		if (body != null) {
 			body = body.replaceAll(href, imageUrlMap.get(href));
 		}
 		return body;
@@ -287,23 +301,24 @@ public class TestImporter {
 
 	/**
 	 * Getting the quiz type for the question type
+	 * 
 	 * @param type
 	 * @return
 	 */
-	private String getQuizType(QuestionTypes type){
+	private String getQuizType(QuestionTypes type) {
 		switch (type) {
-		case ESSAY:
-			return "Essay";
-		case FILLINBLANKS:
-			return "FillInBlanks";
-		case MATCHING:
-			return "Matching";
-		case MULTIPLECHOICE:
-			return "MultipleChoice";
-		case MULTIPLERESPONSE:
-			return "MultipleResponse";
-		default:
-			return "TrueFalse";
+			case ESSAY :
+				return "Essay";
+			case FILLINBLANKS :
+				return "FillInBlanks";
+			case MATCHING :
+				return "Matching";
+			case MULTIPLECHOICE :
+				return "MultipleChoice";
+			case MULTIPLERESPONSE :
+				return "MultipleResponse";
+			default :
+				return "TrueFalse";
 
 		}
 

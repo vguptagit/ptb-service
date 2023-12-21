@@ -3,18 +3,21 @@
  */
 package com.pearson.ptb.proxy.repo;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
-//import org.mongodb.morphia.query.Query;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.ImmutableMap;
 import com.pearson.ptb.bean.Container;
-import com.pearson.ptb.framework.exception.ConfigException;
+import com.pearson.ptb.dataaccess.GenericMongoRepository;
+import com.pearson.ptb.framework.exception.BaseException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.ContainerDelegate;
 
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Implementation class which got implemented from ContainerDelegate.
@@ -22,8 +25,11 @@ import org.springframework.stereotype.Repository;
  * @see com.pearson.ptb.proxy.ContainerDelegate
  *
  */
-@Repository("containers")
+@Repository("container")
+@RequiredArgsConstructor
 public class ContainerRepo implements ContainerDelegate {
+
+	private final GenericMongoRepository<Container, String> genericMongoRepository;
 
 	@Override
 	public List<Container> getRootLevelContainersByBookId(String bookID) {
@@ -31,22 +37,61 @@ public class ContainerRepo implements ContainerDelegate {
 		return null;
 	}
 
+	/**
+	 * Retrieves a container by its unique identifier.
+	 *
+	 * @param containerId
+	 *            The unique identifier of the container to retrieve.
+	 * @return The container with the specified ID.
+	 */
 	@Override
 	public Container getContainerById(String containerId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.GUID).is(containerId));
+		Container container = genericMongoRepository.findOne(query,
+				Container.class);
+
+		return container;
 	}
 
+	/**
+	 * Retrieves a list of container children based on the parent container's
+	 * ID.
+	 *
+	 * @param containerId
+	 *            The unique identifier of the parent container.
+	 * @return A list of containers that are children of the specified parent
+	 *         container.
+	 */
 	@Override
 	public List<Container> getContainerChildrenById(String containerId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.PARENTID).is(containerId));
+		query.with(Sort.by(QueryFields.SEQUENCE));
+		List<Container> containers = genericMongoRepository.findAll(query);
+
+		return containers;
 	}
 
+	/**
+	 * Retrieves a flat view of containers associated with a specific book.
+	 *
+	 * @param bookID
+	 *            The unique identifier of the book for which containers are
+	 *            retrieved.
+	 * @return A list of containers associated with the specified book in a flat
+	 *         view.
+	 */
 	@Override
 	public List<Container> getContainersFlatViewByBookId(String bookID) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.BOOKID).is(bookID));
+		query.with(Sort.by(QueryFields.SEQUENCE));
+		List<Container> findAll = genericMongoRepository.findAll(query);
+		System.out.println(findAll + "cccccccccccccccc");
+		return findAll;
+
 	}
 
 	@Override
@@ -56,7 +101,8 @@ public class ContainerRepo implements ContainerDelegate {
 	}
 
 	@Override
-	public List<Container> getContainerByQuestionids(String bookID, List<String> questionids) {
+	public List<Container> getContainerByQuestionids(String bookID,
+			List<String> questionids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -67,147 +113,32 @@ public class ContainerRepo implements ContainerDelegate {
 		return null;
 	}
 
+	/**
+	 * Retrieves a list of question bindings associated with a specific book and
+	 * container.
+	 *
+	 * @param bookID
+	 *            The unique identifier of the book.
+	 * @param containerID
+	 *            The unique identifier of the container.
+	 * @return A list of question bindings associated with the specified book
+	 *         and container.
+	 */
 	@Override
 	public List<String> getQuestionBindings(String bookID, String containerID) {
-		// TODO Auto-generated method stub
-		return null;
+		return genericMongoRepository
+				.getListFieldByCriteria(
+						ImmutableMap.of(QueryFields.BOOKID, bookID,
+								QueryFields.GUID, containerID),
+						"questionBindings");
+
 	}
 
 	@Override
 	public void save(List<Container> containers) {
-		// TODO Auto-generated method stub
-		
+
+		genericMongoRepository.saveAll(containers);
 	}
-	/*
-	 * 
-	 * private DataAccessHelper<Container> accessor;
-	 * 
-	 *//**
-		 * Constructor to access DataAccessHelper to perform Container operation.
-		 * 
-		 * @throws ConfigException
-		 * @throws UnknownHostException
-		 */
-	/*
-	 * public ContainerRepo(){ //accessor = new
-	 * DataAccessHelper<Container>(Container.class); }
-	 * 
-	 *//**
-		 * Get the list of Containers for the given bookid
-		 * 
-		 * @throws NotFoundException
-		 * @throws BaseException
-		 */
-	/*
-	 * @Override public List<Container> getRootLevelContainersByBookId(String
-	 * bookID){ List<Container> containers = null;
-	 * 
-	 * Query<Container> query = accessor.getDataQuery(); containers =
-	 * query.filter(QueryFields.BOOKID, bookID) .filter(QueryFields.PARENTID, "")
-	 * .order("sequence").asList();
-	 * 
-	 * return containers; }
-	 * 
-	 *//**
-		 * Get the Container for the given bookid and containerid
-		 * 
-		 * @throws NotFoundException
-		 */
-	/*
-	 * @Override public Container getContainerById(String containerId){
-	 * 
-	 * Container container = null; Query<Container> query = accessor.getDataQuery();
-	 * container = query.filter(QueryFields.GUID, containerId).get();
-	 * 
-	 * return container; }
-	 * 
-	 *//**
-		 * This method will get the container by container id
-		 * 
-		 * @param Container id
-		 * @return Container
-		 */
-	/*
-	 * @Override public Container getContainerByContainerId(String containerid){
-	 * 
-	 * Container container = null; Query<Container> query = accessor.getDataQuery();
-	 * container = query.filter(QueryFields.GUID, containerid).get();
-	 * 
-	 * return container; }
-	 * 
-	 *//**
-		 * This method will fetch the containers for which the sent questions is binded
-		 * 
-		 * @param list of questionid's
-		 * @return list of Container
-		 */
-	/*
-	 * @Override public List<Container> getContainerByQuestionids(String bookID,
-	 * List<String> questionids){ List<Container> containers = null;
-	 * Query<Container> query = accessor.getDataQuery(); containers =
-	 * query.filter(QueryFields.BOOKID, bookID).filter("questionBindings in",
-	 * questionids).asList();
-	 * 
-	 * return containers; }
-	 * 
-	 *//**
-		 * Get the Container children for the given book id and container id
-		 * 
-		 * @throws NotFoundException
-		 */
 	
-	/*
-	 * @Override public List<Container> getContainerChildrenById(String containerId)
-	 * {
-	 * 
-	 * List<Container> containers = null; Query<Container> query =
-	 * accessor.getDataQuery(); containers = query.filter(QueryFields.PARENTID,
-	 * containerId) .order(QueryFields.SEQUENCE).asList();
-	 * 
-	 * return containers; }
-	 */
-	  
-	 /**
-		 * This method gets all the containers up to nth level for a given book
-		 * 
-		 * @param bookID
-		 * @return list of Container
-		 */
-	/*
-	 * @Override public List<Container> getContainersFlatViewByBookId(String bookID)
-	 * {
-	 * 
-	 * List<Container> containers = null; Query<Container> query =
-	 * accessor.getDataQuery(); containers = query.filter(QueryFields.BOOKID,
-	 * bookID) .order(QueryFields.SEQUENCE).asList();
-	 * 
-	 * return containers; }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pearson.mytest.proxy.ContainerDelegate#getTitle(String,String)
-	 * 
-	 * @Override public String getTitle(String bookID, String containerID) { return
-	 * accessor.getBaseFieldByCriteria( ImmutableMap.of(QueryFields.BOOKID, bookID,
-	 * QueryFields.GUID, containerID), QueryFields.TITLE); }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pearson.mytest.proxy.ContainerDelegate#getQuestionBindings(String,String)
-	 * 
-	 * @Override public List<String> getQuestionBindings(String bookID, String
-	 * containerID){ return accessor.getListFieldByCriteria(
-	 * ImmutableMap.of(QueryFields.BOOKID, bookID, QueryFields.GUID, containerID),
-	 * "questionBindings"); }
-	 * 
-	 *//**
-		 * @see com.pearson.mytest.proxy.ContainerDelegate#save(List<Container>)
-		 *//*
-			 * @Override public void save(List<Container> containers) {
-			 * accessor.save(containers); }
-			 */
 
 }

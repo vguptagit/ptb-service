@@ -23,11 +23,10 @@ import org.springframework.stereotype.Service;
 @Service("userSettingService")
 public class UserSettingsService {
 
-	
 	@Autowired
 	@Qualifier("usersettings")
 	private UserSettingsDelegate userSettingsDelegate;
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -36,10 +35,10 @@ public class UserSettingsService {
 	 * @throws ServiceUnavailableException
 	 */
 	public UserSettings getUserSettings(String userid) {
-		return userSettingsDelegate.getUserSettings(userid); 
-		
+		return userSettingsDelegate.getUserSettings(userid);
+
 	}
-	
+
 	/**
 	 * 
 	 * @param userSettings
@@ -47,11 +46,11 @@ public class UserSettingsService {
 	 * @throws ValidationFailedException
 	 * @throws ServiceUnavailableException
 	 */
-	public void saveUserSettings(UserSettings userSettings)  {
-		
+	public void saveUserSettings(UserSettings userSettings) {
+
 		userSettingsDelegate.saveUserSettings(userSettings);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -60,10 +59,10 @@ public class UserSettingsService {
 	 * @throws ServiceUnavailableException
 	 */
 	public List<String> getUserDisciplines(String userid) {
-		
+
 		return userSettingsDelegate.getUserDisciplines(userid);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -73,10 +72,10 @@ public class UserSettingsService {
 	 * @throws InternalException
 	 * @throws ValidationFailedException
 	 */
-	public void saveUserDisciplines(String userid, List<String> disciplines){
-		userSettingsDelegate.saveUserDisciplines(userid,disciplines);
+	public void saveUserDisciplines(String userid, List<String> disciplines) {
+		userSettingsDelegate.saveUserDisciplines(userid, disciplines);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -87,7 +86,7 @@ public class UserSettingsService {
 	public List<String> getUserBooks(String userid) {
 		return userSettingsDelegate.getUserBooks(userid);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -99,9 +98,9 @@ public class UserSettingsService {
 	 * @throws BadDataException
 	 */
 	public void saveUserBooks(String userid, List<String> books) {
-		userSettingsDelegate.saveUserBooks(userid,books);
+		userSettingsDelegate.saveUserBooks(userid, books);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -109,10 +108,10 @@ public class UserSettingsService {
 	 * @throws NotFoundException
 	 * @throws ServiceUnavailableException
 	 */
-	public List<String> getQuestionMetadata(String userid){
+	public List<String> getQuestionMetadata(String userid) {
 		return userSettingsDelegate.getQuestionMetadata(userid);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -122,10 +121,11 @@ public class UserSettingsService {
 	 * @throws InternalException
 	 * @throws ValidationFailedException
 	 */
-	public void saveQuestionMetadata(String userid,	List<String> questionMetadata) {
-		userSettingsDelegate.saveQuestionMetadata(userid, questionMetadata);	
+	public void saveQuestionMetadata(String userid,
+			List<String> questionMetadata) {
+		userSettingsDelegate.saveQuestionMetadata(userid, questionMetadata);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -136,7 +136,7 @@ public class UserSettingsService {
 	public PrintSettings getPrintSettings(String userid) {
 		return userSettingsDelegate.getPrintSettings(userid);
 	}
-	
+
 	/**
 	 * 
 	 * @param userid
@@ -146,9 +146,8 @@ public class UserSettingsService {
 	 * @throws InternalException
 	 * @throws ValidationFailedException
 	 */
-	public void savePrintSettings(String userid, PrintSettings printSettings){
+	public void savePrintSettings(String userid, PrintSettings printSettings) {
 		userSettingsDelegate.savePrintSettings(userid, printSettings);
 	}
-	
-	
+
 }

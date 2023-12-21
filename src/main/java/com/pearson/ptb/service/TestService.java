@@ -20,8 +20,8 @@ import com.pearson.ptb.util.CacheKey;
 import org.springframework.stereotype.Service;
 
 /**
- * This <code>TestService</code> is responsible to get the tests, test questions and 
- * published tests from PAF.
+ * This <code>TestService</code> is responsible to get the tests, test questions
+ * and published tests from PAF.
  */
 @Service("testService")
 public class TestService {
@@ -41,11 +41,12 @@ public class TestService {
 	private static CacheWrapper CACHE;
 
 	/**
-	 * This constructor initializes the instance of the cache wrapper object for caching operations.
+	 * This constructor initializes the instance of the cache wrapper object for
+	 * caching operations.
 	 * 
 	 */
-	public TestService(){
-		//CACHE = CacheWrapper.getInstance();
+	public TestService() {
+		// CACHE = CacheWrapper.getInstance();
 	}
 
 	/**
@@ -68,46 +69,49 @@ public class TestService {
 	}
 	/**
 	 * This method will fetch the published tests for the given book id
+	 * 
 	 * @param bookId
-	 *              , Book id
+	 *            , Book id
 	 * @return list of tests
 	 */
-	public List<Test> getPublisherTestsByBookId(String bookId) {		
+	public List<Test> getPublisherTestsByBookId(String bookId) {
 
 		List<Test> tests;
-		String bookTestsCacheKey = String.format(CacheKey.BOOK_TESTS_FORMAT, bookId);
+		String bookTestsCacheKey = String.format(CacheKey.BOOK_TESTS_FORMAT,
+				bookId);
 		tests = CACHE.get(bookTestsCacheKey);
 
-		if(tests == null) {
+		if (tests == null) {
 
 			tests = new ArrayList<Test>();
 			Book book = bookRepo.getBookByID(bookId);
 
-			for(String testId : book.getTestBindings()) {
-				try{
+			for (String testId : book.getTestBindings()) {
+				try {
 
-					tests.add(getTestByID(testId));				
-				} catch(Exception e) { // NOSONAR
-					// To skip if PAF fails for any one test					
+					tests.add(getTestByID(testId));
+				} catch (Exception e) { // NOSONAR
+					// To skip if PAF fails for any one test
 				}
-			}	
+			}
 
-			CACHE.set(bookTestsCacheKey, (ArrayList<Test>)tests);
+			CACHE.set(bookTestsCacheKey, (ArrayList<Test>) tests);
 		}
-
 
 		return tests;
 	}
 
 	/**
 	 * This method will fetch the questions for the given test id
+	 * 
 	 * @param testId
-	 *              , Test id
+	 *            , Test id
 	 * @return list of questions.
 	 */
 	public List<QuestionOutput> getTestQuestions(String testId) {
 
-		String testQuestionsCacheKey = String.format(CacheKey.TEST_QUESTIONS_FORMAT, testId);
+		String testQuestionsCacheKey = String
+				.format(CacheKey.TEST_QUESTIONS_FORMAT, testId);
 
 		List<QuestionOutput> questions = CACHE.get(testQuestionsCacheKey);
 
@@ -115,13 +119,15 @@ public class TestService {
 
 			List<String> questionIds = new ArrayList<String>();
 
-			for (AssignmentBinding questionBinding : getTestByID(testId).getAssignmentContents().getBinding()) {
+			for (AssignmentBinding questionBinding : getTestByID(testId)
+					.getAssignmentContents().getBinding()) {
 				questionIds.add(questionBinding.getGuid());
 			}
 
 			questions = questionService.getQuestions(questionIds);
 
-			CACHE.set(testQuestionsCacheKey,(ArrayList<QuestionOutput>) questions);
+			CACHE.set(testQuestionsCacheKey,
+					(ArrayList<QuestionOutput>) questions);
 		}
 
 		return questions;

@@ -1,7 +1,6 @@
 package com.pearson.ptb.framework;
 import java.util.UUID;
 
-
 /**
  * Thread local wrapper to store values which would remain in thread context.
  * 
@@ -17,10 +16,9 @@ public class CurrentThreadContext {
 	 * @author
 	 */
 	private static ThreadLocal<UUID> threadLocal = new ThreadLocal<UUID>();
-	
+
 	private CurrentThreadContext() {
 	}
-
 
 	/**
 	 * get method to fetch the universal request id for the current thread.
@@ -38,9 +36,8 @@ public class CurrentThreadContext {
 
 		}
 
-		
 		return threadLocal.get().toString();
-		
+
 	}
 
 }

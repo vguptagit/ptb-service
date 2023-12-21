@@ -3,7 +3,7 @@ package com.pearson.ptb.bean;
 import java.util.Date;
 
 /**
- *  The <code>Login</code> class is responsible to hold the Login details
+ * The <code>Login</code> class is responsible to hold the Login details
  *
  */
 public class Login {
@@ -12,7 +12,7 @@ public class Login {
 	 * The instructor user id
 	 */
 	private String userid;
-	
+
 	/**
 	 * Login date and time
 	 */

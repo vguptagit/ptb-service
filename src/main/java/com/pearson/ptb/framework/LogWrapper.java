@@ -46,8 +46,8 @@ public final class LogWrapper implements Logger {
 	 * 
 	 * @author
 	 * 
-	 *         / private static final String EXCEPTION_LOG_TEMPLATE =
-	 *         "%s ~ %s ~ %s ~ Exception";
+	 *         / private static final String EXCEPTION_LOG_TEMPLATE = "%s ~ %s ~
+	 *         %s ~ Exception";
 	 * 
 	 *         /** This is the string template for the Controller Entry log.
 	 * @author
@@ -84,7 +84,8 @@ public final class LogWrapper implements Logger {
 	 * This method returns the instance of the Logger.
 	 * 
 	 * @return logger returns the instance of Logger class.
-	 * @param class the returned logger will be named after class.
+	 * @param class
+	 *            the returned logger will be named after class.
 	 * @author
 	 */
 	@SuppressWarnings("rawtypes")
@@ -818,8 +819,8 @@ public final class LogWrapper implements Logger {
 		// log API as info
 		log.info(String.format(LogWrapper.LOG_API_TEMPLATE,
 				CurrentThreadContext.getUniversalId(), api,
-				exception == null ? "Success" : "Fail", exception == null ? ""
-						: exception.toString()));
+				exception == null ? "Success" : "Fail",
+				exception == null ? "" : exception.toString()));
 	}
 
 	/**
@@ -847,7 +848,8 @@ public final class LogWrapper implements Logger {
 				CurrentThreadContext.getUniversalId(), uri,
 				this.convertKeyValueMapToString(queryString),
 				this.convertListToString(header),
-				this.convertListToString(cookie), body, returnvalue.toString()));
+				this.convertListToString(cookie), body,
+				returnvalue.toString()));
 	}
 
 	/**

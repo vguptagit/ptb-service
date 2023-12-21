@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- *User Preference APIs
+ * User Preference APIs
  *
  */
 @Controller
@@ -37,75 +37,82 @@ public class UserSettingsController extends BaseController {
 	@Autowired
 	@Qualifier("userSettingService")
 	private UserSettingsService userSettingService;
-	
 
 	/**
 	 * To get the User level preference settings
+	 * 
 	 * @param request
 	 * @return UserSettings
 	 */
 	@ApiOperation(value = "Returns User level preference settings")
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
 	@ResponseBody
-	public UserSettings getUserSettings(HttpServletRequest request){
+	public UserSettings getUserSettings(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		return userSettingService.getUserSettings(userid);
 
 	}
 
 	/**
 	 * To save the User preference settings
+	 * 
 	 * @param request
 	 * @param response
 	 * @param userSettings
 	 */
 	@RequestMapping(value = "/settings", method = RequestMethod.POST)
 	public void saveUserSettings(HttpServletRequest request,
-			HttpServletResponse response, @Valid @RequestBody UserSettings userSettings){
+			HttpServletResponse response,
+			@Valid @RequestBody UserSettings userSettings) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		userSettings.setUserid(userid);
-		userSettingService.saveUserSettings(userSettings);		
-				
+		userSettingService.saveUserSettings(userSettings);
+
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	/**
-	 *  To get the User preference disciplines
+	 * To get the User preference disciplines
+	 * 
 	 * @param request
 	 * @return List of disciplines
 	 */
 	@RequestMapping(value = "/settings/disciplines", method = RequestMethod.GET)
 	@ResponseBody
-	public List<String> getUserDisciplines(HttpServletRequest request){
+	public List<String> getUserDisciplines(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
-				
-		return userSettingService.getUserDisciplines(userid);		
+
+		return userSettingService.getUserDisciplines(userid);
 	}
 
 	/**
 	 * To save the User preference disciplines
+	 * 
 	 * @param request
 	 * @param response
 	 * @param disciplines
 	 */
 	@RequestMapping(value = "/settings/disciplines", method = RequestMethod.POST)
 	@ResponseBody
-	public void saveUserDisciplines(HttpServletRequest request, HttpServletResponse response, @RequestBody List<String> disciplines){
+	public void saveUserDisciplines(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestBody List<String> disciplines) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		userSettingService.saveUserDisciplines(userid, disciplines);
-		
+
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}
-	
+
 	/**
 	 * To get the User preference Books
+	 * 
 	 * @param request
 	 * @return list of books
 	 */
@@ -114,67 +121,73 @@ public class UserSettingsController extends BaseController {
 	public List<String> getUserBooks(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		List<String> books = null;
 		books = userSettingService.getUserBooks(userid);
 
 		return books;
 	}
 
-
 	/**
 	 * To save the User preference books
+	 * 
 	 * @param request
 	 * @param response
 	 * @param books
 	 */
 	@RequestMapping(value = "/settings/books", method = RequestMethod.POST)
 	@ResponseBody
-	public void saveUserBooks(HttpServletRequest request, HttpServletResponse response, @RequestBody List<String> books){
+	public void saveUserBooks(HttpServletRequest request,
+			HttpServletResponse response, @RequestBody List<String> books) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		userSettingService.saveUserBooks(userid, books);
-				
+
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}
-	
+
 	/**
 	 * To get the User preference Question Metadata
+	 * 
 	 * @param request
 	 * @return List of Question Metadata
 	 */
 	@RequestMapping(value = "/settings/questionmetadata", method = RequestMethod.GET)
 	@ResponseBody
-	public List<String> getQuestionMetadata(HttpServletRequest request){
+	public List<String> getQuestionMetadata(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		List<String> questionMetadata = null;
 		questionMetadata = userSettingService.getQuestionMetadata(userid);
 
 		return questionMetadata;
 	}
-	
+
 	/**
 	 * To save the User preference books
+	 * 
 	 * @param request
 	 * @param response
 	 * @param questionMetadata
 	 */
 	@RequestMapping(value = "/settings/questionmetadata", method = RequestMethod.POST)
 	@ResponseBody
-	public void saveQuestionMetadata(HttpServletRequest request, HttpServletResponse response, @RequestBody List<String> questionMetadata){
+	public void saveQuestionMetadata(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestBody List<String> questionMetadata) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		userSettingService.saveQuestionMetadata(userid, questionMetadata);
-		
+
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}
-	
+
 	/**
 	 * To get the User preference Print Settings
+	 * 
 	 * @param request
 	 * @return PrintSettings
 	 */
@@ -183,27 +196,30 @@ public class UserSettingsController extends BaseController {
 	public PrintSettings getPrintSettings(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		PrintSettings printSettings = null;
 		printSettings = userSettingService.getPrintSettings(userid);
 
 		return printSettings;
 	}
-	
+
 	/**
-	 *  To save the User preference Print Settings
+	 * To save the User preference Print Settings
+	 * 
 	 * @param request
 	 * @param response
 	 * @param printSettings
 	 */
 	@RequestMapping(value = "/settings/printsettings", method = RequestMethod.POST)
 	@ResponseBody
-	public void savePrintsettings(HttpServletRequest request, HttpServletResponse response, @RequestBody PrintSettings printSettings){
+	public void savePrintsettings(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestBody PrintSettings printSettings) {
 
 		String userid = UserHelper.getUserId(request);
-		
+
 		userSettingService.savePrintSettings(userid, printSettings);
-				
+
 		response.setStatus(HttpServletResponse.SC_CREATED);
-	}	
+	}
 }

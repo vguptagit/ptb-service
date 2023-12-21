@@ -8,12 +8,14 @@ import com.pearson.ptb.bean.DownloadInfo;
 import com.pearson.ptb.bean.DownloadOutput;
 import com.pearson.ptb.framework.exception.InternalException;
 /**
- * This <code>Pdf</code> is responsible to hold the information of download settings for pdf format.
+ * This <code>Pdf</code> is responsible to hold the information of download
+ * settings for pdf format.
  */
 public class Pdf extends Word {
 
 	/**
-	 * this method downloads the document based on the content type and file name
+	 * this method downloads the document based on the content type and file
+	 * name
 	 * 
 	 * @return downloaded document
 	 */
@@ -33,7 +35,7 @@ public class Pdf extends Word {
 			} else {
 				fileName = downloadInfo.getTestTitle();
 			}
-			
+
 			output.setFileName(fileName + this.extension());
 			return output;
 
@@ -42,12 +44,12 @@ public class Pdf extends Word {
 					"Exception while rendering the PDF document", e);
 		}
 	}
-	
+
 	/***
 	 * Returns the extension of the file type downloaded by this downloader
 	 */
 	@Override
-	public String extension(){
+	public String extension() {
 		return ".pdf";
 	}
 }

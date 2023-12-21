@@ -12,7 +12,8 @@ import org.w3c.dom.NodeList;
 import com.pearson.ptb.bean.DownloadFormat;
 import com.pearson.ptb.framework.exception.InternalException;
 /**
- * This <code>BlackboardMultipleResponse</code> is responsible for support black board format for multiple response questions.
+ * This <code>BlackboardMultipleResponse</code> is responsible for support black
+ * board format for multiple response questions.
  */
 public class BlackboardMultipleResponse extends BlackboardQTIConvert {
 
@@ -25,8 +26,8 @@ public class BlackboardMultipleResponse extends BlackboardQTIConvert {
 	private static final String RESPCONDITION = "/item/resprocessing/respcondition";
 
 	/**
-	 * Constructor which takes the download format, sequence, ptbquestionXML as parameters and sets the
-	 * format.
+	 * Constructor which takes the download format, sequence, ptbquestionXML as
+	 * parameters and sets the format.
 	 * 
 	 * @param bbFormat
 	 * @param sequence
@@ -64,38 +65,32 @@ public class BlackboardMultipleResponse extends BlackboardQTIConvert {
 								.getAttributes().getNamedItem("ident")
 								.setNodeValue(Integer.toString(i + 1));
 						Node child = (Node) ((Element) renderChoice)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).getFirstChild();
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.getFirstChild();
 						((Element) renderChoice)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).removeChild(child);
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.removeChild(child);
 						((Element) renderChoice)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0)
-								.appendChild(
-										bbQuestionXML
-												.createCDATASection(answerChoicesList
-														.get(i).toString()));
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.appendChild(bbQuestionXML.createCDATASection(
+										answerChoicesList.get(i).toString()));
 					} else {
 						newElement.getElementsByTagName("response_label")
 								.item(0).getAttributes().getNamedItem("ident")
 								.setNodeValue(Integer.toString(i + 1));
 						NodeList feedback = newElement
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).getChildNodes();
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.getChildNodes();
 						if (feedback.item(0) instanceof CharacterData) {
 							CharacterData child = (CharacterData) feedback
 									.item(0);
 							newElement.getElementsByTagName(FORMATTEDTEXT_TAG)
 									.item(0).removeChild(child);
 						}
-						newElement
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
+						newElement.getElementsByTagName(FORMATTEDTEXT_TAG)
 								.item(0)
-								.appendChild(
-										bbQuestionXML
-												.createCDATASection(answerChoicesList
-														.get(i).toString()));
+								.appendChild(bbQuestionXML.createCDATASection(
+										answerChoicesList.get(i).toString()));
 						renderChoice.appendChild(newElement);
 					}
 				}

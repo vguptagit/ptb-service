@@ -2,7 +2,8 @@ package com.pearson.ptb.framework.exception;
 
 import org.springframework.http.HttpStatus;
 /**
- * This <code>ConfigException</code> is used for throwing configuration related Exception
+ * This <code>ConfigException</code> is used for throwing configuration related
+ * Exception
  * 
  */
 @SuppressWarnings("serial")

@@ -3,10 +3,9 @@ package com.pearson.ptb.bean;
 import com.google.gson.annotations.SerializedName;
 import com.googlecode.jmapper.annotations.JMap;
 
-
 /**
- *  This <code>Assignment</code> is entity of PAF to represents the details of the activity such as title
- *  guid, assignmentContents.
+ * This <code>Assignment</code> is entity of PAF to represents the details of
+ * the activity such as title guid, assignmentContents.
  *
  */
 public class Assignment extends com.pearson.ptb.bean.BaseLinkedDataEntity {
@@ -18,19 +17,19 @@ public class Assignment extends com.pearson.ptb.bean.BaseLinkedDataEntity {
 	 */
 	@JMap
 	private String title;
-	
+
 	@JMap
 	private String guid;
-	
+
 	/**
 	 * The paf activity contents of type AssignmentContent
 	 */
 	@JMap
 	private AssignmentContent assignmentContents;
-	
+
 	@SerializedName("@id")
 	private String id;
-	
+
 	/** Get {@see #id}. @return {@link #id}. */
 	public String getId() {
 		return id;
@@ -39,13 +38,13 @@ public class Assignment extends com.pearson.ptb.bean.BaseLinkedDataEntity {
 	/** Set {@see #id}. @param {@link #id}. */
 	public void setId(String id) {
 		this.id = id;
-	}	
-	
+	}
+
 	/** Get {@see #guid}. @return {@link #guid}. */
 	public String getGuid() {
 		return guid;
 	}
-	
+
 	/** Set {@see #guid}. @param {@link #guid}. */
 	public void setGuid(String guid) {
 		this.guid = guid;
@@ -60,7 +59,7 @@ public class Assignment extends com.pearson.ptb.bean.BaseLinkedDataEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	/** Get {@see #assignmentContents}. @return {@link #assignmentContents}. */
 	public AssignmentContent getAssignmentContents() {
 		return assignmentContents;

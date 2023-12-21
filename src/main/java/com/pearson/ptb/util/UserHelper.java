@@ -40,8 +40,8 @@ public class UserHelper {
 	 */
 	public static Map<String, String> addCriteria(Map<String, String> criteria,
 			String key, String vaule) {
-		Map<String, String> mapCriteria=criteria;
-		if (vaule != null) {		
+		Map<String, String> mapCriteria = criteria;
+		if (vaule != null) {
 			if (mapCriteria == null) {
 				mapCriteria = new HashMap<String, String>();
 			}
@@ -63,30 +63,31 @@ public class UserHelper {
 	public static String getUserId(HttpServletRequest request) {
 		String userId = null;
 
-		if (request != null && request.getAttribute(Common.EXT_USER_ID) != null) {
+		if (request != null
+				&& request.getAttribute(Common.EXT_USER_ID) != null) {
 			userId = request.getAttribute(Common.EXT_USER_ID).toString();
 		} else {
 			userId = "ffffffff54b3faa6e4b0f10ebd0747ce";
 		}
 		return userId;
 	}
-	
+
 	/**
 	 * This will give the default settings for a new user
 	 * 
 	 * @param request
 	 *            The userid generated from request object
 	 * @return UserSettings
-	 */	
+	 */
 	public static UserSettings getDefaultSettings(String userid) {
 
 		UserSettings userSettings = new UserSettings();
-		
+
 		userSettings.setUserid(userid);
-		
+
 		userSettings.setDisciplines(new ArrayList<String>());
 		userSettings.setBooks(new ArrayList<String>());
-		
+
 		List<String> questionMetadata = new ArrayList<String>();
 		questionMetadata.add("Difficulty");
 		questionMetadata.add("Topic");
@@ -94,35 +95,35 @@ public class UserHelper {
 		questionMetadata.add("PageReference");
 		questionMetadata.add("Skill");
 		questionMetadata.add("QuestionId");
-		
+
 		userSettings.setQuestionMetadata(questionMetadata);
-		
+
 		PrintSettings printSettings = new PrintSettings();
 		printSettings.setLeftMargin("1.9");
 		printSettings.setRightMargin("1.9");
 		printSettings.setTopMargin("1.9");
-		printSettings.setBottomMargin("1.9");		
-		
+		printSettings.setBottomMargin("1.9");
+
 		printSettings.setFont("Helvetica, Arial");
 		printSettings.setFontSize("12");
 		printSettings.setFooterSpace("1.2");
 		printSettings.setHeaderSpace("1.2");
 
-		printSettings.setMultipleVersions(true);		
+		printSettings.setMultipleVersions(true);
 		printSettings.setNumberOfVersions(1);
 		printSettings.setScrambleOrder("Scramble question order");
 
 		printSettings.setIncludeAreaForStudentResponse(AnswerAreas.NONE);
-		
-		printSettings.setIncludeAnswerKeyIn(AnswerKeys.NONE);				
-		
+
+		printSettings.setIncludeAnswerKeyIn(AnswerKeys.NONE);
+
 		printSettings.setIncludeAnwserFeedback(true);
 		printSettings.setIncludeQuestionHints(true);
-		
+
 		printSettings.setExportFileFormat(DownloadFormat.doc);
 		userSettings.setPrintSettings(printSettings);
-		
+
 		return userSettings;
 	}
-	
+
 }

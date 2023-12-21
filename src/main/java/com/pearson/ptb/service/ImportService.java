@@ -27,13 +27,9 @@ public class ImportService {
 	@Autowired
 	@Qualifier("book")
 	private BookDelegate bookDelegate;
-	
-	/*
-	 * @Autowired private ImpRepo impRepo;
-	 */
 
 	@Autowired
-	@Qualifier("containers")
+	@Qualifier("container")
 	private ContainerDelegate containerDelegate;
 
 	/**
@@ -43,32 +39,19 @@ public class ImportService {
 	 * @throws NotFoundException
 	 * @throws BadDataException
 	 */
-	/*
-	 * public void importBooks(Books books) { List<Container> containersTemp = new
-	 * ArrayList<Container>();
-	 * 
-	 * Book book = Converter .getDestinationBean(books, Book.class, Books.class);
-	 * 
-	 * book.validateState(); book.setReferenceBookid(book.getGuid());
-	 * book.setGuid(UUID.randomUUID().toString());
-	 * 
-	 * convertContainerJsonToList(books.getContainers(), containersTemp, "",
-	 * book.getGuid());
-	 * 
-	 * bookDelegate.save(book); containerDelegate.save(containersTemp); }
-	 */
 	public void importBooks(Books books) {
 		List<Container> containersTemp = new ArrayList<>();
 
-		Book book = Converter.getDestinationBean(books, Book.class, Books.class);
+		Book book = Converter.getDestinationBean(books, Book.class,
+				Books.class);
 
 		book.validateState();
 		book.setReferenceBookid(book.getGuid());
 		book.setGuid(UUID.randomUUID().toString());
 
-		convertContainerJsonToList(books.getContainers(), containersTemp, "", book.getGuid());
+		convertContainerJsonToList(books.getContainers(), containersTemp, "",
+				book.getGuid());
 
-	//	impRepo.save(book);
 		bookDelegate.save(book);
 		containerDelegate.save(containersTemp);
 	}
@@ -80,31 +63,23 @@ public class ImportService {
 	 * @throws NotFoundException
 	 * @throws BadDataException
 	 */
-	/*
-	 * private void convertContainerJsonToList(List<Containers> containerList,
-	 * List<Container> containersTemp, String parentId, String bookId) { for
-	 * (Containers containers : containerList) { Container container =
-	 * Converter.getDestinationBean(containers, Container.class, Containers.class);
-	 * container.setParentId(parentId); container.setBookid(bookId); // Validate the
-	 * container values container.validateState(); containersTemp.add(container); if
-	 * (containers.getContainers() != null && !containers.getContainers().isEmpty())
-	 * { convertContainerJsonToList(containers.getContainers(), containersTemp,
-	 * container.getGuid(), bookId); } } }
-	 */
 
-	private void convertContainerJsonToList(List<Containers> containerList, List<Container> containersTemp,
-			String parentId, String bookId) {
+	private void convertContainerJsonToList(List<Containers> containerList,
+			List<Container> containersTemp, String parentId, String bookId) {
 		for (Containers containers : containerList) {
-			Container container = Converter.getDestinationBean(containers, Container.class, Containers.class);
+			Container container = Converter.getDestinationBean(containers,
+					Container.class, Containers.class);
 			container.setParentId(parentId);
 			container.setBookid(bookId);
 
-// Validate the container values
+			// Validate the container values
 			container.validateState();
 			containersTemp.add(container);
 
-			if (containers.getContainers() != null && !containers.getContainers().isEmpty()) {
-				convertContainerJsonToList(containers.getContainers(), containersTemp, container.getGuid(), bookId);
+			if (containers.getContainers() != null
+					&& !containers.getContainers().isEmpty()) {
+				convertContainerJsonToList(containers.getContainers(),
+						containersTemp, container.getGuid(), bookId);
 			}
 		}
 	}

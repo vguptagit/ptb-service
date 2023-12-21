@@ -25,16 +25,19 @@ public abstract class BaseController {
 	/**
 	 * This is the logger.
 	 */
-	private static final Logger LOG = LogWrapper.getInstance(BaseException.class);
+	private static final Logger LOG = LogWrapper
+			.getInstance(BaseException.class);
 
 	/**
-	 * This is the string template for the basic error log when an exception is made.
+	 * This is the string template for the basic error log when an exception is
+	 * made.
 	 * 
 	 */
 	private static final String BASIC_LOG_TEMPLATE = "%s ~ ExceptionClass:%s ~ Message:%s ~ StackTrace:%s";
 
 	/**
-	 * This is the string template for the detailed error log when an exception is made.
+	 * This is the string template for the detailed error log when an exception
+	 * is made.
 	 * 
 	 */
 	private static final String DETAILED_LOG_TEMPLATE = "%s ~ExceptionClass:%s ~ Message:%s ~ Exception:%s ~ StackTrace:%s";
@@ -47,8 +50,8 @@ public abstract class BaseController {
 	 * @return A string which is the formatted stack trace.
 	 */
 	public String convertStackTraceToString(Throwable cause) {
-		
-		if(cause == null) {
+
+		if (cause == null) {
 			return "---nil---";
 		}
 		StringBuilder stringBuilder = new StringBuilder();
@@ -86,8 +89,8 @@ public abstract class BaseController {
 		errorResponse.setMessage(exception.getMessage());
 
 		// Returns the responseEntity containing the JSON object and Status Code
-		return new ResponseEntity<ErrorResponse>(errorResponse,
-				responseHeaders, httpStatus);
+		return new ResponseEntity<ErrorResponse>(errorResponse, responseHeaders,
+				httpStatus);
 	}
 
 	/**
@@ -112,7 +115,7 @@ public abstract class BaseController {
 
 		return this.handleException(exception, HttpStatus.CONFLICT);
 	}
-	
+
 	/**
 	 * This method catches an exception of type BadDataException. Which will
 	 * further map to 400 (Bad Request).
@@ -127,17 +130,17 @@ public abstract class BaseController {
 			BadDataException ex) {
 
 		BaseController.LOG.error(String.format(
-				BaseController.DETAILED_LOG_TEMPLATE, 
-				CurrentThreadContext.getUniversalId(), 
-				this.getClass().getName(), ex.getMessage(), ex.toString(), 
+				BaseController.DETAILED_LOG_TEMPLATE,
+				CurrentThreadContext.getUniversalId(),
+				this.getClass().getName(), ex.getMessage(), ex.toString(),
 				this.convertStackTraceToString(ex.getCause())));
-		
+
 		return this.handleException(ex, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
-	 * This method catches an exception of type AccessDeniedException. Which will
-	 * further map to 401 (Un Authorized).
+	 * This method catches an exception of type AccessDeniedException. Which
+	 * will further map to 401 (Un Authorized).
 	 * 
 	 * @param exception
 	 *            This is the Exception instance which is caught.
@@ -149,17 +152,17 @@ public abstract class BaseController {
 			AccessDeniedException ex) {
 
 		BaseController.LOG.error(String.format(
-				BaseController.DETAILED_LOG_TEMPLATE, 
-				CurrentThreadContext.getUniversalId(), 
-				this.getClass().getName(), ex.getMessage(), ex.toString(), 
+				BaseController.DETAILED_LOG_TEMPLATE,
+				CurrentThreadContext.getUniversalId(),
+				this.getClass().getName(), ex.getMessage(), ex.toString(),
 				this.convertStackTraceToString(ex.getCause())));
-		
+
 		return this.handleException(ex, HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	/**
-	 * This method catches an exception of type ServiceUnavailableException. Which will
-	 * further map to 502 (Bad Gateway).
+	 * This method catches an exception of type ServiceUnavailableException.
+	 * Which will further map to 502 (Bad Gateway).
 	 * 
 	 * @param exception
 	 *            This is the Exception instance which is caught.
@@ -171,21 +174,21 @@ public abstract class BaseController {
 			ServiceUnavailableException ex) {
 
 		BaseController.LOG.error(String.format(
-				BaseController.DETAILED_LOG_TEMPLATE, 
-				CurrentThreadContext.getUniversalId(), 
-				this.getClass().getName(), ex.getMessage(), ex.toString(), 
+				BaseController.DETAILED_LOG_TEMPLATE,
+				CurrentThreadContext.getUniversalId(),
+				this.getClass().getName(), ex.getMessage(), ex.toString(),
 				this.convertStackTraceToString(ex.getCause())));
-		
+
 		return this.handleException(ex, HttpStatus.BAD_GATEWAY);
 	}
-	
+
 	/**
 	 * This method catches an exception when expectation is not met while
 	 * performing any use case.This will inform user what expectation is not met
 	 * with status code 417
 	 * 
-	 * @param exception 
-	 * 	This is the Exception instance which is caught.
+	 * @param exception
+	 *            This is the Exception instance which is caught.
 	 * @return responseEntity: This is the response which will be sent in case
 	 *         of error.
 	 */
@@ -244,10 +247,10 @@ public abstract class BaseController {
 			IllegalArgumentException ex) {
 
 		BaseController.LOG.error(String.format(
-				BaseController.DETAILED_LOG_TEMPLATE, CurrentThreadContext
-						.getUniversalId(), this.getClass().getName(), ex
-						.getMessage(), this.toString(), this
-						.convertStackTraceToString(ex.getCause())));
+				BaseController.DETAILED_LOG_TEMPLATE,
+				CurrentThreadContext.getUniversalId(),
+				this.getClass().getName(), ex.getMessage(), this.toString(),
+				this.convertStackTraceToString(ex.getCause())));
 
 		return this.handleException(new BadDataException(ex.toString()),
 				HttpStatus.BAD_REQUEST);
@@ -285,10 +288,10 @@ public abstract class BaseController {
 			InternalException ex) {
 
 		BaseController.LOG.error(String.format(
-				BaseController.DETAILED_LOG_TEMPLATE, CurrentThreadContext
-						.getUniversalId(), this.getClass().getName(), ex
-						.getMessage(), ex.toString(), this
-						.convertStackTraceToString(ex.getCause())));
+				BaseController.DETAILED_LOG_TEMPLATE,
+				CurrentThreadContext.getUniversalId(),
+				this.getClass().getName(), ex.getMessage(), ex.toString(),
+				this.convertStackTraceToString(ex.getCause())));
 
 		return this.handleException(ex, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -306,14 +309,15 @@ public abstract class BaseController {
 	public ResponseEntity<ErrorResponse> mongoServerSelectionExceptionHandler(
 			MongoException ex) {
 
-		BaseController.LOG.error(String.format(
-				BaseController.BASIC_LOG_TEMPLATE, CurrentThreadContext
-						.getUniversalId(), this.getClass().getName(), ex
-						.getMessage(), this.convertStackTraceToString(ex
-						.getCause())));
+		BaseController.LOG
+				.error(String.format(BaseController.BASIC_LOG_TEMPLATE,
+						CurrentThreadContext.getUniversalId(),
+						this.getClass().getName(), ex.getMessage(),
+						this.convertStackTraceToString(ex.getCause())));
 
-		return this.handleException(new ServiceUnavailableException(
-				"Mongo DB not started"), HttpStatus.INTERNAL_SERVER_ERROR);
+		return this.handleException(
+				new ServiceUnavailableException("Mongo DB not started"),
+				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	/**
@@ -330,10 +334,10 @@ public abstract class BaseController {
 			ConfigException ex) {
 
 		BaseController.LOG.error(String.format(
-				BaseController.DETAILED_LOG_TEMPLATE, CurrentThreadContext
-						.getUniversalId(), this.getClass().getName(), ex
-						.getMessage(), ex.toString(), this
-						.convertStackTraceToString(ex.getCause())));
+				BaseController.DETAILED_LOG_TEMPLATE,
+				CurrentThreadContext.getUniversalId(),
+				this.getClass().getName(), ex.getMessage(), ex.toString(),
+				this.convertStackTraceToString(ex.getCause())));
 
 		return this.handleException(ex, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -359,7 +363,8 @@ public abstract class BaseController {
 			errorSource = r.getFieldName();
 			break;
 		}
-		return this.handleException(new BadDataException("Invalid data for "
-				+ errorSource), HttpStatus.BAD_REQUEST);
+		return this.handleException(
+				new BadDataException("Invalid data for " + errorSource),
+				HttpStatus.BAD_REQUEST);
 	}
 }

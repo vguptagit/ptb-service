@@ -44,7 +44,8 @@ public class UserFoldersController extends BaseController {
 	 * @return List of UserFolder
 	 */
 
-//	@ApiOperation(value = Swagger.GET_ROOT_FOLDERS_VALUE, notes = Swagger.GET_ROOT_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.GET_ROOT_FOLDERS_VALUE, notes =
+	// Swagger.GET_ROOT_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/folders", method = RequestMethod.GET)
 
@@ -62,7 +63,8 @@ public class UserFoldersController extends BaseController {
 	 * @return UserFolder
 	 */
 
-//	@ApiOperation(value = Swagger.GET_TEST_ROOT_VALUE, notes = Swagger.GET_TEST_ROOT_NOTE)
+	// @ApiOperation(value = Swagger.GET_TEST_ROOT_VALUE, notes =
+	// Swagger.GET_TEST_ROOT_NOTE)
 
 	@RequestMapping(value = "/my/testroot", method = RequestMethod.GET)
 
@@ -81,14 +83,17 @@ public class UserFoldersController extends BaseController {
 	 * @return List of UserFolder
 	 */
 
-//	@ApiOperation(value = Swagger.GET_FOLDERS_VALUE, notes = Swagger.GET_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.GET_FOLDERS_VALUE, notes =
+	// Swagger.GET_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/folders/{folderId}/folders", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<UserFolder> getFolders(@PathVariable String folderId, HttpServletRequest request) {
+	public List<UserFolder> getFolders(@PathVariable String folderId,
+			HttpServletRequest request) {
 
-		return userFolderService.getFolders(UserHelper.getUserId(request), folderId);
+		return userFolderService.getFolders(UserHelper.getUserId(request),
+				folderId);
 	}
 
 	/**
@@ -100,16 +105,18 @@ public class UserFoldersController extends BaseController {
 	 * @return UserFolder
 	 */
 
-//	@ApiOperation(value = Swagger.SAVE_FOLDERS_VALUE, notes = Swagger.SAVE_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.SAVE_FOLDERS_VALUE, notes =
+	// Swagger.SAVE_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/folders", method = RequestMethod.POST)
 
 	@ResponseBody
-	public UserFolder saveFolders(@Valid @RequestBody UserFolder folder, HttpServletRequest request,
-			HttpServletResponse response) {
+	public UserFolder saveFolders(@Valid @RequestBody UserFolder folder,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		response.setStatus(HttpServletResponse.SC_CREATED);
-		return userFolderService.saveFolder(folder, UserHelper.getUserId(request));
+		return userFolderService.saveFolder(folder,
+				UserHelper.getUserId(request));
 
 	}
 
@@ -122,16 +129,18 @@ public class UserFoldersController extends BaseController {
 	 * @return UserFolder
 	 */
 
-//	@ApiOperation(value = Swagger.UPDATE_FOLDERS_VALUE, notes = Swagger.UPDATE_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.UPDATE_FOLDERS_VALUE, notes =
+	// Swagger.UPDATE_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/folders", method = RequestMethod.PUT)
 
 	@ResponseBody
-	public UserFolder updateFolder(@Valid @RequestBody UserFolder folder, HttpServletRequest request,
-			HttpServletResponse response) {
+	public UserFolder updateFolder(@Valid @RequestBody UserFolder folder,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		response.setStatus(HttpServletResponse.SC_CREATED);
-		return userFolderService.updateFolder(folder, UserHelper.getUserId(request));
+		return userFolderService.updateFolder(folder,
+				UserHelper.getUserId(request));
 
 	}
 
@@ -144,16 +153,19 @@ public class UserFoldersController extends BaseController {
 	 * @return UserQuestionsFolder
 	 */
 
-//	@ApiOperation(value = Swagger.SAVE_USERQUESTION_FOLDERS_VALUE, notes = Swagger.SAVE_USERQUESTION_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.SAVE_USERQUESTION_FOLDERS_VALUE, notes =
+	// Swagger.SAVE_USERQUESTION_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/questionfolders", method = RequestMethod.POST)
 
 	@ResponseBody
-	public UserQuestionsFolder saveUserQuestionFolder(@Valid @RequestBody UserQuestionsFolder folder,
+	public UserQuestionsFolder saveUserQuestionFolder(
+			@Valid @RequestBody UserQuestionsFolder folder,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		response.setStatus(HttpServletResponse.SC_CREATED);
-		return userFolderService.saveUserQuestionFolder(folder, UserHelper.getUserId(request));
+		return userFolderService.saveUserQuestionFolder(folder,
+				UserHelper.getUserId(request));
 
 	}
 
@@ -166,16 +178,19 @@ public class UserFoldersController extends BaseController {
 	 * @return UserQuestionsFolder
 	 */
 
-//	@ApiOperation(value = Swagger.UPDATE_USERQUESTION_FOLDERS_VALUE, notes = Swagger.UPDATE_USERQUESTION_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.UPDATE_USERQUESTION_FOLDERS_VALUE, notes =
+	// Swagger.UPDATE_USERQUESTION_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/questionfolders", method = RequestMethod.PUT)
 
 	@ResponseBody
-	public UserQuestionsFolder updateUserQuestionFolder(@Valid @RequestBody UserQuestionsFolder folder,
+	public UserQuestionsFolder updateUserQuestionFolder(
+			@Valid @RequestBody UserQuestionsFolder folder,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		response.setStatus(HttpServletResponse.SC_CREATED);
-		return userFolderService.updateUserQuestionFolder(folder, UserHelper.getUserId(request));
+		return userFolderService.updateUserQuestionFolder(folder,
+				UserHelper.getUserId(request));
 
 	}
 
@@ -186,30 +201,36 @@ public class UserFoldersController extends BaseController {
 	 * @return List of UserQuestionsFolder
 	 */
 
-//	@ApiOperation(value = Swagger.GET_USERQUESTION_FOLDERS_VALUE, notes = Swagger.GET_USERQUESTION_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.GET_USERQUESTION_FOLDERS_VALUE, notes =
+	// Swagger.GET_USERQUESTION_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/questionfolders", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<UserQuestionsFolder> getUserQuestionFolders(HttpServletRequest request) {
+	public List<UserQuestionsFolder> getUserQuestionFolders(
+			HttpServletRequest request) {
 
 		String userId = UserHelper.getUserId(request);
 		return userFolderService.getMyQuestionsFolders(userId);
 	}
 
 	/**
-	 * To get a list of child level question folders for a particular parent folder
+	 * To get a list of child level question folders for a particular parent
+	 * folder
 	 * 
-	 * @param parent folder id
+	 * @param parent
+	 *            folder id
 	 * @return List of UserQuestionsFolder
 	 */
 
-//	@ApiOperation(value = Swagger.GET_CHILDQUESTION_FOLDERS_VALUE, notes = Swagger.GET_CHILDQUESTION_FOLDERS_NOTE)
+	// @ApiOperation(value = Swagger.GET_CHILDQUESTION_FOLDERS_VALUE, notes =
+	// Swagger.GET_CHILDQUESTION_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/questionfolders/{folderId}/folders", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<UserQuestionsFolder> getChildQuestionFolders(@PathVariable String folderId) {
+	public List<UserQuestionsFolder> getChildQuestionFolders(
+			@PathVariable String folderId) {
 
 		return userFolderService.getChildQuestionFolders(folderId);
 	}
@@ -220,7 +241,8 @@ public class UserFoldersController extends BaseController {
 	 * @param request
 	 * @return UserFolder
 	 */
-//	@ApiOperation(value = Swagger.GET_QUESTIONFOLDERS_ROOT_VALUE, notes = Swagger.GET_QUESTIONFOLDERS_ROOT_NOTE)
+	// @ApiOperation(value = Swagger.GET_QUESTIONFOLDERS_ROOT_VALUE, notes =
+	// Swagger.GET_QUESTIONFOLDERS_ROOT_NOTE)
 
 	@RequestMapping(value = "/my/questionfoldersroot", method = RequestMethod.GET)
 

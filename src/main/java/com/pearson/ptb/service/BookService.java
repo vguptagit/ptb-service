@@ -37,15 +37,18 @@ public class BookService {
 	/**
 	 * This will get the list of books depending on the search criteria
 	 * 
-	 * @param searchCriteria to search the book
+	 * @param searchCriteria
+	 *            to search the book
 	 * @return List of books
 	 * @throws NotFoundException
 	 */
-	public List<Book> getBooks(Map<String, String> searchCriteria, String userid) {
+	public List<Book> getBooks(Map<String, String> searchCriteria,
+			String userid) {
 		List<Book> books = null;
 		List<Book> userSelectedbooks = new ArrayList<Book>();
 
-		if (searchCriteria.containsKey("userBooks") && Boolean.valueOf(searchCriteria.get("userBooks"))) {
+		if (searchCriteria.containsKey("userBooks")
+				&& Boolean.valueOf(searchCriteria.get("userBooks"))) {
 			List<String> userbooks = null;
 			books = bookDelegate.getBooks(searchCriteria);
 			userbooks = userSettingService.getUserBooks(userid);

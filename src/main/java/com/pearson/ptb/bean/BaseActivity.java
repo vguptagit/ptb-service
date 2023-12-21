@@ -6,7 +6,8 @@ import com.googlecode.jmapper.annotations.JMap;
 import com.pearson.ptb.framework.ConfigurationManager;
 
 /**
- * This <code>BaseActivity</code> is entity of PAF to represents the details such as title and guid.
+ * This <code>BaseActivity</code> is entity of PAF to represents the details
+ * such as title and guid.
  * 
  * @author nithinjain
  */
@@ -65,9 +66,9 @@ public class BaseActivity {
 	public void setGuid(String guid) {
 		this.guid = guid;
 		StringBuilder url = new StringBuilder();
-		url.append(ConfigurationManager.getInstance().getPAFBaseUrl())
-				.append(ConfigurationManager.getInstance()
-						.getPAFActivitiesEndPoint()).append("/").append(guid);
+		url.append(ConfigurationManager.getInstance().getPAFBaseUrl()).append(
+				ConfigurationManager.getInstance().getPAFActivitiesEndPoint())
+				.append("/").append(guid);
 		this.setId(url.toString());
 	}
 

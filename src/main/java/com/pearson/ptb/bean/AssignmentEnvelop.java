@@ -4,11 +4,12 @@ import com.googlecode.jmapper.annotations.JMap;
 import com.pearson.ptb.bean.Assignment;
 
 /**
- * This <code>AssignmentEnvelop</code> is entity of PAF to represents the assignment body.
+ * This <code>AssignmentEnvelop</code> is entity of PAF to represents the
+ * assignment body.
  */
 
 public class AssignmentEnvelop extends BaseEnvelop {
-	
+
 	/**
 	 * Indicates the Assignment body
 	 */

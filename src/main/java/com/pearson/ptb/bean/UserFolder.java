@@ -11,7 +11,8 @@ import com.pearson.ptb.framework.exception.BadDataException;
 import com.pearson.ptb.util.ExceptionHelper;
 
 /**
- * The <code>UserFolder</code> class is responsible to hold the user folder details
+ * The <code>UserFolder</code> class is responsible to hold the user folder
+ * details
  * 
  * @author nithinjain
  *
@@ -24,7 +25,7 @@ public class UserFolder extends BaseEntity {
 	 * The sorting sequence of a folder
 	 */
 	private double sequence;
-	
+
 	/**
 	 * The instructor user id
 	 */
@@ -34,7 +35,7 @@ public class UserFolder extends BaseEntity {
 	 * The parent folder id
 	 */
 	private String parentId;
-	
+
 	private List<TestBinding> testBindings;
 
 	/** Get {@see #sequence}. @return {@link #sequence}. */
@@ -46,7 +47,7 @@ public class UserFolder extends BaseEntity {
 	public void setSequence(double sequence) {
 		this.sequence = sequence;
 	}
-	
+
 	/** Get {@see #userId}. @return {@link #userId}. */
 	public String getUserID() {
 		return userId;
@@ -66,61 +67,62 @@ public class UserFolder extends BaseEntity {
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
-	
+
 	/** Get {@see #testBindings}. @return {@link #testBindings}. */
 	public List<TestBinding> getTestBindings() {
-		
-		if(testBindings != null) {
+
+		if (testBindings != null) {
 			for (TestBinding testBinding : new ArrayList<>(testBindings)) {
-			    if (testBinding == null) {
-			    	testBindings.remove(testBinding);
-			    }
-			}			
+				if (testBinding == null) {
+					testBindings.remove(testBinding);
+				}
+			}
 		}
-		
-		if(testBindings != null && !testBindings.isEmpty()) {
+
+		if (testBindings != null && !testBindings.isEmpty()) {
 			Collections.sort(testBindings, new TestBindingComparator());
 			return testBindings;
 		} else {
-			return new ArrayList<TestBinding>();	
-		}		
+			return new ArrayList<TestBinding>();
+		}
 	}
 
 	/** Set {@see #testBindings}. @param {@link #testBindings}. */
-	public void setTestBindings(List<TestBinding> testBindingsList) {		
-		
+	public void setTestBindings(List<TestBinding> testBindingsList) {
+
 		for (TestBinding testBinding : new ArrayList<>(testBindingsList)) {
-		    if (testBinding == null) {
-		    	testBindingsList.remove(testBinding);
-		    }
+			if (testBinding == null) {
+				testBindingsList.remove(testBinding);
+			}
 		}
-		
+
 		testBindings = testBindingsList;
 	}
-	
 
 	/**
 	 * To remove TestBinding
+	 * 
 	 * @param testId
 	 * @return TestBinding
 	 */
 	public TestBinding removeTestBinding(String testId) {
-		
+
 		TestBinding testBindingRemoved = null;
-		
-		for(TestBinding testBinding : this.testBindings) {
-			if(testBinding.getTestId().equals(testId)) {
+
+		for (TestBinding testBinding : this.testBindings) {
+			if (testBinding.getTestId().equals(testId)) {
 				testBindingRemoved = testBinding;
 				break;
 			}
 		}
 		this.testBindings.remove(testBindingRemoved);
-		
+
 		return testBindingRemoved;
 	}
 
 	/**
-	 * To  Validate the sequence and userId fields
+	 * To Validate the sequence and userId fields
+	 * 
 	 * @throws BadDataException
 	 */
 	public void validateState() {
@@ -140,7 +142,7 @@ public class UserFolder extends BaseEntity {
 			throw new BadDataException(ExceptionHelper.getMessage(messages));
 		}
 	}
-	
+
 	private class TestBindingComparator implements Comparator<TestBinding> {
 
 		@Override

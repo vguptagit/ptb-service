@@ -82,10 +82,10 @@ public class Word implements TestDownload {
 	private static final String ANSWERBLANK = "___________";
 	private static final String ANSWERBLANK_MERGEFIELD = "AnswerBlank";
 	private static final String ANSWER_CHOICE_SPACE = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    private static final String PAGE_SMALL = "Page ";
-    private static final String PAGE_CAPITAL = "PAGE";
-    private static final String OF = " of  ";
-    private static final Logger LOG = LogWrapper.getInstance(Word.class);
+	private static final String PAGE_SMALL = "Page ";
+	private static final String PAGE_CAPITAL = "PAGE";
+	private static final String OF = " of  ";
+	private static final Logger LOG = LogWrapper.getInstance(Word.class);
 
 	/**
 	 * 
@@ -111,13 +111,13 @@ public class Word implements TestDownload {
 		} catch (Exception e) {
 			throw new InternalException(
 					"Exception while setting up licence for Aspose.Word", e);
-		} finally{
+		} finally {
 			try {
-				if(inputStream != null) {
+				if (inputStream != null) {
 					inputStream.close();
 				}
 			} catch (IOException e) {
-				LOG.error("Error while Closing The Stream",e);
+				LOG.error("Error while Closing The Stream", e);
 			}
 		}
 
@@ -134,10 +134,11 @@ public class Word implements TestDownload {
 		try {
 			printDocument = new Document();
 			Document templateDocument = getTemplateDocument();
-			builder = new DocumentBuilder(printDocument);	
-			Font font = builder.getFont();            
-	        font.setName(downloadInfo.getPrintSettings().getFont());   
-            font.setSize(Double.parseDouble(downloadInfo.getPrintSettings().getFontSize()));
+			builder = new DocumentBuilder(printDocument);
+			Font font = builder.getFont();
+			font.setName(downloadInfo.getPrintSettings().getFont());
+			font.setSize(Double.parseDouble(
+					downloadInfo.getPrintSettings().getFontSize()));
 			Section section = getSection(templateDocument);
 			setTableTemplates(section);
 			qtiParser = new QTIParser();
@@ -177,7 +178,8 @@ public class Word implements TestDownload {
 			return (Section) printDocument.importNode(sectionList.get(0), true);
 		} catch (Exception e) {
 			throw new InternalException(
-					"Exception while getting section from template document", e);
+					"Exception while getting section from template document",
+					e);
 		}
 	}
 
@@ -190,26 +192,24 @@ public class Word implements TestDownload {
 	 */
 	private void setTableTemplates(Section section) {
 		templateTable = new HashMap<String, Table>();
-		templateTable.put(QUESTIONTEXT_TABLE, section.getBody().getTables()
-				.get(QUESTIONTABLE_INDEX));
+		templateTable.put(QUESTIONTEXT_TABLE,
+				section.getBody().getTables().get(QUESTIONTABLE_INDEX));
 		templateTable.put(ASSESSMENT_TABLE,
 				section.getBody().getTables().get(ASSESSMENTTABLE_INDEX));
 		templateTable.put(CHOISE_TABLE,
 				section.getBody().getTables().get(CHOISETABLE_INDEX));
-		templateTable.put(MATCH_CHOISE_TABLE, section.getBody().getTables()
-				.get(MATCHCHOISETABLE_INDEX));
+		templateTable.put(MATCH_CHOISE_TABLE,
+				section.getBody().getTables().get(MATCHCHOISETABLE_INDEX));
 		templateTable.put("QuestionText_AnswerBlank", section.getBody()
 				.getTables().get(QUESTIONTEXT_WITH_ANSWERBLANKTABLE_INDEX));
 		templateTable.put("AnswerChoice_AnswerBlank", section.getBody()
 				.getTables().get(ANSWERCHOICE_WITH_ANSWERBLANKTABLE_INDEX));
-		templateTable
-				.put("MatchAnswerChoice_AnswerBlank",
-						section.getBody()
-								.getTables()
-								.get(ANSWERCHOICE_MATCHING_WITH_ANSWERBLANKTABLE_INDEX));
+		templateTable.put("MatchAnswerChoice_AnswerBlank",
+				section.getBody().getTables().get(
+						ANSWERCHOICE_MATCHING_WITH_ANSWERBLANKTABLE_INDEX));
 
-		templateTable.put("Answer_Choice_Horizontaly", section.getBody()
-				.getTables().get(ANSWER_CHOICE_HORIZONTALY));
+		templateTable.put("Answer_Choice_Horizontaly",
+				section.getBody().getTables().get(ANSWER_CHOICE_HORIZONTALY));
 
 	}
 
@@ -222,7 +222,7 @@ public class Word implements TestDownload {
 			DownloadInfo downloadInfo) {
 
 		download(stream, downloadInfo, SaveFormat.DOC);
-	
+
 		DownloadOutput output = new DownloadOutput();
 		output.setContentType("msword");
 		String fileName;
@@ -298,21 +298,19 @@ public class Word implements TestDownload {
 	 */
 	private void pagesetup(Section section, PrintSettings printSettings) {
 		PageSetup page = section.getPageSetup();
-		page.setLeftMargin(ConvertUtil.inchToPoint(Double
-				.parseDouble(printSettings.getLeftMargin())));
-		page.setRightMargin(ConvertUtil.inchToPoint(Double
-				.parseDouble(printSettings.getRightMargin())));
-		page.setTopMargin(ConvertUtil.inchToPoint(Double
-				.parseDouble(printSettings.getTopMargin())));
-		page.setBottomMargin(ConvertUtil.inchToPoint(Double
-				.parseDouble(printSettings.getBottomMargin())));
-		
-	
+		page.setLeftMargin(ConvertUtil.inchToPoint(
+				Double.parseDouble(printSettings.getLeftMargin())));
+		page.setRightMargin(ConvertUtil.inchToPoint(
+				Double.parseDouble(printSettings.getRightMargin())));
+		page.setTopMargin(ConvertUtil
+				.inchToPoint(Double.parseDouble(printSettings.getTopMargin())));
+		page.setBottomMargin(ConvertUtil.inchToPoint(
+				Double.parseDouble(printSettings.getBottomMargin())));
 
-		page.setHeaderDistance(ConvertUtil.inchToPoint(Double
-				.parseDouble(printSettings.getHeaderSpace())));
-		page.setFooterDistance(ConvertUtil.inchToPoint(Double
-				.parseDouble(printSettings.getFooterSpace())));
+		page.setHeaderDistance(ConvertUtil.inchToPoint(
+				Double.parseDouble(printSettings.getHeaderSpace())));
+		page.setFooterDistance(ConvertUtil.inchToPoint(
+				Double.parseDouble(printSettings.getFooterSpace())));
 	}
 
 	/**
@@ -331,28 +329,30 @@ public class Word implements TestDownload {
 			printDocument.getSections().get(0).getHeadersFooters()
 					.add(headerFooter);
 			builder.moveToHeaderFooter(HeaderFooterType.HEADER_PRIMARY);
-			
+
 			builder.moveToMergeField(TESTNAME_LABEL_MERGEFIELD);
-			
-			Font font = builder.getFont();            
-			font.setName(downloadInfo.getPrintSettings().getFont());   
-			font.setSize(Double.parseDouble(downloadInfo.getPrintSettings().getFontSize()));
-			
+
+			Font font = builder.getFont();
+			font.setName(downloadInfo.getPrintSettings().getFont());
+			font.setSize(Double.parseDouble(
+					downloadInfo.getPrintSettings().getFontSize()));
+
 			builder.write(String.valueOf(TESTNAME));
 			builder.moveToMergeField(TESTNAME_MERGEFIELD);
-			
-			Font fontTestName = builder.getFont();            
-			fontTestName.setName(downloadInfo.getPrintSettings().getFont());   
-			fontTestName.setSize(Double.parseDouble(downloadInfo.getPrintSettings().getFontSize()));
-			
+
+			Font fontTestName = builder.getFont();
+			fontTestName.setName(downloadInfo.getPrintSettings().getFont());
+			fontTestName.setSize(Double.parseDouble(
+					downloadInfo.getPrintSettings().getFontSize()));
+
 			builder.write(downloadInfo.getTestTitle());
 
 			builder.moveToMergeField(PAGENUMBER_MERGEFIELD);
 
 			if (downloadInfo.getPrintSettings().getPageNumberDisplay()
 					.equals(PageNumberDisplay.TOPRIGHT)) {
-				builder.getParagraphFormat().setAlignment(
-						ParagraphAlignment.RIGHT);
+				builder.getParagraphFormat()
+						.setAlignment(ParagraphAlignment.RIGHT);
 				builder.write(PAGE_SMALL);
 				builder.insertField(PAGE_CAPITAL, "");
 				builder.write(OF);
@@ -385,16 +385,16 @@ public class Word implements TestDownload {
 			builder.moveToHeaderFooter(HeaderFooterType.FOOTER_PRIMARY);
 			if (downloadInfo.getPrintSettings().getPageNumberDisplay()
 					.equals(PageNumberDisplay.BOTTOMRIGHT)) {
-				builder.getParagraphFormat().setAlignment(
-						ParagraphAlignment.RIGHT);
+				builder.getParagraphFormat()
+						.setAlignment(ParagraphAlignment.RIGHT);
 				builder.write(PAGE_SMALL);
 				builder.insertField(PAGE_CAPITAL, "");
 				builder.write(OF);
 				builder.insertField("NUMPAGES", "");
 			} else if (downloadInfo.getPrintSettings().getPageNumberDisplay()
 					.equals(PageNumberDisplay.BOTTOMMIDDLE)) {
-				builder.getParagraphFormat().setAlignment(
-						ParagraphAlignment.CENTER);
+				builder.getParagraphFormat()
+						.setAlignment(ParagraphAlignment.CENTER);
 				builder.write(PAGE_SMALL);
 				builder.insertField(PAGE_CAPITAL, "");
 				builder.write(OF);
@@ -429,7 +429,8 @@ public class Word implements TestDownload {
 
 				writeQuestions(downloadInfo, printSettings);
 				writeAnswerBlankForeachQuestion(downloadInfo, printSettings);
-			} else if (printSettings.getIncludeAnswerKeyIn() == AnswerKeys.SAMEFILE) {
+			} else if (printSettings
+					.getIncludeAnswerKeyIn() == AnswerKeys.SAMEFILE) {
 
 				if (printSettings.isIncludeStudentName()) {
 					writeStudentName();
@@ -438,7 +439,8 @@ public class Word implements TestDownload {
 				writeQuestions(downloadInfo, printSettings);
 				writeAnswerBlankForeachQuestion(downloadInfo, printSettings);
 				writeAnswerKeyForeachQuestion(downloadInfo, printSettings);
-			} else if (printSettings.getIncludeAnswerKeyIn() == AnswerKeys.SEPARATEFILE) {
+			} else if (printSettings
+					.getIncludeAnswerKeyIn() == AnswerKeys.SEPARATEFILE) {
 
 				int i = 0;
 				for (Object question : downloadInfo.getQuestions()) { // NOSONAR
@@ -505,7 +507,8 @@ public class Word implements TestDownload {
 	private void writeAnswerBlankForeachQuestion(DownloadInfo downloadInfo,
 			PrintSettings printSettings) {
 		try {
-			if (printSettings.getIncludeAreaForStudentResponse() == AnswerAreas.LASTPAGE) {
+			if (printSettings
+					.getIncludeAreaForStudentResponse() == AnswerAreas.LASTPAGE) {
 				builder.insertBreak(BreakType.PAGE_BREAK);
 				int i = 1;
 				for (Object question : downloadInfo.getQuestions()) {
@@ -532,7 +535,8 @@ public class Word implements TestDownload {
 		try {
 			QuestionTypes questionType = qtiParser.getQuestionType();
 
-			if (printSettings.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
+			if (printSettings
+					.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
 				appendTable("QuestionText_AnswerBlank");
 				builder.moveToMergeField(ANSWERBLANK_MERGEFIELD);
 				if (questionType != QuestionTypes.ESSAY
@@ -615,12 +619,13 @@ public class Word implements TestDownload {
 			for (int i = 0; i < answerChoicesList.size(); i++) {
 
 				answers.append(convertToLetter(i)).append("&nbsp;");
-				answers.append(answerChoicesList.get(i).toString()).append(
-						ANSWER_CHOICE_SPACE);
+				answers.append(answerChoicesList.get(i).toString())
+						.append(ANSWER_CHOICE_SPACE);
 
 			}
 
-			if (printSettings.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
+			if (printSettings
+					.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
 				appendTable("Answer_Choice_Horizontaly");
 				builder.moveToMergeField(ANSWERBLANK_MERGEFIELD);
 				bindWrite("", printSettings);
@@ -649,7 +654,8 @@ public class Word implements TestDownload {
 		List<String> answerChoicesList = qtiParser.getAnswerChoices();
 		for (int i = 0; i < answerChoicesList.size(); i++) {
 			try {
-				if (printSettings.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
+				if (printSettings
+						.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
 					appendTable("AnswerChoice_AnswerBlank");
 					builder.moveToMergeField(ANSWERBLANK_MERGEFIELD);
 					bindWrite("", printSettings);
@@ -685,7 +691,8 @@ public class Word implements TestDownload {
 			int i = 0;
 			for (Map.Entry<String, String> entry : twoColumnAnswerChoices
 					.entries()) {
-				if (printSettings.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
+				if (printSettings
+						.getIncludeAreaForStudentResponse() == AnswerAreas.LEFTSIDE) {
 					appendTable("MatchAnswerChoice_AnswerBlank");
 					builder.moveToMergeField(ANSWERBLANK_MERGEFIELD);
 					bindWrite(ANSWERBLANK, printSettings);
@@ -727,7 +734,7 @@ public class Word implements TestDownload {
 
 			appendTable(QUESTIONTEXT_TABLE);
 			builder.moveToMergeField(BULLET_MERGEFIELD);
-						
+
 			bindWrite(String.valueOf(questionIndex + 1) + DOT, printSettings);
 
 			builder.moveToMergeField(CONTENT_MERGEFIELD);
@@ -803,18 +810,19 @@ public class Word implements TestDownload {
 			builder.insertHtml(content);
 			RunCollection runCollection = ((Cell) builder.getCurrentParagraph()
 					.getParentNode()).getFirstParagraph().getRuns();
-			
+
 			if (runCollection != null) {
 				for (int i = 0; i < runCollection.getCount(); i++) {
-					Font font = runCollection.get(i).getFont();	
-	                font.setName(printSettings.getFont());
+					Font font = runCollection.get(i).getFont();
+					font.setName(printSettings.getFont());
 				}
 			}
-			
+
 			setImageSize((Cell) builder.getCurrentParagraph().getParentNode());
 		} catch (Exception e) {
 			throw new InternalException(
-					"Exception while inserting the html content to document", e);
+					"Exception while inserting the html content to document",
+					e);
 		}
 	}
 
@@ -859,7 +867,7 @@ public class Word implements TestDownload {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
 		}
 
@@ -875,7 +883,7 @@ public class Word implements TestDownload {
 		try {
 			Font font = builder.getFont();
 			font.setSize(Double.parseDouble(printSettings.getFontSize()));
-            font.setName(printSettings.getFont());
+			font.setName(printSettings.getFont());
 			builder.write(content);
 		} catch (Exception e) {
 			throw new InternalException(
@@ -891,7 +899,8 @@ public class Word implements TestDownload {
 	 */
 	private void includeWorkingSpace(PrintSettings printSettings) {
 		try {
-			if (printSettings.getIncludeAreaForStudentResponse() == AnswerAreas.BETWEENQUESTIONS) {
+			if (printSettings
+					.getIncludeAreaForStudentResponse() == AnswerAreas.BETWEENQUESTIONS) {
 				for (int i = 0; i < QUESTION_SPACE; i++) {
 					builder.insertBreak(BreakType.LINE_BREAK);
 				}

@@ -77,7 +77,6 @@ public class TestVersionService {
 
 	QTIParser qtiParser = new QTIParser();
 	List<String> versionedTestMetadata;
-	
 
 	/**
 	 * creates the test from the given existing test by applying the question
@@ -102,10 +101,10 @@ public class TestVersionService {
 			String testId, String userId) {
 
 		UserFolder testFolder = userFolderService.getTestFolder(testId);
-		
-		versionedTestMetadata=new ArrayList<String>();
+
+		versionedTestMetadata = new ArrayList<String>();
 		versionedTestMetadata.add(testId);
-		
+
 		UserFolder folder = null;
 		try {
 			folder = userFolderService.getFolder(userId, testFolder.getGuid());
@@ -118,38 +117,37 @@ public class TestVersionService {
 		versionInfo.validateState();
 		List<TestResult> results = createVersionTests(versionInfo, testId,
 				folder);
-		
+
 		List<TestBinding> testBindings = testFolder.getTestBindings();
-		int index = 0, 
-		indexToInsert = 0;
-		double sequence=0;
-		double nextSequence=0;
+		int index = 0, indexToInsert = 0;
+		double sequence = 0;
+		double nextSequence = 0;
 		for (TestBinding test : testBindings) {
-			if(versionedTestMetadata.contains(test.getTestId())){
-				sequence=test.getSequence();
-				indexToInsert = index;	
+			if (versionedTestMetadata.contains(test.getTestId())) {
+				sequence = test.getSequence();
+				indexToInsert = index;
 			}
 			index = index + 1;
 		}
 
-		int startIndex=indexToInsert+1;
+		int startIndex = indexToInsert + 1;
 		int divideByTwo = 2;
-		
-		if(startIndex<testBindings.size()){
-			nextSequence=testBindings.get(startIndex).getSequence();
+
+		if (startIndex < testBindings.size()) {
+			nextSequence = testBindings.get(startIndex).getSequence();
 		}
-		
+
 		for (TestResult result : results) {
-			if(nextSequence==0){
-				sequence=sequence+=1;
-			}else{
-				sequence=(sequence+nextSequence)/divideByTwo;
+			if (nextSequence == 0) {
+				sequence = sequence += 1;
+			} else {
+				sequence = (sequence + nextSequence) / divideByTwo;
 			}
 			TestBinding testBinding = new TestBinding();
 			testBinding.setTestId(result.getGuid());
 			testBinding.setSequence(sequence);
 			testBindings.add(startIndex, testBinding);
-			startIndex+=1;
+			startIndex += 1;
 		}
 		testFolder.setTestBindings(testBindings);
 		userFolderService.saveFolder(testFolder, userId);
@@ -189,9 +187,11 @@ public class TestVersionService {
 
 			int possibleVersions = getFactorial(originalBindings.size());
 
-			List<AssignmentBinding> copiedBindings = cloneBindings(originalBindings);
+			List<AssignmentBinding> copiedBindings = cloneBindings(
+					originalBindings);
 
-			fillVersionedTestQuestionsList(originalBindings, questionList, true);
+			fillVersionedTestQuestionsList(originalBindings, questionList,
+					true);
 			getTestVersionDetails(testId, questionList, versionedTestNames,
 					testTitile, possibleVersions);
 
@@ -220,8 +220,8 @@ public class TestVersionService {
 							maxSequence);
 					testEnvelop.getBody().setTitle(versionTestTitile);
 					testEnvelop.getmetadata().setTitle(versionTestTitile);
-					testEnvelop.getmetadata().setVersion(
-							String.valueOf(versionNo));
+					testEnvelop.getmetadata()
+							.setVersion(String.valueOf(versionNo));
 
 					List<AssignmentBinding> shuffledBindings = getScrambledTestEnvelop(
 							versionInfo.getScrambleType(), copiedBindings,
@@ -248,9 +248,9 @@ public class TestVersionService {
 	 * @param testId
 	 * @return list of URLs
 	 */
-	private void getTestVersionDetails(String testId,
-			List<String> questionList, List<String> versionedTestNames,
-			String testTitile, int possibleVersions) {
+	private void getTestVersionDetails(String testId, List<String> questionList,
+			List<String> versionedTestNames, String testTitile,
+			int possibleVersions) {
 		String testMetadata;
 		List<String> activityList = new ArrayList<String>();
 		try {
@@ -278,7 +278,7 @@ public class TestVersionService {
 
 		for (String url : versionedTests) {
 			activityList = Arrays.asList(url.split("/"));
-			String versionedTestId=activityList.get(activityList.size() - 1);
+			String versionedTestId = activityList.get(activityList.size() - 1);
 			Metadata metadata = metadataService.getMetadata(versionedTestId);
 			versionedTestMetadata.add(versionedTestId);
 			if (metadata != null) {
@@ -288,12 +288,13 @@ public class TestVersionService {
 				if (archiveService.getTestFolder(metadata.getGuid()) == null
 						&& metadata.getTitle().equals(versionedTestTitle)) {
 					versionedTestNames.add(metadata.getTitle());
-					if (Integer.parseInt(metadata.getVersion()) < possibleVersions) {
-						Test test = testService.getTestByID(activityList
-								.get(activityList.size() - 1));
+					if (Integer.parseInt(
+							metadata.getVersion()) < possibleVersions) {
+						Test test = testService.getTestByID(
+								activityList.get(activityList.size() - 1));
 						if (test != null) {
-							fillVersionedTestQuestionsList(test
-									.getAssignmentContents().getBinding(),
+							fillVersionedTestQuestionsList(
+									test.getAssignmentContents().getBinding(),
 									questionList, false);
 						}
 					}
@@ -318,8 +319,8 @@ public class TestVersionService {
 			if (isParentTest) {
 				questionID = bindings.getGuid();
 			} else {
-				Metadata metadata = metadataService.getMetadata(bindings
-						.getGuid());
+				Metadata metadata = metadataService
+						.getMetadata(bindings.getGuid());
 				if (metadata.getVersionOf() != null
 						&& !metadata.getVersionOf().isEmpty()) {
 					questionID = metadata.getVersionOf();
@@ -422,15 +423,21 @@ public class TestVersionService {
 			List<AssignmentBinding> bindings) {
 		for (AssignmentBinding assignmentBinding : bindings) {
 			String qtiXML = null;
-			Metadata metadata = metadataService.getMetadata(assignmentBinding.getGuid());
-			if(metadata.getQuizType().equalsIgnoreCase(QuestionTypes.MATCHING.toString()) 
-					|| metadata.getQuizType().equalsIgnoreCase(QuestionTypes.MULTIPLECHOICE.toString())
-					|| metadata.getQuizType().equalsIgnoreCase(QuestionTypes.MULTIPLERESPONSE.toString())
-					|| metadata.getQuizType().equalsIgnoreCase(QuestionTypes.TRUEFALSE.toString())){
-				qtiXML = questionService.getQuestionXmlById(assignmentBinding.getGuid());
+			Metadata metadata = metadataService
+					.getMetadata(assignmentBinding.getGuid());
+			if (metadata.getQuizType()
+					.equalsIgnoreCase(QuestionTypes.MATCHING.toString())
+					|| metadata.getQuizType().equalsIgnoreCase(
+							QuestionTypes.MULTIPLECHOICE.toString())
+					|| metadata.getQuizType().equalsIgnoreCase(
+							QuestionTypes.MULTIPLERESPONSE.toString())
+					|| metadata.getQuizType().equalsIgnoreCase(
+							QuestionTypes.TRUEFALSE.toString())) {
+				qtiXML = questionService
+						.getQuestionXmlById(assignmentBinding.getGuid());
 				qtiParser.setXMLDocument(qtiXML);
 				qtiXML = qtiParser.shuffleAnswerChoices();
-				saveQuestion(folder, assignmentBinding, metadata , qtiXML);	
+				saveQuestion(folder, assignmentBinding, metadata, qtiXML);
 			}
 		}
 	}
@@ -442,8 +449,10 @@ public class TestVersionService {
 	 * @param assignmentBinding
 	 * @param qtiXML
 	 */
-	private void saveQuestion(UserFolder folder, AssignmentBinding assignmentBinding, Metadata metadata, String qtiXML) {
-		QuestionEnvelop questionEnvelop = getQuestionEnvelop(metadata,qtiXML);
+	private void saveQuestion(UserFolder folder,
+			AssignmentBinding assignmentBinding, Metadata metadata,
+			String qtiXML) {
+		QuestionEnvelop questionEnvelop = getQuestionEnvelop(metadata, qtiXML);
 		String response = questionService.saveQuestion(questionEnvelop,
 				folder.getUserID(), folder.getGuid());
 		QuestionOutput questionOutput = getQuestionResultBean(response);
@@ -459,7 +468,8 @@ public class TestVersionService {
 	 * @param qtiXML
 	 * @return
 	 */
-	private QuestionEnvelop getQuestionEnvelop(Metadata metadata, String qtiXML) {
+	private QuestionEnvelop getQuestionEnvelop(Metadata metadata,
+			String qtiXML) {
 		QuestionEnvelop questionEnvelop = new QuestionEnvelop();
 		metadata.setCreated(getUTCTime());
 		metadata.setModified(getUTCTime());
@@ -558,8 +568,8 @@ public class TestVersionService {
 		for (AssignmentBinding bindings : originalBindings) {
 
 			String credential = (new Gson()).toJson(bindings);
-			copiedBindings.add((new Gson()).fromJson(credential,
-					AssignmentBinding.class));
+			copiedBindings.add(
+					(new Gson()).fromJson(credential, AssignmentBinding.class));
 		}
 
 		return copiedBindings;

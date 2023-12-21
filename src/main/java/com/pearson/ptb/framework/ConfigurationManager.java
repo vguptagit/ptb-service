@@ -3,7 +3,7 @@ package com.pearson.ptb.framework;
 import com.pearson.ptb.framework.exception.ConfigException;
 
 /**
- * This class will is used to read the configuration. 
+ * This class will is used to read the configuration.
  */
 public final class ConfigurationManager extends BaseConfigurationManager {
 
@@ -25,9 +25,9 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * ConfigurationManager as a singleton
 	 * </p>
 	 * 
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
-	protected ConfigurationManager(){
+	protected ConfigurationManager() {
 		// Calling parent class Constructor to load all properties from config
 		// properties file
 		super();
@@ -58,9 +58,9 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * 
 	 * @return Configuration Manager returns the instance of
 	 *         ConfigurationManager class.
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
-	public static ConfigurationManager getInstance(){
+	public static ConfigurationManager getInstance() {
 		// synchronized block for creating ConfigurationManager singleton
 		if (configurationManager == null) {
 			// null check in synchronization for race condition
@@ -86,50 +86,49 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public Boolean isDebugEnabled() {
 		// returns the IsDebugEnabled
-		return Boolean
-				.valueOf(ConfigurationManager.configurationProperties.get(
-						"IsDebugEnabled").replaceAll(SPECIAL_CHARACTER_STRING,
-						""));
+		return Boolean.valueOf(ConfigurationManager.configurationProperties
+				.get("IsDebugEnabled")
+				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
-	
+
 	/**
-	 * 	 * This method returns the quad consumer key.
-	 	 * 
+	 * * This method returns the quad consumer key.
+	 * 
 	 * @return A String which returns the value of QUADConsumerKey.
 	 */
 	public String getQUADConsumerKey() {
-	
+
 		return ConfigurationManager.configurationProperties
 				.get("QUADConsumerKey");
 	}
 
-	/**	
-	 * This method returns the quad data secret key.	
+	/**
+	 * This method returns the quad data secret key.
 	 * 
 	 * @return A String which has the value of QUADDataSecretKey.
 	 */
 	public String getQUADDataSecretKey() {
-		
+
 		return ConfigurationManager.configurationProperties
 				.get("QUADDataSecretKey");
 	}
 
 	/**
-	 * This method returns the quad Oauth algorithm.	
+	 * This method returns the quad Oauth algorithm.
 	 * 
 	 * @return A String which has the value of QUADOauthAlgorithm.
 	 */
 	public String getQUADOauthAlgorithm() {
-		
+
 		return ConfigurationManager.configurationProperties
 				.get("QUADOauthAlgorithm");
 	}
-	
+
 	/**
-	 * This method returns the PTB ImportUrl for importing books.	
+	 * This method returns the PTB ImportUrl for importing books.
 	 * 
 	 * @return A String which has the value of PTBImportUrl.
-	 */	
+	 */
 	public String getPTBImportUrl() {
 		return String.valueOf(ConfigurationManager.configurationProperties
 				.get("PTBImportUrl"));
@@ -187,22 +186,28 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 		return ConfigurationManager.configurationProperties
 				.get("SysToSysPITokenUrl");
 	}
-	
+
 	/**
-	 * <p> This method returns the PI Token From Access Token Url. </p>
+	 * <p>
+	 * This method returns the PI Token From Access Token Url.
+	 * </p>
 	 * 
-	 * @return A String which returns the value of SysToSysPITokenFromAccessTokenUrl.
+	 * @return A String which returns the value of
+	 *         SysToSysPITokenFromAccessTokenUrl.
 	 */
 	public String getSysToSysPITokenFromAccessTokenUrl() {
 
 		return ConfigurationManager.configurationProperties
 				.get("SysToSysPITokenFromAccessTokenUrl");
 	}
-	
+
 	/**
-	 * <p> This method returns the User Profile From AccessToken Url. </p>
+	 * <p>
+	 * This method returns the User Profile From AccessToken Url.
+	 * </p>
 	 * 
-	 * @return A String which returns the value of SysToSysUserProfileFromAccessTokenUrl.
+	 * @return A String which returns the value of
+	 *         SysToSysUserProfileFromAccessTokenUrl.
 	 */
 	public String getSysToSysUserProfileFromAccessTokenUrl() {
 
@@ -211,7 +216,9 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	}
 
 	/**
-	 * <p> This method returns the Data Secure Rest Url. </p>
+	 * <p>
+	 * This method returns the Data Secure Rest Url.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of DataSecureRestUrl.
 	 */
@@ -220,42 +227,49 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 		return ConfigurationManager.configurationProperties
 				.get("DataSecureRestUrl");
 	}
-	
+
 	/**
-	 * <p> This method returns the Token Url. </p>
+	 * <p>
+	 * This method returns the Token Url.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of TokenUrl.
 	 */
 	public String getTokenUrl() {
 
-		return ConfigurationManager.configurationProperties
-				.get("TokenUrl");
+		return ConfigurationManager.configurationProperties.get("TokenUrl");
 	}
 
 	/**
-	 * <p> This method returns the Instructor Authorization Url. </p>
+	 * <p>
+	 * This method returns the Instructor Authorization Url.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of InstructorAuthorizationUrl.
 	 */
-    public String getInstructorAuthUrl() {
+	public String getInstructorAuthUrl() {
 
-        return ConfigurationManager.configurationProperties
-                .get("InstructorAuthorizationUrl");
-    }
-    
-    /**
-	 * <p> This method returns the Instructor Group Id. </p>
+		return ConfigurationManager.configurationProperties
+				.get("InstructorAuthorizationUrl");
+	}
+
+	/**
+	 * <p>
+	 * This method returns the Instructor Group Id.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of InstructorGroupId.
 	 */
-    public String getInstructorGroupId() {
+	public String getInstructorGroupId() {
 
-        return ConfigurationManager.configurationProperties
-                .get("InstructorGroupId");
-    }
-    
-    /**
-	 * <p> This method returns the Socket Timeout. </p>
+		return ConfigurationManager.configurationProperties
+				.get("InstructorGroupId");
+	}
+
+	/**
+	 * <p>
+	 * This method returns the Socket Timeout.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of SocketTimeout.
 	 */
@@ -266,19 +280,23 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	}
 
 	/**
-	 * <p> This method returns the Connection Timeout. </p>
+	 * <p>
+	 * This method returns the Connection Timeout.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of ConnectionTimeout.
 	 */
 	public int getConnectionTimeout() {
 
 		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("ConnectionTimeout").replaceAll(SPECIAL_CHARACTER_STRING,
-						""));
+				.get("ConnectionTimeout")
+				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
 
 	/**
-	 * <p> This method returns the KeyMoniker, used to generate token from PI. </p>
+	 * <p>
+	 * This method returns the KeyMoniker, used to generate token from PI.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of pi.keyMoniker.
 	 */
@@ -287,9 +305,11 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 		return ConfigurationManager.configurationProperties
 				.get("pi.keyMoniker");
 	}
-	
+
 	/**
-	 * <p> This method returns the KeyMap, used to generate token from PI. </p>
+	 * <p>
+	 * This method returns the KeyMap, used to generate token from PI.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of pi.keyMap.
 	 */
@@ -299,83 +319,99 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	}
 
 	/**
-	 * <p> This method returns the Duration for which PI token would be valid. </p>
+	 * <p>
+	 * This method returns the Duration for which PI token would be valid.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of pi.sessionDuration.
 	 */
 	public int getPISessionDuration() {
 
 		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("pi.sessionDuration").replaceAll(SPECIAL_CHARACTER_STRING,
-						""));
+				.get("pi.sessionDuration")
+				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
 
 	/**
-	 * <p> This method returns the Maximum Scrambled Versions for the test. </p>
+	 * <p>
+	 * This method returns the Maximum Scrambled Versions for the test.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of maxScrambledVersions.
 	 */
 	public int getMaxScrambledVersions() {
 
 		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("maxScrambledVersions").replaceAll(
-						SPECIAL_CHARACTER_STRING, ""));
-	}	
+				.get("maxScrambledVersions")
+				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+	}
 
 	/**
-	 * <p> This method returns the Database Name. </p>
+	 * <p>
+	 * This method returns the Database Name.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of db.database.
 	 */
 	public String getDataBase() {
-		return String.valueOf(ConfigurationManager.configurationProperties.get(
-				"db.database").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		return String.valueOf(ConfigurationManager.configurationProperties
+				.get("db.database").replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
 
 	/**
-	 * <p> This method returns the Server Name. </p>
+	 * <p>
+	 * This method returns the Server Name.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of db.server.
 	 */
 	public String getDataBaseServer() {
-		System.out.println(ConfigurationManager.configurationProperties.get(
-				"db.server"));
-		return String.valueOf(ConfigurationManager.configurationProperties.get(
-				"db.server").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		System.out.println(
+				ConfigurationManager.configurationProperties.get("db.server"));
+		return String.valueOf(ConfigurationManager.configurationProperties
+				.get("db.server").replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
 
 	/**
-	 * <p> This method returns the Database UserName. </p>
+	 * <p>
+	 * This method returns the Database UserName.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of db.userName.
 	 */
 	public String getDataBaseUserName() {
-		return String.valueOf(ConfigurationManager.configurationProperties.get(
-				"db.userName").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		return String.valueOf(ConfigurationManager.configurationProperties
+				.get("db.userName").replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
-	
+
 	/**
-	 * <p> This method returns the Database Password. </p>
+	 * <p>
+	 * This method returns the Database Password.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of db.password.
 	 */
 	public String getDataBasePassword() {
-		return String.valueOf(ConfigurationManager.configurationProperties.get(
-				"db.password").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		return String.valueOf(ConfigurationManager.configurationProperties
+				.get("db.password").replaceAll(SPECIAL_CHARACTER_STRING, ""));
 	}
-	
+
 	/**
-	 * <p> This method returns the PAF Base Url. </p>
+	 * <p>
+	 * This method returns the PAF Base Url.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of PAFBaseUrl.
 	 */
 	public String getPAFBaseUrl() {
-		return String.valueOf(ConfigurationManager.configurationProperties
-				.get("PAFBaseUrl"));
+		return String.valueOf(
+				ConfigurationManager.configurationProperties.get("PAFBaseUrl"));
 	}
 
 	/**
-	 * <p> This method returns the PAF Activities End Point. </p>
+	 * <p>
+	 * This method returns the PAF Activities End Point.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of PAFActivitiesEndPoint.
 	 */
@@ -383,34 +419,44 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 		return String.valueOf(ConfigurationManager.configurationProperties
 				.get("PAFActivitiesEndPoint"));
 	}
-	
+
 	/**
-	 * <p> This method returns the Size of the record which can be fetched from PAF in single request. </p>
+	 * <p>
+	 * This method returns the Size of the record which can be fetched from PAF
+	 * in single request.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of PAFActivities_RecordSize.
 	 */
-	public String getPAFActivitiesRecordSize(){
-		return String.valueOf(configurationProperties.get("PAFActivities_RecordSize"));
+	public String getPAFActivitiesRecordSize() {
+		return String.valueOf(
+				configurationProperties.get("PAFActivities_RecordSize"));
 	}
 
 	/**
-	 * <p> This method returns the name of the environment. </p>
+	 * <p>
+	 * This method returns the name of the environment.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of EnvironmentName.
 	 */
 	public String environmentName() {
-		return ConfigurationManager.configurationProperties.get(
-				"EnvironmentName").replaceAll(SPECIAL_CHARACTER_STRING, "");
+		return ConfigurationManager.configurationProperties
+				.get("EnvironmentName")
+				.replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
-	
+
 	/**
-	 * <p> This method returns the name of the application. </p>
+	 * <p>
+	 * This method returns the name of the application.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of ApplicationName.
 	 */
 	public String applicationName() {
-		return ConfigurationManager.configurationProperties.get(
-				"ApplicationName").replaceAll(SPECIAL_CHARACTER_STRING, "");
+		return ConfigurationManager.configurationProperties
+				.get("ApplicationName")
+				.replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
 
 	/**
@@ -422,93 +468,123 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @author nithinjain
 	 */
 	public String getMyTestBaseUrl() {
-		return ConfigurationManager.configurationProperties
-				.get("MyTestBaseUrl").replaceAll(SPECIAL_CHARACTER_STRING, "");
+		return ConfigurationManager.configurationProperties.get("MyTestBaseUrl")
+				.replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
-	
+
 	/**
-	 * <p> This method returns the EPS Authorization Token. </p>
+	 * <p>
+	 * This method returns the EPS Authorization Token.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of eps.authorisationToken.
 	 */
-	public String getEPSAuthorisationToken(){
+	public String getEPSAuthorisationToken() {
 		return ConfigurationManager.configurationProperties
-				.get("eps.authorisationToken").replaceAll(SPECIAL_CHARACTER_STRING, "");
+				.get("eps.authorisationToken")
+				.replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
-	
+
 	/**
-	 * <p> This method returns the EPS Staging url. </p>
+	 * <p>
+	 * This method returns the EPS Staging url.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of eps.stagingUrl.
 	 */
-	public String getEPSStagingURL(){
+	public String getEPSStagingURL() {
 		return ConfigurationManager.configurationProperties
 				.get("eps.stagingUrl").replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
-	
+
 	/**
-	 * <p> This method returns the EPS Item url. </p>
+	 * <p>
+	 * This method returns the EPS Item url.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of eps.itemUrl.
 	 */
-	public String getEPSItemURL(){
-		return ConfigurationManager.configurationProperties
-				.get("eps.itemUrl").replaceAll(SPECIAL_CHARACTER_STRING, "");
+	public String getEPSItemURL() {
+		return ConfigurationManager.configurationProperties.get("eps.itemUrl")
+				.replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
-	
-	/**
-	 * <p> This method returns the Cache Expiry In Seconds For Book Questions. </p>
-	 * 
-	 * @return A String which returns the value of cache.book_questions.cacheExpiryInSeconds.
-	 */
-	public Integer getCacheExpiryInSecondsForBookQuestions(){
-		return Integer.valueOf(configurationProperties.get("cache.book_questions.cacheExpiryInSeconds"));
-	}
-	
-	/**
-	 * <p> This method returns the Cache Expiry In Seconds For BookContainer Questions. </p>
-	 * 
-	 * @return A String which returns the value of cache.book_Container_questions.cacheExpiryInSeconds.
-	 */
-	public Integer getCacheExpiryInSecondsForBookContainerQuestions(){
-		return Integer.valueOf(configurationProperties.get("cache.book_Container_questions.cacheExpiryInSeconds"));
-	}
-	
-	/**
-	 * <p> This method returns the Cache Expiry In Seconds For QuestionXML. </p>
-	 * 
-	 * @return A String which returns the value of cache.question_XML.cacheExpiryInSeconds.
-	 */
-	public Integer getCacheExpiryInSecondsForQuestionXML(){
-		return Integer.valueOf(configurationProperties.get("cache.question_XML.cacheExpiryInSeconds"));
-	}	
 
 	/**
-	 * <p> This method returns the name of the application for Health details. </p>
+	 * <p>
+	 * This method returns the Cache Expiry In Seconds For Book Questions.
+	 * </p>
+	 * 
+	 * @return A String which returns the value of
+	 *         cache.book_questions.cacheExpiryInSeconds.
+	 */
+	public Integer getCacheExpiryInSecondsForBookQuestions() {
+		return Integer.valueOf(configurationProperties
+				.get("cache.book_questions.cacheExpiryInSeconds"));
+	}
+
+	/**
+	 * <p>
+	 * This method returns the Cache Expiry In Seconds For BookContainer
+	 * Questions.
+	 * </p>
+	 * 
+	 * @return A String which returns the value of
+	 *         cache.book_Container_questions.cacheExpiryInSeconds.
+	 */
+	public Integer getCacheExpiryInSecondsForBookContainerQuestions() {
+		return Integer.valueOf(configurationProperties
+				.get("cache.book_Container_questions.cacheExpiryInSeconds"));
+	}
+
+	/**
+	 * <p>
+	 * This method returns the Cache Expiry In Seconds For QuestionXML.
+	 * </p>
+	 * 
+	 * @return A String which returns the value of
+	 *         cache.question_XML.cacheExpiryInSeconds.
+	 */
+	public Integer getCacheExpiryInSecondsForQuestionXML() {
+		return Integer.valueOf(configurationProperties
+				.get("cache.question_XML.cacheExpiryInSeconds"));
+	}
+
+	/**
+	 * <p>
+	 * This method returns the name of the application for Health details.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of HealthApplicationName.
 	 */
 	public String getHealthApplicationName() {
-		return ConfigurationManager.configurationProperties.get(
-				"HealthApplicationName").replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
+		return ConfigurationManager.configurationProperties
+				.get("HealthApplicationName")
+				.replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
 	}
 
 	/**
-	 * <p> This method returns the name of the owner for Health details. </p>
+	 * <p>
+	 * This method returns the name of the owner for Health details.
+	 * </p>
 	 * 
 	 * @return A String which returns the value of HealthApplicationOwnerName.
 	 */
 	public String getHealthApplicationOwnerName() {
-		return ConfigurationManager.configurationProperties.get(
-				"HealthApplicationOwnerName").replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
+		return ConfigurationManager.configurationProperties
+				.get("HealthApplicationOwnerName")
+				.replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
 	}
-	
+
 	/**
-	 * <p> This will get the exception message we get from PAF when we try to delete the parent test </p>
+	 * <p>
+	 * This will get the exception message we get from PAF when we try to delete
+	 * the parent test
+	 * </p>
 	 * 
 	 * @return A String which returns the value of ParentTestDeleteExceptionMsg.
 	 */
 	public String getParentTestDeleteExceptionMsg() {
-		return ConfigurationManager.configurationProperties.get("ParentTestDeleteExceptionMsg");
+		return ConfigurationManager.configurationProperties
+				.get("ParentTestDeleteExceptionMsg");
 	}
 }
