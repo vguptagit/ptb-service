@@ -69,6 +69,9 @@ public class ArchiveService {
 		// CACHE = CacheWrapper.getInstance();
 	}
 
+	public void initializeCache() {
+		CACHE = CacheWrapper.getInstance();
+	}
 	/**
 	 * This method will archive the folder based on folder id
 	 * 

@@ -31,21 +31,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookRepo implements BookDelegate {
 
-	private final GenericMongoRepository<Book, String> genericMongoRepository;
-
+	private final  GenericMongoRepository<Book, String> genericMongoRepository;
+	
 	@Autowired
-	private BookDataAccessHelper accessHelper;
+	private com.pearson.ptb.dataaccess.BookDataAccessHelper accessHelper;
 
-	/**
-	 * Retrieves a list of books based on the provided criteria.
-	 *
-	 * @param criteria
-	 *            A map containing filter criteria for book retrieval. Expected
-	 *            keys: "s" for search term and other keys for filtering.
-	 * @return A list of books that match the specified criteria.
-	 * @throws NotFoundException
-	 *             If no books are found based on the provided criteria.
-	 */
 
 	@Override
 	public List<Book> getBooks(Map<String, String> criteria) {
@@ -80,7 +70,6 @@ public class BookRepo implements BookDelegate {
 
 		Book book = null;
 		book = genericMongoRepository.findById(bookID);
-		System.out.println(bookID + "++++++++++++++++++++" + book);
 		if (book == null) {
 			throw new NotFoundException("Book not found");
 		}
@@ -90,6 +79,7 @@ public class BookRepo implements BookDelegate {
 	@Override
 	public String getTitle(String bookID) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

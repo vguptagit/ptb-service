@@ -8,8 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -17,9 +17,18 @@ import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.mongodb.MongoException;
 import com.pearson.ptb.framework.CurrentThreadContext;
 import com.pearson.ptb.framework.LogWrapper;
-import com.pearson.ptb.framework.exception.*;
+import com.pearson.ptb.framework.exception.AccessDeniedException;
+import com.pearson.ptb.framework.exception.BadDataException;
+import com.pearson.ptb.framework.exception.BaseException;
+import com.pearson.ptb.framework.exception.ConfigException;
+import com.pearson.ptb.framework.exception.DuplicateTitleException;
+import com.pearson.ptb.framework.exception.ErrorResponse;
+import com.pearson.ptb.framework.exception.ExpectationException;
+import com.pearson.ptb.framework.exception.InternalException;
+import com.pearson.ptb.framework.exception.NotFoundException;
+import com.pearson.ptb.framework.exception.ServiceUnavailableException;
 
-@Controller
+@RestController
 public abstract class BaseController {
 
 	/**

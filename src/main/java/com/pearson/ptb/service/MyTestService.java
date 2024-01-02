@@ -75,6 +75,10 @@ public class MyTestService {
 		// CACHE = CacheWrapper.getInstance();
 	}
 
+	public void initializeCache() {
+		CACHE = CacheWrapper.getInstance();
+	}
+
 	/**
 	 * Create paper test inside the specified user folder
 	 * 

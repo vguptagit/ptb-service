@@ -76,7 +76,14 @@ public class QuestionService {
 		 * cacheExpiryTimeForQuestionXML=ConfigurationManager.getInstance().
 		 * getCacheExpiryInSecondsForQuestionXML();
 		 */}
+	public void initializeCache() {
+		CACHE = CacheWrapper.getInstance();
+		cacheExpiryTimeForBookQuestions=ConfigurationManager.getInstance().getCacheExpiryInSecondsForBookQuestions();
+		cacheExpiryTimeForBookContainerQuestions=ConfigurationManager.getInstance().getCacheExpiryInSecondsForBookContainerQuestions();
+		cacheExpiryTimeForQuestionXML=ConfigurationManager.getInstance().getCacheExpiryInSecondsForQuestionXML();
 
+	}
+	
 	/*
 	 * @PostConstruct private void initializeCache() { CACHE =
 	 * CacheWrapper.getInstance(); cacheExpiryTimeForBookQuestions =

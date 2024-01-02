@@ -48,6 +48,10 @@ public class TestService {
 	public TestService() {
 		// CACHE = CacheWrapper.getInstance();
 	}
+	
+	public void initializeCache() {
+		CACHE = CacheWrapper.getInstance();
+	}
 
 	/**
 	 * This will fetch the details of a specific my test

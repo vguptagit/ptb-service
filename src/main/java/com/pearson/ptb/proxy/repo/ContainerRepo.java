@@ -5,7 +5,9 @@ package com.pearson.ptb.proxy.repo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -28,6 +30,10 @@ import lombok.RequiredArgsConstructor;
 @Repository("container")
 @RequiredArgsConstructor
 public class ContainerRepo implements ContainerDelegate {
+	
+	
+
+	private final GenericMongoRepository<Container, String> genericMongoRepository;
 
 	private final GenericMongoRepository<Container, String> genericMongoRepository;
 

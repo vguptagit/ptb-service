@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "com.pearson.ptb.dataaccess")
+//@EnableMongoRepositories(basePackages = "com.pearson.ptb.dataaccess")
 // @ComponentScan({"com.pearson.ptb.dataaccess","com.pearson.ptb.controller"})
 public class MytestApplication {
 

@@ -19,6 +19,7 @@ import com.pearson.ptb.util.ExceptionHelper;
  * @author prasadbn
  *
  */
+
 @Document(collection = "book")
 public class Book extends BaseEntity {
 

@@ -33,6 +33,9 @@ public class BookService {
 	@Autowired
 	@Qualifier("usersettings")
 	private UserSettingsDelegate userSettingService;
+	
+
+
 
 	/**
 	 * This will get the list of books depending on the search criteria

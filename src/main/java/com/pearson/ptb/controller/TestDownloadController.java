@@ -30,7 +30,6 @@ import com.pearson.ptb.provider.pi.service.AuthenticationProvider;
 import com.pearson.ptb.service.DownloadService;
 //import com.pearson.mytest.util.Swagger;
 import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * To download the specific test with specified format

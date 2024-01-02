@@ -12,16 +12,14 @@ import org.springframework.stereotype.Repository;
 import com.pearson.ptb.bean.Login;
 import com.pearson.ptb.dataaccess.GenericMongoRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository("loginRepo")
+@RequiredArgsConstructor
 public class LoginRepo {
 
 	private final GenericMongoRepository<Login, String> genericMongoRepository;
 
-	@Autowired
-	public LoginRepo(MongoOperations mongoOperations) {
-		this.genericMongoRepository = new GenericMongoRepository<>(
-				mongoOperations, Login.class);
-	}
 
 	/**
 	 * Constructor to access DataAccessHelper to perform login operation.

@@ -17,7 +17,6 @@ import com.pearson.ptb.service.MetadataService;
 import com.pearson.ptb.service.TestService;
 //import com.pearson.mytest.util.Swagger;
 import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * To list all Tests for given book and Questions in the given test

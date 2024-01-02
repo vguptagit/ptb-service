@@ -30,6 +30,10 @@ public class MetadataService {
 		// CACHE = CacheWrapper.getInstance();
 	}
 
+	public void initializeCache() {
+		CACHE = CacheWrapper.getInstance();
+	}
+
 	/**
 	 * Gets the meta data details of the test
 	 * 

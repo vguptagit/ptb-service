@@ -2,6 +2,8 @@ package com.pearson.ptb.framework;
 
 import com.pearson.ptb.framework.exception.ConfigException;
 
+import scala.collection.generic.BitOperations.Int;
+
 /**
  * This class will is used to read the configuration.
  */
@@ -86,9 +88,16 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public Boolean isDebugEnabled() {
 		// returns the IsDebugEnabled
-		return Boolean.valueOf(ConfigurationManager.configurationProperties
-				.get("IsDebugEnabled")
-				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String string = (String) ConfigurationManager.configurationProperties
+				.get("IsDebugEnabled");
+
+		if (string != null) {
+			return Boolean
+					.valueOf(string.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			return false;
+		}
+
 	}
 
 	/**
@@ -98,7 +107,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getQUADConsumerKey() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("QUADConsumerKey");
 	}
 
@@ -109,7 +118,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getQUADDataSecretKey() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("QUADDataSecretKey");
 	}
 
@@ -120,7 +129,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getQUADOauthAlgorithm() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("QUADOauthAlgorithm");
 	}
 
@@ -144,7 +153,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getPAFConsumerKey() {
 		// returns the paf consumer key
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("PAFConsumerKey");
 	}
 
@@ -158,7 +167,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getPAFDataSecretKey() {
 		// returns the paf DataSecret Key
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("PAFDataSecretKey");
 	}
 
@@ -172,7 +181,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getPAFOauthAlgorithm() {
 		// returns the paf Oauth Algorithm
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("PAFOauthAlgorithm");
 	}
 
@@ -183,7 +192,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getSysToSysPITokenUrl() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("SysToSysPITokenUrl");
 	}
 
@@ -197,7 +206,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getSysToSysPITokenFromAccessTokenUrl() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("SysToSysPITokenFromAccessTokenUrl");
 	}
 
@@ -211,7 +220,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getSysToSysUserProfileFromAccessTokenUrl() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("SysToSysUserProfileFromAccessTokenUrl");
 	}
 
@@ -224,7 +233,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getDataSecureRestUrl() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("DataSecureRestUrl");
 	}
 
@@ -237,7 +246,8 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getTokenUrl() {
 
-		return ConfigurationManager.configurationProperties.get("TokenUrl");
+		return (String) ConfigurationManager.configurationProperties
+				.get("TokenUrl");
 	}
 
 	/**
@@ -249,7 +259,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getInstructorAuthUrl() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("InstructorAuthorizationUrl");
 	}
 
@@ -262,7 +272,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getInstructorGroupId() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("InstructorGroupId");
 	}
 
@@ -275,8 +285,14 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public int getSocketTimeout() {
 
-		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("SocketTimeout").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String timeout = (String) ConfigurationManager.configurationProperties
+				.get("SocketTimeout");
+		if (timeout != null) {
+			return Integer
+					.parseInt(timeout.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -288,9 +304,15 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public int getConnectionTimeout() {
 
-		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("ConnectionTimeout")
-				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String timeout = (String) ConfigurationManager.configurationProperties
+				.get("ConnectionTimeout");
+
+		if (timeout != null) {
+			return Integer
+					.parseInt(timeout.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -302,7 +324,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getKeyMoniker() {
 
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("pi.keyMoniker");
 	}
 
@@ -315,7 +337,8 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public String getKeyMap() {
 
-		return ConfigurationManager.configurationProperties.get("pi.keyMap");
+		return (String) ConfigurationManager.configurationProperties
+				.get("pi.keyMap");
 	}
 
 	/**
@@ -327,9 +350,16 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public int getPISessionDuration() {
 
-		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("pi.sessionDuration")
-				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String PIdurration = (String) ConfigurationManager.configurationProperties
+				.get("pi.sessionDuration");
+		if (PIdurration != null) {
+			return Integer.parseInt(
+					PIdurration.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			return -1;
+
+		}
+
 	}
 
 	/**
@@ -341,9 +371,15 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 */
 	public int getMaxScrambledVersions() {
 
-		return Integer.parseInt(ConfigurationManager.configurationProperties
-				.get("maxScrambledVersions")
-				.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String version = (String) ConfigurationManager.configurationProperties
+				.get("maxScrambledVersions");
+
+		if (version != null) {
+			return Integer
+					.parseInt(version.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -354,8 +390,14 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of db.database.
 	 */
 	public String getDataBase() {
-		return String.valueOf(ConfigurationManager.configurationProperties
-				.get("db.database").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String db = (String) ConfigurationManager.configurationProperties
+				.get("db.database");
+		if (db != null) {
+
+			return String.valueOf(db.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			throw new IllegalStateException("value cannot be null");
+		}
 	}
 
 	/**
@@ -368,8 +410,15 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	public String getDataBaseServer() {
 		System.out.println(
 				ConfigurationManager.configurationProperties.get("db.server"));
-		return String.valueOf(ConfigurationManager.configurationProperties
-				.get("db.server").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String dbserver = ((String) ConfigurationManager.configurationProperties
+				.get("db.server"));
+		if (dbserver != null) {
+			return String
+					.valueOf(dbserver.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			throw new IllegalStateException("value cannot be null!");
+		}
+
 	}
 
 	/**
@@ -380,8 +429,16 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of db.userName.
 	 */
 	public String getDataBaseUserName() {
-		return String.valueOf(ConfigurationManager.configurationProperties
-				.get("db.userName").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String dbUserName = (String) ConfigurationManager.configurationProperties
+				.get("db.userName");
+
+		if (dbUserName != null) {
+
+			return String.valueOf(
+					dbUserName.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			throw new IllegalStateException("value cant be null!!");
+		}
 	}
 
 	/**
@@ -392,8 +449,16 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of db.password.
 	 */
 	public String getDataBasePassword() {
-		return String.valueOf(ConfigurationManager.configurationProperties
-				.get("db.password").replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		String dbPassword = (String) ConfigurationManager.configurationProperties
+				.get("db.password");
+
+		if (dbPassword != null) {
+			return String.valueOf(
+					dbPassword.replaceAll(SPECIAL_CHARACTER_STRING, ""));
+		} else {
+			throw new IllegalStateException("Value cannot be null!");
+		}
+
 	}
 
 	/**
@@ -441,9 +506,12 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of EnvironmentName.
 	 */
 	public String environmentName() {
-		return ConfigurationManager.configurationProperties
-				.get("EnvironmentName")
-				.replaceAll(SPECIAL_CHARACTER_STRING, "");
+
+		String envName = (String) ConfigurationManager.configurationProperties
+				.get("EnvironmentName");
+
+		return envName.replaceAll(SPECIAL_CHARACTER_STRING, "");
+
 	}
 
 	/**
@@ -454,11 +522,11 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of ApplicationName.
 	 */
 	public String applicationName() {
-		return ConfigurationManager.configurationProperties
-				.get("ApplicationName")
-				.replaceAll(SPECIAL_CHARACTER_STRING, "");
-	}
+		String applicationName = (String) ConfigurationManager.configurationProperties
+				.get("ApplicationName");
+			return applicationName.replaceAll(SPECIAL_CHARACTER_STRING, "");
 
+	}
 	/**
 	 * <p>
 	 * This method returns the MyTest base url.
@@ -468,10 +536,11 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @author nithinjain
 	 */
 	public String getMyTestBaseUrl() {
-		return ConfigurationManager.configurationProperties.get("MyTestBaseUrl")
-				.replaceAll(SPECIAL_CHARACTER_STRING, "");
-	}
+		String url = (String) ConfigurationManager.configurationProperties
+				.get("MyTestBaseUrl");
+			return url.replaceAll(SPECIAL_CHARACTER_STRING, "");
 
+	}
 	/**
 	 * <p>
 	 * This method returns the EPS Authorization Token.
@@ -480,9 +549,9 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of eps.authorisationToken.
 	 */
 	public String getEPSAuthorisationToken() {
-		return ConfigurationManager.configurationProperties
-				.get("eps.authorisationToken")
-				.replaceAll(SPECIAL_CHARACTER_STRING, "");
+		String token = (String) ConfigurationManager.configurationProperties
+				.get("eps.authorisationToken");
+			return token.replaceAll(SPECIAL_CHARACTER_STRING, "");
 	}
 
 	/**
@@ -493,8 +562,10 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of eps.stagingUrl.
 	 */
 	public String getEPSStagingURL() {
-		return ConfigurationManager.configurationProperties
-				.get("eps.stagingUrl").replaceAll(SPECIAL_CHARACTER_STRING, "");
+		String epsUrl = (String) ConfigurationManager.configurationProperties
+				.get("eps.stagingUrl");
+			return epsUrl.replaceAll(SPECIAL_CHARACTER_STRING, "");
+
 	}
 
 	/**
@@ -505,8 +576,10 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of eps.itemUrl.
 	 */
 	public String getEPSItemURL() {
-		return ConfigurationManager.configurationProperties.get("eps.itemUrl")
-				.replaceAll(SPECIAL_CHARACTER_STRING, "");
+		String epsItem = (String) ConfigurationManager.configurationProperties
+				.get("eps.itemUrl");
+			return epsItem.replaceAll(SPECIAL_CHARACTER_STRING, "");
+
 	}
 
 	/**
@@ -518,7 +591,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 *         cache.book_questions.cacheExpiryInSeconds.
 	 */
 	public Integer getCacheExpiryInSecondsForBookQuestions() {
-		return Integer.valueOf(configurationProperties
+		return Integer.valueOf((String) configurationProperties
 				.get("cache.book_questions.cacheExpiryInSeconds"));
 	}
 
@@ -532,7 +605,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 *         cache.book_Container_questions.cacheExpiryInSeconds.
 	 */
 	public Integer getCacheExpiryInSecondsForBookContainerQuestions() {
-		return Integer.valueOf(configurationProperties
+		return Integer.valueOf((String) configurationProperties
 				.get("cache.book_Container_questions.cacheExpiryInSeconds"));
 	}
 
@@ -545,7 +618,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 *         cache.question_XML.cacheExpiryInSeconds.
 	 */
 	public Integer getCacheExpiryInSecondsForQuestionXML() {
-		return Integer.valueOf(configurationProperties
+		return Integer.valueOf((String) configurationProperties
 				.get("cache.question_XML.cacheExpiryInSeconds"));
 	}
 
@@ -557,9 +630,10 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of HealthApplicationName.
 	 */
 	public String getHealthApplicationName() {
-		return ConfigurationManager.configurationProperties
-				.get("HealthApplicationName")
-				.replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
+		String applcaitionName = (String) ConfigurationManager.configurationProperties
+				.get("HealthApplicationName");
+
+			return applcaitionName.replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
 	}
 
 	/**
@@ -570,9 +644,9 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of HealthApplicationOwnerName.
 	 */
 	public String getHealthApplicationOwnerName() {
-		return ConfigurationManager.configurationProperties
-				.get("HealthApplicationOwnerName")
-				.replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
+		String ownerName = (String) ConfigurationManager.configurationProperties
+				.get("HealthApplicationOwnerName");
+			return ownerName.replaceAll(HEALTH_SPECIAL_CHARACTER, " ");
 	}
 
 	/**
@@ -584,7 +658,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @return A String which returns the value of ParentTestDeleteExceptionMsg.
 	 */
 	public String getParentTestDeleteExceptionMsg() {
-		return ConfigurationManager.configurationProperties
+		return (String) ConfigurationManager.configurationProperties
 				.get("ParentTestDeleteExceptionMsg");
 	}
 }
