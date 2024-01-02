@@ -10,14 +10,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
 import com.pearson.ptb.bean.Book;
+import com.pearson.ptb.dataaccess.BookDataAccessHelper;
 import com.pearson.ptb.dataaccess.GenericMongoRepository;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.BookDelegate;
 import com.pearson.ptb.util.BookHelper;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Implementation class which got implemented from interface BookDelegate
@@ -26,12 +28,13 @@ import com.pearson.ptb.util.BookHelper;
  *
  */
 @Repository("book")
+@RequiredArgsConstructor
 public class BookRepo implements BookDelegate {
 
 	private final  GenericMongoRepository<Book, String> genericMongoRepository;
 	
 	@Autowired
-	private com.pearson.ptb.dataaccess.BookDataAccessHelper accessHelper;
+	private BookDataAccessHelper accessHelper;
 
 
 	@Override
