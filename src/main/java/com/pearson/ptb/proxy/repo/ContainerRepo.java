@@ -35,6 +35,8 @@ public class ContainerRepo implements ContainerDelegate {
 
 	private final GenericMongoRepository<Container, String> genericMongoRepository;
 
+	private final GenericMongoRepository<Container, String> genericMongoRepository;
+
 	@Override
 	public List<Container> getRootLevelContainersByBookId(String bookID) {
 		// TODO Auto-generated method stub

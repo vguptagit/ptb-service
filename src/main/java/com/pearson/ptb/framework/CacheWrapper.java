@@ -55,7 +55,7 @@ public final class CacheWrapper {
 	 * 
 	 * @throws ConfigException
 	 */
-	private CacheWrapper(){
+	private CacheWrapper() {
 
 		CONFIG = ConfigurationManager.getInstance();
 		CACHECONFIG = CacheConfigManager.getInstance();
@@ -73,7 +73,7 @@ public final class CacheWrapper {
 	 *             If there is an error in accessing the cache.
 	 * @throws ServiceUnavailableException
 	 */
-	public static CacheWrapper getInstance(){
+	public static CacheWrapper getInstance() {
 		try {
 			if (CacheWrapper.cacheWrapper == null) {
 				// null check in synchronization for race condition
@@ -185,8 +185,8 @@ public final class CacheWrapper {
 				String cacheKey = CONFIG.environmentName() + ":"
 						+ CONFIG.applicationName() + ":" + key;
 
-				byte[] byteArray = jedis.get(SerializationUtils
-						.serialize(cacheKey));
+				byte[] byteArray = jedis
+						.get(SerializationUtils.serialize(cacheKey));
 
 				if (byteArray != null) {
 					// if not null then generate the original Object
