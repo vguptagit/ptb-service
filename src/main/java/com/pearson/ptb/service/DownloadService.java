@@ -103,7 +103,8 @@ public class DownloadService {
 
 			DownloadInfo downloadInfo = getDownloadInfo(testid, userid, format,
 					answerKey, answerArea, includeRandomizedTests,
-					includeStudentName, saveSettings, margin, pageNumberDisplay);
+					includeStudentName, saveSettings, margin,
+					pageNumberDisplay);
 			downloadOutput = downloadFile(stream, testid,
 					includeRandomizedTests, downloder, downloadInfo);
 
@@ -163,7 +164,7 @@ public class DownloadService {
 		Set<String> addedNames = new HashSet<String>();
 		DownloadInfo parentTest = downloadInfo.clone();
 		addedNames.add(parentTest.getTestTitle());
-		
+
 		try {
 
 			testMetadata = testVersionRepo.getTestVersions(testid);
@@ -174,10 +175,11 @@ public class DownloadService {
 				activityGUID = Arrays.asList(url.split("/"));
 				String guid = activityGUID.get(activityGUID.size() - 1);
 
-				boolean isNewlyAdded = checkForValidVersionedTest(guid, parentTest.getTestTitle(),
-						downloadInfo, addedNames, versionNo, validVersionlst);
-				if(isNewlyAdded){
-					versionNo ++;
+				boolean isNewlyAdded = checkForValidVersionedTest(guid,
+						parentTest.getTestTitle(), downloadInfo, addedNames,
+						versionNo, validVersionlst);
+				if (isNewlyAdded) {
+					versionNo++;
 				}
 			}
 
@@ -226,7 +228,7 @@ public class DownloadService {
 			Set<String> addedNames, int versionNo,
 			List<DownloadInfo> validVersionLst) {
 		boolean isNewlyAdded = false;
-		//ArchiveRepo archiveRepo = new ArchiveRepo();
+		// ArchiveRepo archiveRepo = new ArchiveRepo();
 		Metadata metadata = metadataService.getMetadata(guid);
 		if (metadata != null) {
 			String versionedTestTitle = parentTestTitle + "_v"
@@ -239,9 +241,9 @@ public class DownloadService {
 			 * setTestDetails(guid, downloadInfo);
 			 * 
 			 * if (!addedNames.add(downloadInfo.getTestTitle())) {
-			 * downloadInfo.setTestTitle(metadata.getTitle() + "(" + versionNo + ")");
-			 * addedNames.add(downloadInfo.getTestTitle()); isNewlyAdded = true; }
-			 * validVersionLst.add(downloadInfo.clone()); }
+			 * downloadInfo.setTestTitle(metadata.getTitle() + "(" + versionNo +
+			 * ")"); addedNames.add(downloadInfo.getTestTitle()); isNewlyAdded =
+			 * true; } validVersionLst.add(downloadInfo.clone()); }
 			 */
 		}
 		return isNewlyAdded;
@@ -263,13 +265,13 @@ public class DownloadService {
 					.equals(AnswerKeys.SEPARATEFILE)) {
 
 				// Setup print setting to generate test file
-				downloadInfo.getPrintSettings().setIncludeAnswerKeyIn(
-						AnswerKeys.NONE);
+				downloadInfo.getPrintSettings()
+						.setIncludeAnswerKeyIn(AnswerKeys.NONE);
 				downloadToZip(zipOuputStream, downloader, downloadInfo, false);
 
 				// Setup print setting to generate answer keys
-				downloadInfo.getPrintSettings().setIncludeAnswerKeyIn(
-						AnswerKeys.SEPARATEFILE);
+				downloadInfo.getPrintSettings()
+						.setIncludeAnswerKeyIn(AnswerKeys.SEPARATEFILE);
 				downloadToZip(zipOuputStream, downloader, downloadInfo, true);
 
 			} else {
@@ -295,8 +297,8 @@ public class DownloadService {
 			boolean isAnsweyKey) {
 
 		try {
-			zipOuputStream.putNextEntry(new ZipEntry(getZipEntryTitle(
-					downloader, downloadInfo, isAnsweyKey)));
+			zipOuputStream.putNextEntry(new ZipEntry(
+					getZipEntryTitle(downloader, downloadInfo, isAnsweyKey)));
 			downloader.download(zipOuputStream, downloadInfo);
 			zipOuputStream.closeEntry();
 		} catch (IOException e) {

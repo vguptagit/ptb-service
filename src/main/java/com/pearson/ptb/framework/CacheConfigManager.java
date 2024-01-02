@@ -31,16 +31,16 @@ public final class CacheConfigManager extends BaseConfigurationManager{
 	}
 	
 	public Boolean getIsCacheEnabled() {
-		return Boolean.valueOf(configurationProperties
-				.get("cache.isCacheEnabled").replaceAll(SPECIAL_CHARACTER_STRING,""));
+		return Boolean.valueOf(((String) configurationProperties
+				.get("cache.isCacheEnabled")).replaceAll(SPECIAL_CHARACTER_STRING,""));
 	}
 	
-	public String getCacheServer(){
+	public Object getCacheServer(){
 		return configurationProperties.get("cache.cacheServer");
 	}
 	
 	public Integer getCacheExpiryInSeconds(){
-		return Integer.valueOf(configurationProperties.get("cache.cacheExpiryInSeconds"));
+		return Integer.valueOf((String) configurationProperties.get("cache.cacheExpiryInSeconds"));
 	}
 
 	/**

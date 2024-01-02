@@ -11,83 +11,82 @@ import com.googlecode.jmapper.annotations.JMap;
 import com.pearson.ptb.framework.LogWrapper;
 import com.pearson.ptb.util.Common;
 
-
 /**
- * The <code>Metadata</code> class responsible to hold the  metadata 
+ * The <code>Metadata</code> class responsible to hold the metadata
  *
  */
 public class Metadata extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Indicates description
 	 */
 	@JMap
 	private String description;
-	
+
 	/**
 	 * Indicates quizType
 	 */
 	@JMap
 	private String quizType;
-	
+
 	/**
 	 * Indicates subject
 	 */
 	@JMap
 	private List<String> subject;
-	
+
 	/**
 	 * Indicates timeRequired
 	 */
 	@JMap
 	private String timeRequired;
-	
+
 	/**
 	 * Indicates crawlable
 	 */
 	@JMap
 	private String crawlable;
-	
+
 	/**
 	 * Indicates keywords
 	 */
 	@JMap
 	private String keywords;
-	
+
 	/**
 	 * Indicates versionOf
 	 */
 	@JMap
 	private String versionOf;
-	
+
 	/**
 	 * Indicates version
 	 */
 	@JMap
 	private String version;
-	
+
 	/**
 	 * Indicates extendedMetadata
 	 */
 	@JMap
 	private List<ExtMetadata> extendedMetadata;
-	
+
 	/**
 	 * Indicates created
 	 */
 	@JMap
 	private String created;
-	
+
 	/**
 	 * Indicates modified
 	 */
 	@JMap
-	private String modified ;		
+	private String modified;
 
 	private static final Logger LOG = LogWrapper.getInstance(Metadata.class);
-	
+
 	/** Get {@see #quizType}. @return {@link #quizType}. */
 	public String getQuizType() {
 		return quizType;
@@ -177,7 +176,7 @@ public class Metadata extends BaseEntity implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/** Get {@see #created}. @return {@link #created}. */
 	public String getCreated() {
 		return created;
@@ -199,7 +198,8 @@ public class Metadata extends BaseEntity implements Serializable {
 	}
 
 	/**
-	 * To get the value of specified metadata name 
+	 * To get the value of specified metadata name
+	 * 
 	 * @param extendedMetadataName
 	 * @return ExtMetadata
 	 */
@@ -218,8 +218,9 @@ public class Metadata extends BaseEntity implements Serializable {
 		return metaData;
 	}
 
-
-	/** To get the sequence 
+	/**
+	 * To get the sequence
+	 * 
 	 * @return sequence in double
 	 */
 	@JsonIgnore
@@ -237,7 +238,9 @@ public class Metadata extends BaseEntity implements Serializable {
 		return sequence;
 	}
 
-	/** To add Extended Metadata
+	/**
+	 * To add Extended Metadata
+	 * 
 	 * @param extMetadata
 	 */
 	public void addExtendedMetadata(ExtMetadata extMetadata) {
@@ -246,5 +249,5 @@ public class Metadata extends BaseEntity implements Serializable {
 		}
 		this.extendedMetadata.add(extMetadata);
 	}
-	
+
 }

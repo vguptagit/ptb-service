@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The <code>UserBook</code> class is responsible to hold the user books migrated from Pegasus
+ * The <code>UserBook</code> class is responsible to hold the user books
+ * migrated from Pegasus
  *
  */
 public class UserBook extends BaseEntity {
@@ -16,22 +17,22 @@ public class UserBook extends BaseEntity {
 	 * The instructor user id
 	 */
 	private String userId;
-	
+
 	/**
 	 * The indicates testBindings
 	 */
 	private List<String> testBindings;
-	
+
 	/**
 	 * The indicates questionBindings
 	 */
 	private List<String> questionBindings;
-	
+
 	/**
 	 * To check if book is already imported, default set to false
 	 */
 	private Boolean isImported = false;
-	
+
 	/**
 	 * The indicates imported date of the book
 	 */
@@ -49,7 +50,7 @@ public class UserBook extends BaseEntity {
 
 	/** Get {@see #testBindings}. @return {@link #testBindings}. */
 	public List<String> getTestBindings() {
-		if(testBindings == null) {
+		if (testBindings == null) {
 			testBindings = new ArrayList<String>();
 		}
 		return testBindings;
@@ -62,7 +63,7 @@ public class UserBook extends BaseEntity {
 
 	/** Get {@see #questionBindings}. @return {@link #questionBindings}. */
 	public List<String> getQuestionBindings() {
-		if(questionBindings == null) {
+		if (questionBindings == null) {
 			questionBindings = new ArrayList<String>();
 		}
 		return questionBindings;

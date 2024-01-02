@@ -45,7 +45,7 @@ public class HttpUtility {
 	 * This is the default Http Client
 	 */
 	private DefaultHttpClient client;
-	
+
 	private static final int CONNECTION_TIME_OUT = 120000;
 
 	private static final int SOCKET_TIME_OUT = 12000;
@@ -59,7 +59,7 @@ public class HttpUtility {
 	 *             This is thrown if there is an error in the I/O while reading
 	 *             property file.
 	 */
-	public HttpUtility(){
+	public HttpUtility() {
 		// Initialize the client with the httpParam
 		client = new DefaultHttpClient(httpParams());
 
@@ -72,8 +72,8 @@ public class HttpUtility {
 	 * @throws IOException
 	 *             This is thrown if there is an error in the I/O while reading
 	 *             property file.
-	 * */
-	private org.apache.http.params.HttpParams httpParams(){
+	 */
+	private org.apache.http.params.HttpParams httpParams() {
 		return new SyncBasicHttpParams()
 				.setParameter(CONNECTION_TIMEOUT, CONNECTION_TIME_OUT)
 				.setParameter(SO_TIMEOUT, SOCKET_TIME_OUT)
@@ -96,10 +96,11 @@ public class HttpUtility {
 	 * 
 	 * @author nithinjain
 	 */
-	private String buildQueryString(String url, Map<String, String> queryString){
+	private String buildQueryString(String url,
+			Map<String, String> queryString) {
 		String query = "%s=%s";
 		StringBuilder sb = new StringBuilder();
-		String buildUrl=url;
+		String buildUrl = url;
 		// Set query string
 		if (queryString != null && !queryString.isEmpty()) {
 			buildUrl = buildUrl.concat("?");
@@ -110,11 +111,14 @@ public class HttpUtility {
 					sb.append('&');
 				}
 				try {
-					sb.append(String.format(query, URLEncoder.encode(key,
-							Common.UTF_8_CHAR_ENCODING), URLEncoder.encode(
-							queryString.get(key), Common.UTF_8_CHAR_ENCODING)));
+					sb.append(String.format(query,
+							URLEncoder.encode(key, Common.UTF_8_CHAR_ENCODING),
+							URLEncoder.encode(queryString.get(key),
+									Common.UTF_8_CHAR_ENCODING)));
 				} catch (UnsupportedEncodingException e) {
-					throw new InternalException("Error on URL encoding in the method HttpUtility.buildQueryString ", e);
+					throw new InternalException(
+							"Error on URL encoding in the method HttpUtility.buildQueryString ",
+							e);
 				}
 			}
 
@@ -176,9 +180,9 @@ public class HttpUtility {
 		HttpGet httpGet = new HttpGet(buildQueryString(url, queryString));
 		// Set headers
 		setRequestHeaders(httpGet, contentType, headers);
-		
+
 		return getResponse(httpGet, url, "MakeGet");
-		
+
 	}
 
 	/**
@@ -203,7 +207,7 @@ public class HttpUtility {
 	 */
 	public HttpResponse makePost(String url, Map<String, String> headers,
 			ContentType contentType, Map<String, String> queryString,
-			String payload){
+			String payload) {
 
 		// Create an HttpPost object
 		HttpPost httpPost = new HttpPost(buildQueryString(url, queryString));
@@ -213,15 +217,14 @@ public class HttpUtility {
 
 		// Set Headers
 		setRequestHeaders(httpPost, contentType, headers);
-		
+
 		// return the http Response
 		return getResponse(httpPost, url, "MakePost");
-		
+
 	}
-	
+
 	/**
-	 * This method makes the HTTP Put request with the JSON payload, on the
-	 * URL.
+	 * This method makes the HTTP Put request with the JSON payload, on the URL.
 	 * 
 	 * @param url
 	 *            This is the url for the request
@@ -256,13 +259,12 @@ public class HttpUtility {
 		try {
 			return new HttpResponse(client.execute(httpPut));
 		} catch (Exception ex) {
-			LOG.debug(
-					"Exception is handled in HttpUtility.makePut() method ",
-					ex);			
+			LOG.debug("Exception is handled in HttpUtility.makePut() method ",
+					ex);
 			return null;
 		}
 	}
-	
+
 	/**
 	 * This method makes the HTTP DELETE request with the queryString, on the
 	 * URL.
@@ -282,10 +284,12 @@ public class HttpUtility {
 	 *             property file or input stream.
 	 */
 	public HttpResponse makeDelete(String url, Map<String, String> headers,
-			ContentType contentType, Map<String, String> queryString) throws IOException {
+			ContentType contentType, Map<String, String> queryString)
+			throws IOException {
 
 		// Create an HttpDelete object
-		HttpDelete httpDelete = new HttpDelete(buildQueryString(url, queryString));
+		HttpDelete httpDelete = new HttpDelete(
+				buildQueryString(url, queryString));
 
 		// Set Headers
 		setRequestHeaders(httpDelete, contentType, headers);
@@ -372,18 +376,22 @@ public class HttpUtility {
 	 * @throws UnsupportedEncodingException
 	 *             If the request and url is unsupported.
 	 */
-	private HttpResponse getResponse(HttpUriRequest request, String url, String method){ 
+	private HttpResponse getResponse(HttpUriRequest request, String url,
+			String method) {
 
 		HttpResponse httpResponse = null;
 		try {
-			long startTime=System.currentTimeMillis();
+			long startTime = System.currentTimeMillis();
 			httpResponse = new HttpResponse(client.execute(request));
-			long elapsedTime = System.currentTimeMillis() - startTime; 
-			LOG.info( method + ": "+url+" - Time taken: "+elapsedTime+"ms - "+ RequestCorrelation.HEADER + ": " + RequestCorrelation.getId());
+			long elapsedTime = System.currentTimeMillis() - startTime;
+			LOG.info(method + ": " + url + " - Time taken: " + elapsedTime
+					+ "ms - " + RequestCorrelation.HEADER + ": "
+					+ RequestCorrelation.getId());
 		} catch (IOException e) {
-			throw new InternalException("Unable to get the response for "+method+"", e);
+			throw new InternalException(
+					"Unable to get the response for " + method + "", e);
 		}
-		return httpResponse; 
+		return httpResponse;
 	}
 
 	/**
@@ -406,8 +414,8 @@ public class HttpUtility {
 
 		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.STRICT);
 
-		entity.addPart(fieldName, new InputStreamBody(new ByteArrayInputStream(
-				content), fileName));
+		entity.addPart(fieldName, new InputStreamBody(
+				new ByteArrayInputStream(content), fileName));
 
 		HttpPost httpPost = new HttpPost(url);
 
@@ -415,28 +423,34 @@ public class HttpUtility {
 
 		return new HttpResponse(client.execute(httpPost));
 	}
-	
+
 	/**
 	 * update the give file content which is in the form of byte array to the
 	 * given <code>url</code>.
-	 * @param url, url where file need to be update
-	 * @param fileName, file name of the file which need to be update
-	 * @param content, byte array form of file
-	 * @param fieldName, this will be having the value "field"
-	 * @param headers, header data which will be in the form of map
+	 * 
+	 * @param url,
+	 *            url where file need to be update
+	 * @param fileName,
+	 *            file name of the file which need to be update
+	 * @param content,
+	 *            byte array form of file
+	 * @param fieldName,
+	 *            this will be having the value "field"
+	 * @param headers,
+	 *            header data which will be in the form of map
 	 * @return HttpResponse
 	 */
 	public HttpResponse updateFile(String url, byte[] content,
-			Map<String,String> headers)  {
-		
+			Map<String, String> headers) {
+
 		ByteArrayEntity entity = new ByteArrayEntity(content);
 
 		HttpPut httpPut = new HttpPut(url);
 
 		httpPut.setEntity(entity);
-		
+
 		setRequestHeaders(httpPut, ContentType.WILDCARD, headers);
-		
+
 		httpPut.setHeader(Common.CONTENT_TYPE, "image/jpeg");
 
 		try {

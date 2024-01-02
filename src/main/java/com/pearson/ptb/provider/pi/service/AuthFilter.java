@@ -28,20 +28,20 @@ import com.pearson.ptb.framework.LogWrapper;
 public class AuthFilter implements HandlerInterceptor {
 
 	private static final Logger LOG = LogWrapper.getInstance(AuthFilter.class);
-		
-//	@Override
+
+	// @Override
 	@Bean
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		boolean requestStatus = false;
-		try {			
-			//This is for download usecase
+		try {
+			// This is for download usecase
 			String keyword = "/books/import";
 			String requestURI = request.getRequestURI();
 			if (requestURI.contains(keyword)) {
 				requestStatus = true;
-				
-			}else if(requestURI.contains("/books/import")){     
+
+			} else if (requestURI.contains("/books/import")) {
 
 				SortedMap<String, String> alphaSortedMap = null;
 				alphaSortedMap = new TreeMap<String, String>();
@@ -49,8 +49,10 @@ public class AuthFilter implements HandlerInterceptor {
 				OAuthMessageSigner signer = new OAuthMessageSigner();
 
 				String authorizationHeader = request.getHeader("Authorization");
-				if (authorizationHeader != null && authorizationHeader.contains(OAuthUtil.AUTH_SCHEME)) {
-					Map<String, String> oauthParameters = OAuthUtil.decodeAuthorization(authorizationHeader);
+				if (authorizationHeader != null && authorizationHeader
+						.contains(OAuthUtil.AUTH_SCHEME)) {
+					Map<String, String> oauthParameters = OAuthUtil
+							.decodeAuthorization(authorizationHeader);
 
 					// if realm is in here get rid of it
 					oauthParameters.remove("realm");
@@ -58,22 +60,23 @@ public class AuthFilter implements HandlerInterceptor {
 					alphaSortedMap.putAll(oauthParameters);
 				}
 
-				//This secret key is from QUAD.
-				String secret = ConfigurationManager.getInstance().getQUADDataSecretKey();				
+				// This secret key is from QUAD.
+				String secret = ConfigurationManager.getInstance()
+						.getQUADDataSecretKey();
 				String url = request.getRequestURL().toString();
-				String signature = alphaSortedMap.remove(OAuthHeaderConstants.SIGNATURE_PARAM);
+				String signature = alphaSortedMap
+						.remove(OAuthHeaderConstants.SIGNATURE_PARAM);
 				String calculatedSignature = null;
-				String method = request.getMethod();    
+				String method = request.getMethod();
 
+				calculatedSignature = signer.sign(secret,
+						OAuthUtil.mapToJava(alphaSortedMap.get(
+								OAuthHeaderConstants.SIGNATURE_METHOD_PARAM)),
+						method, url, alphaSortedMap);
 
-				calculatedSignature = signer.sign(secret,OAuthUtil.mapToJava(alphaSortedMap
-										.get(OAuthHeaderConstants.SIGNATURE_METHOD_PARAM)),
-										method, url, alphaSortedMap);
-				
 				if (signature.equals(calculatedSignature)) {
 					requestStatus = true;
 				}
-
 
 			} else {
 
@@ -81,40 +84,51 @@ public class AuthFilter implements HandlerInterceptor {
 
 				if (piAuthtoken == null || piAuthtoken.isEmpty()) {
 					response.setStatus(HttpStatus.BAD_REQUEST.value());
-					response.getWriter().write("x-authorization header not found");
+					response.getWriter()
+							.write("x-authorization header not found");
 
 					// abort the request
 					requestStatus = false;
-				}else {
-				AuthenticationProvider pi = new AuthenticationProvider();
-				request.setAttribute("extUserId", pi.authenticate(piAuthtoken));
+				} else {
+					AuthenticationProvider pi = new AuthenticationProvider();
+					request.setAttribute("extUserId",
+							pi.authenticate(piAuthtoken));
 
-				// continue with the request
-				requestStatus = true;
+					// continue with the request
+					requestStatus = true;
 				}
 
 			}
 		} catch (TokenParseException | InvalidTokenException e) {
 
-			requestStatus = logError(e, response, HttpStatus.FORBIDDEN.value(),"Invalid PI Token in x-authorization");
+			requestStatus = logError(e, response, HttpStatus.FORBIDDEN.value(),
+					"Invalid PI Token in x-authorization");
 
 		} catch (RemoteCallException e) {
-			requestStatus = logError(e, response,HttpStatus.BAD_GATEWAY.value(),"Error calling DataSecure REST");
+			requestStatus = logError(e, response,
+					HttpStatus.BAD_GATEWAY.value(),
+					"Error calling DataSecure REST");
 
 		} catch (Exception e) {
 			if ((e.getCause() != null)
-					&& e.getCause().getClass().getSimpleName().contains("MongoServerSelectionException")) {
-				requestStatus = logError(e, response, HttpStatus.INTERNAL_SERVER_ERROR.value(),"Mongo DB not started");
+					&& e.getCause().getClass().getSimpleName()
+							.contains("MongoServerSelectionException")) {
+				requestStatus = logError(e, response,
+						HttpStatus.INTERNAL_SERVER_ERROR.value(),
+						"Mongo DB not started");
 			} else {
-				requestStatus = logError(e, response, HttpStatus.INTERNAL_SERVER_ERROR.value(),"Unknown Exception");
+				requestStatus = logError(e, response,
+						HttpStatus.INTERNAL_SERVER_ERROR.value(),
+						"Unknown Exception");
 			}
 		}
 		return requestStatus;
 	}
 
 	@Bean
-	private boolean logError(Exception e,HttpServletResponse response,int httpStatus,String exceptionMessage) throws IOException{
-		LOG.error("Error is logged from AuthFilter.preHandle() method",e);
+	private boolean logError(Exception e, HttpServletResponse response,
+			int httpStatus, String exceptionMessage) throws IOException {
+		LOG.error("Error is logged from AuthFilter.preHandle() method", e);
 		response.setStatus(httpStatus);
 		response.getWriter().write(exceptionMessage);
 		// abort the request
@@ -124,23 +138,23 @@ public class AuthFilter implements HandlerInterceptor {
 	/**
 	 * This method is part of handler not required for MyTest
 	 */
-	//@Override
+	// @Override
 	@Bean
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		//This is part of handler not required for MyTest		
+		// This is part of handler not required for MyTest
 	}
 
 	/**
 	 * This method is part of handler not required for MyTest
 	 */
-	//@Override
+	// @Override
 	@Bean
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		//This is part of handler not required for MyTest		
-	}	
+		// This is part of handler not required for MyTest
+	}
 
 }

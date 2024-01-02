@@ -61,7 +61,7 @@ public final class CacheWrapper {
 		CACHECONFIG = CacheConfigManager.getInstance();
 		// create an instance of pool
 		jedisPool = new JedisPool(new JedisPoolConfig(),
-				CACHECONFIG.getCacheServer());
+				(String) CACHECONFIG.getCacheServer());
 	}
 
 	/**
@@ -91,6 +91,7 @@ public final class CacheWrapper {
 
 		return CacheWrapper.cacheWrapper;
 	}
+	
 
 	/**
 	 * This method sets an item on cache

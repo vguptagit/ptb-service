@@ -25,7 +25,8 @@ import com.pearson.ptb.bean.DownloadInfo;
 import com.pearson.ptb.bean.DownloadOutput;
 import com.pearson.ptb.framework.exception.InternalException;
 /**
- * This <code>Blackboard</code> is responsible for support black board format for all type of questions.
+ * This <code>Blackboard</code> is responsible for support black board format
+ * for all type of questions.
  */
 public class Blackboard implements TestDownload {
 
@@ -100,8 +101,8 @@ public class Blackboard implements TestDownload {
 		String infoFile = buildInfoFile();
 		try {
 
-			zipOuputStream.putNextEntry(new ZipEntry(downloadInfo
-					.getTestTitle() + ".dat"));
+			zipOuputStream.putNextEntry(
+					new ZipEntry(downloadInfo.getTestTitle() + ".dat"));
 			zipOuputStream.write(documentToByte(testXML));
 
 			zipOuputStream.putNextEntry(new ZipEntry("imsmanifest.xml"));
@@ -145,11 +146,11 @@ public class Blackboard implements TestDownload {
 			exportType = "assessment/x-bb-qti-test";
 		}
 		StringBuilder manifestXML = new StringBuilder();
-		manifestXML
-				.append("<manifest identifier=\"man00001\"  xmlns:bb=\"http://www.blackboard.com/content-packaging/\">");
+		manifestXML.append(
+				"<manifest identifier=\"man00001\"  xmlns:bb=\"http://www.blackboard.com/content-packaging/\">");
 		manifestXML.append("<organizations>");
-		manifestXML
-				.append("<organization identifier=\"toc00001\"/></organizations>");
+		manifestXML.append(
+				"<organization identifier=\"toc00001\"/></organizations>");
 		manifestXML.append("<resources>");
 		manifestXML.append("<resource bb:file=\"");
 		manifestXML.append(downloadInfo.getTestTitle());
@@ -185,7 +186,8 @@ public class Blackboard implements TestDownload {
 		StringBuilder infoFile = new StringBuilder();
 		infoFile.append("cx.package.info.version=6.0");
 		infoFile.append("\r\n");
-		infoFile.append("cx.config.logs=[Log{name\\=C\\:\\\\blackboard\\\\logs\\\\content-exchange\\\\ExportFile_42279_20090821084849.txt, verbosity\\=default}, Log{name\\=C\\:\\\\blackboard\\\\logs\\\\content-exchange\\\\ExportFile_42279_20090821084849_detailed.txt, verbosity\\=debug}]");
+		infoFile.append(
+				"cx.config.logs=[Log{name\\=C\\:\\\\blackboard\\\\logs\\\\content-exchange\\\\ExportFile_42279_20090821084849.txt, verbosity\\=default}, Log{name\\=C\\:\\\\blackboard\\\\logs\\\\content-exchange\\\\ExportFile_42279_20090821084849_detailed.txt, verbosity\\=debug}]");
 		return infoFile.toString();
 	}
 

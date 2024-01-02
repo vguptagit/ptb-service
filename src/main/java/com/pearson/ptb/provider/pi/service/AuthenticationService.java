@@ -16,34 +16,34 @@ import com.pearson.ptb.util.HttpUtility;
 import org.springframework.stereotype.Service;
 
 /**
- * This <code>AuthenticationService</code> is responsible for authenticating access token to get the PI token
- * and validates the instructors.
+ * This <code>AuthenticationService</code> is responsible for authenticating
+ * access token to get the PI token and validates the instructors.
  */
 @Service("authenticationService")
 public class AuthenticationService {
 
-	
 	private static final String CONFIG_PROPERTY_EXCEPTION = "Unable to read properties from config";
-	
+
 	/**
 	 * this method will get the PI token from PI using access token.
 	 * 
-	 * @param  accessToken
+	 * @param accessToken
 	 * @return String.
 	 */
-	public String getPITokenFromAccessToken(String accessToken){
+	public String getPITokenFromAccessToken(String accessToken) {
 
 		try {
 
-			String targetURL = ConfigurationManager.getInstance().getSysToSysPITokenFromAccessTokenUrl();
-			
+			String targetURL = ConfigurationManager.getInstance()
+					.getSysToSysPITokenFromAccessTokenUrl();
+
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("Authorization", "Bearer " + accessToken);
-			
+
 			HttpResponse response = null;
-			
+
 			response = getResponseByMakeGet(targetURL, headers, response);
-			
+
 			String json = response.getReponseMessage();
 			PIJson piJson = new Gson().fromJson(json, PIJson.class);
 
@@ -56,40 +56,45 @@ public class AuthenticationService {
 	private HttpResponse getResponseByMakeGet(String targetURL,
 			Map<String, String> headers, HttpResponse response) {
 		try {
-			response = (new HttpUtility()).makeGet(targetURL.trim(), headers, ContentType.APPLICATION_JSON, null);
+			response = (new HttpUtility()).makeGet(targetURL.trim(), headers,
+					ContentType.APPLICATION_JSON, null);
 		} catch (Exception ex) {
-			throw new InternalException("Failed response from PIToken_From_AccessToken call", ex);
+			throw new InternalException(
+					"Failed response from PIToken_From_AccessToken call", ex);
 		}
 		return response;
 	}
-	
+
 	/**
 	 * this method validates the user based on PI token.
 	 * 
-	 * @param  piToken
+	 * @param piToken
 	 * @param extUserId
-	 * 					,represents existing user.
+	 *            ,represents existing user.
 	 * @return Boolean.
 	 */
-	public Boolean isIntructor(String piToken, String extUserId){
+	public Boolean isIntructor(String piToken, String extUserId) {
 
 		Boolean isIntructor = false;
 		try {
 
-			String targetURL = String.format(ConfigurationManager.getInstance().getInstructorAuthUrl(), extUserId);
-			
+			String targetURL = String.format(
+					ConfigurationManager.getInstance().getInstructorAuthUrl(),
+					extUserId);
+
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("x-authorization", piToken);
-			
+
 			HttpResponse response = null;
-			
+
 			response = getResponseByMakeGet(targetURL, headers, response);
-			
-			String json = response.getReponseMessage(); 
+
+			String json = response.getReponseMessage();
 			Group[] groupsJson = new Gson().fromJson(json, Group[].class);
 
-			for(Group group : groupsJson) {
-				if(group.id.equals(ConfigurationManager.getInstance().getInstructorGroupId())) {
+			for (Group group : groupsJson) {
+				if (group.id.equals(ConfigurationManager.getInstance()
+						.getInstructorGroupId())) {
 					isIntructor = true;
 				}
 			}
@@ -98,29 +103,32 @@ public class AuthenticationService {
 			throw new InternalException(CONFIG_PROPERTY_EXCEPTION, ex);
 		}
 	}
-	
+
 	/**
 	 * this method will get the profile of the existing user from PI.
 	 * 
 	 * @param accessToken
 	 * @param extUserId
-	 * 					,represents existing user.
+	 *            ,represents existing user.
 	 * @return UserProfile.
 	 */
-	public UserProfile getUserProfileFromPIApi(String accessToken, String extUserId){
+	public UserProfile getUserProfileFromPIApi(String accessToken,
+			String extUserId) {
 
 		try {
-			String targetURL = ConfigurationManager.getInstance().getSysToSysUserProfileFromAccessTokenUrl() + "/" + extUserId;
-			
+			String targetURL = ConfigurationManager.getInstance()
+					.getSysToSysUserProfileFromAccessTokenUrl() + "/"
+					+ extUserId;
+
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("Authorization", "Bearer " + accessToken);
-			
+
 			HttpResponse response = null;
-			
+
 			response = getResponseByMakeGetMethod(targetURL, headers, response);
-			
-			String json = response.getReponseMessage();				
-			
+
+			String json = response.getReponseMessage();
+
 			return new Gson().fromJson(json, UserProfile.class);
 		} catch (ConfigException ex) {
 			throw new InternalException(CONFIG_PROPERTY_EXCEPTION, ex);
@@ -133,15 +141,18 @@ public class AuthenticationService {
 		try {
 			response = getResponseByMakeGet(targetURL, headers, response);
 		} catch (Exception ex) {
-			throw new InternalException("Failed response from UserProfile_From_AccessToken call", ex);
+			throw new InternalException(
+					"Failed response from UserProfile_From_AccessToken call",
+					ex);
 		}
 		return response;
 	}
-	
-	class PIJson {		
-		String pi_token; // NOSONAR as this property name is as per the json returned by PI api
+
+	class PIJson {
+		String pi_token; // NOSONAR as this property name is as per the json
+							// returned by PI api
 	}
-	
+
 	class Groups {
 		List<Group> group;
 	}
@@ -149,5 +160,5 @@ public class AuthenticationService {
 		String id;
 		String name;
 	}
-		
+
 }

@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pearson.ptb.bean.ArchiveItem;
 import com.pearson.ptb.bean.ArchivedFolder;
@@ -26,18 +26,17 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 
-@Controller
-
+@RestController
 @Api(value = "Archive", description = "Archive restore APIs")
 public class ArchiveController extends BaseController {
 
 	@Autowired
-
 	@Qualifier("archiveService")
 	private ArchiveService archiveService;
 
 	/**
-	 * @param archiveItem item to be archived
+	 * @param archiveItem
+	 *            item to be archived
 	 * @return <code>ArchivedFolder</code>
 	 */
 
@@ -45,10 +44,9 @@ public class ArchiveController extends BaseController {
 	// Swagger.ARCHIVEFOLDER_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders", method = RequestMethod.POST)
-
 	@ResponseBody
+	// done
 	public ArchivedFolder archiveFolder(@RequestBody ArchiveItem archiveItem) {
-
 		return archiveService.archiveFolder(archiveItem.getId());
 	}
 
@@ -58,36 +56,28 @@ public class ArchiveController extends BaseController {
 	 * @param archiveItem
 	 * @return UserFolder
 	 */
-
 	// @ApiOperation(value = Swagger.RESTOREFOLDER_VALUE, notes =
 	// Swagger.RESTOREFOLDER_NOTE)
 
 	@RequestMapping(value = "/my/restore/folders", method = RequestMethod.POST)
-
 	@ResponseBody
-	public UserFolder restoreFolder(
-
-			@RequestBody ArchiveItem archiveItem) {
-
+	public UserFolder restoreFolder(@RequestBody ArchiveItem archiveItem) {
 		return archiveService.restoreFolder(archiveItem.getId());
 	}
 
 	/**
 	 * To delete folder
 	 * 
-	 * @param folderId as String
+	 * @param folderId
+	 *            as String
 	 */
-
 	// @ApiOperation(value = Swagger.DELETEFOLDER_VALUE, notes =
 	// Swagger.DELETEFOLDER_NOTE)
 
 	@RequestMapping(value = "/my/delete/folders/{folderId}", method = RequestMethod.DELETE)
 
 	@ResponseBody
-	public void deleteFolder(
-
-			@PathVariable String folderId) {
-
+	public void deleteFolder(@PathVariable String folderId) {
 		archiveService.deleteFolder(folderId);
 	}
 
@@ -105,14 +95,14 @@ public class ArchiveController extends BaseController {
 
 	@ResponseBody
 	public List<ArchivedFolder> getRootFolders(HttpServletRequest request) {
-
 		return archiveService.getFolders(UserHelper.getUserId(request), null);
 	}
 
 	/**
 	 * To get a list of children folders of a given archive folder
 	 * 
-	 * @param folderId as String
+	 * @param folderId
+	 *            as String
 	 * @return List<ArchivedFolder> of the archived folder
 	 */
 
@@ -122,9 +112,10 @@ public class ArchiveController extends BaseController {
 	@RequestMapping(value = "/my/archive/folders/{folderId}/folders", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<ArchivedFolder> getFolders(@PathVariable String folderId, HttpServletRequest request) {
-
-		return archiveService.getFolders(UserHelper.getUserId(request), folderId);
+	public List<ArchivedFolder> getFolders(@PathVariable String folderId,
+			HttpServletRequest request) {
+		return archiveService.getFolders(UserHelper.getUserId(request),
+				folderId);
 	}
 
 	/**
@@ -144,7 +135,8 @@ public class ArchiveController extends BaseController {
 
 		String userId = UserHelper.getUserId(request);
 
-		return archiveService.archiveTest(userId, archiveItem.getId(), archiveItem.getFolderId());
+		return archiveService.archiveTest(userId, archiveItem.getId(),
+				archiveItem.getFolderId());
 	}
 
 	/**
@@ -164,14 +156,17 @@ public class ArchiveController extends BaseController {
 
 		String userId = UserHelper.getUserId(request);
 
-		return archiveService.restoreTest(userId, archiveItem.getId(), archiveItem.getFolderId());
+		return archiveService.restoreTest(userId, archiveItem.getId(),
+				archiveItem.getFolderId());
 	}
 
 	/**
 	 * To delete test
 	 * 
-	 * @param folderId as String
-	 * @param testId   as String
+	 * @param folderId
+	 *            as String
+	 * @param testId
+	 *            as String
 	 * @param request
 	 */
 
@@ -212,8 +207,8 @@ public class ArchiveController extends BaseController {
 	}
 
 	/**
-	 * To list of all created tests for the given archive folder identified through
-	 * the {folderid}
+	 * To list of all created tests for the given archive folder identified
+	 * through the {folderid}
 	 * 
 	 * @param folderId
 	 * @return List<TestMetadata>, list of test metadata
@@ -224,7 +219,8 @@ public class ArchiveController extends BaseController {
 	@RequestMapping(value = "/my/archive/folders/{folderId}/tests", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<TestMetadata> getTests(@PathVariable String folderId, HttpServletRequest request) {
+	public List<TestMetadata> getTests(@PathVariable String folderId,
+			HttpServletRequest request) {
 
 		return archiveService.getTests(UserHelper.getUserId(request), folderId);
 	}

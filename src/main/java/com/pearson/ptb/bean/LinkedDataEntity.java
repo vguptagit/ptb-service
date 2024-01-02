@@ -5,9 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import com.googlecode.jmapper.annotations.JMap;
 
 public class LinkedDataEntity extends BaseEntity {
-	
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The context of a entity and this will be in URL format
@@ -16,8 +15,7 @@ public class LinkedDataEntity extends BaseEntity {
 	@SerializedName("@context")
 	@JsonProperty("@context")
 	private String context;
-	
-	
+
 	/**
 	 * The type of a entity
 	 */
@@ -25,7 +23,7 @@ public class LinkedDataEntity extends BaseEntity {
 	@SerializedName("@type")
 	@JsonProperty("@type")
 	private String type;
-	
+
 	/** Get {@see #context}. @return {@link #context}. */
 	public String getContext() {
 		return context;

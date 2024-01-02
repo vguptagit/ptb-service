@@ -1,6 +1,5 @@
 package com.pearson.ptb.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import com.pearson.ptb.service.ImageService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-
 /**
  * To upload the image to eps
  *
@@ -26,17 +24,18 @@ public class ImageController extends BaseController {
 	@Autowired()
 	@Qualifier("imageService")
 	private ImageService imageService;
-	
+
 	/**
 	 * To upload the image
+	 * 
 	 * @param file
-	 * imagefile
+	 *            imagefile
 	 * @return image stored path, url
 	 */
 	@ApiOperation(value = "returns the path of saved the image", notes = "returns the path of saved the image")
 	@RequestMapping(value = "/image/upload", method = RequestMethod.POST)
 	@ResponseBody
-	public String upload(@RequestParam("file") MultipartFile file){
+	public String upload(@RequestParam("file") MultipartFile file) {
 		return imageService.uploadImage(file);
 	}
 }

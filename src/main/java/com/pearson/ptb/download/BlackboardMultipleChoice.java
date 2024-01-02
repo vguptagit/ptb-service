@@ -12,7 +12,8 @@ import org.w3c.dom.NodeList;
 import com.pearson.ptb.bean.DownloadFormat;
 import com.pearson.ptb.framework.exception.InternalException;
 /**
- * This <code>BlackboardMultipleChoice</code> is responsible for support black board format for multiple choice questions.
+ * This <code>BlackboardMultipleChoice</code> is responsible for support black
+ * board format for multiple choice questions.
  */
 public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 
@@ -26,11 +27,11 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 	private static final String ITEM = "/item";
 	private static final String RESPCONDITION_MAXVALUE = "/item/resprocessing/outcomes/decvar";
 	private static final String RESPCONDITION = "/item/resprocessing/respcondition";
-	private static final int FEEDBACK_INDEX =2;
+	private static final int FEEDBACK_INDEX = 2;
 
 	/**
-	 * Constructor which takes the download format, sequence, ptbquestionXML as parameters and sets the
-	 * format.
+	 * Constructor which takes the download format, sequence, ptbquestionXML as
+	 * parameters and sets the format.
 	 * 
 	 * @param bbFormat
 	 * @param sequence
@@ -67,39 +68,32 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 								.getAttributes().getNamedItem(INDENT)
 								.setNodeValue(Integer.toString(i + 1));
 						Node child = (Node) ((Element) renderChoice)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).getFirstChild();
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.getFirstChild();
 						((Element) renderChoice)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).removeChild(child);
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.removeChild(child);
 						((Element) renderChoice)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0)
-								.appendChild(
-										bbQuestionXML
-												.createCDATASection(answerChoicesList
-														.get(i).toString()));
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.appendChild(bbQuestionXML.createCDATASection(
+										answerChoicesList.get(i).toString()));
 					} else {
 						newElement.getElementsByTagName("response_label")
 								.item(0).getAttributes().getNamedItem(INDENT)
 								.setNodeValue(Integer.toString(i + 1));
 						NodeList feedback = newElement
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).getChildNodes();
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.getChildNodes();
 						if (feedback.item(0) instanceof CharacterData) {
 							CharacterData child = (CharacterData) feedback
 									.item(0);
-							newElement
-									.getElementsByTagName(FORMATTEDTEXT_TAG)
+							newElement.getElementsByTagName(FORMATTEDTEXT_TAG)
 									.item(0).removeChild(child);
 						}
-						newElement
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
+						newElement.getElementsByTagName(FORMATTEDTEXT_TAG)
 								.item(0)
-								.appendChild(
-										bbQuestionXML
-												.createCDATASection(answerChoicesList
-														.get(i).toString()));
+								.appendChild(bbQuestionXML.createCDATASection(
+										answerChoicesList.get(i).toString()));
 						renderChoice.appendChild(newElement);
 					}
 				}
@@ -113,15 +107,20 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 	// update Resproces element
 	private void updateResprocessing() {
 		try {
-			Node resprocessingmaxvalue = getXMLNode(RESPCONDITION_MAXVALUE,true);
-			resprocessingmaxvalue.getAttributes().getNamedItem("maxvalue").setNodeValue(this.getMaximumScore());
+			Node resprocessingmaxvalue = getXMLNode(RESPCONDITION_MAXVALUE,
+					true);
+			resprocessingmaxvalue.getAttributes().getNamedItem("maxvalue")
+					.setNodeValue(this.getMaximumScore());
 
 			NodeList respconditions = getXMLNodes(RESPCONDITION, true);
 			for (int i = 0; i < respconditions.getLength(); i++) {
 				Node currentItem = respconditions.item(i);
-				String key = currentItem.getAttributes().getNamedItem("title").getNodeValue();
-				if("correct".equals(key)) {
-					((Element) currentItem).getElementsByTagName("varequal").item(0).setTextContent(Integer.toString(getMaximumScoreIndex()));
+				String key = currentItem.getAttributes().getNamedItem("title")
+						.getNodeValue();
+				if ("correct".equals(key)) {
+					((Element) currentItem).getElementsByTagName("varequal")
+							.item(0).setTextContent(
+									Integer.toString(getMaximumScoreIndex()));
 				}
 			}
 		} catch (Exception e) {
@@ -129,20 +128,19 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 					"Exception while updating response processing", e);
 		}
 	}
-	
-	
-//To get index of the Answer choice.
-   private int getMaximumScoreIndex(){        
-       String maxScore = getMaximumScore();
-       int i=1;
-       for (Entry<String, Double> entry : answerKeysWithScore.entries()) {
-           if(Double.toString(entry.getValue()).equals(maxScore)){
-               return i;
-           }
-           i++;
-       }         
-       return i;
-   }
+
+	// To get index of the Answer choice.
+	private int getMaximumScoreIndex() {
+		String maxScore = getMaximumScore();
+		int i = 1;
+		for (Entry<String, Double> entry : answerKeysWithScore.entries()) {
+			if (Double.toString(entry.getValue()).equals(maxScore)) {
+				return i;
+			}
+			i++;
+		}
+		return i;
+	}
 
 	// update Multiple-Choice Itemfeedback
 	private void updateItemfeedback() {
@@ -161,14 +159,13 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 								.getNamedItem(INDENT)
 								.setNodeValue(Integer.toString(i + 1));
 						Node child = (Node) ((Element) itemfeedback)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).getFirstChild();
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.getFirstChild();
 						((Element) itemfeedback)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).removeChild(child);
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.removeChild(child);
 						((Element) itemfeedback)
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0)
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
 								.appendChild(
 										bbQuestionXML.createCDATASection(" "));
 					} else {
@@ -176,19 +173,16 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 								.setNodeValue(Integer.toString(i + 1));
 
 						NodeList feedback = newElement
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0).getChildNodes();
+								.getElementsByTagName(FORMATTEDTEXT_TAG).item(0)
+								.getChildNodes();
 						if (feedback.item(0) instanceof CharacterData) {
 							CharacterData child = (CharacterData) feedback
 									.item(0);
-							newElement
-									.getElementsByTagName(FORMATTEDTEXT_TAG)
+							newElement.getElementsByTagName(FORMATTEDTEXT_TAG)
 									.item(0).removeChild(child);
 						}
-						newElement
-								.getElementsByTagName(FORMATTEDTEXT_TAG)
-								.item(0)
-								.appendChild(
+						newElement.getElementsByTagName(FORMATTEDTEXT_TAG)
+								.item(0).appendChild(
 										bbQuestionXML.createCDATASection(""));
 						rootNode.appendChild(newElement);
 					}

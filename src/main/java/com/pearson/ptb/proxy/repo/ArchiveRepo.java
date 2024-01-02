@@ -2,42 +2,84 @@ package com.pearson.ptb.proxy.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.pearson.ptb.bean.ArchivedFolder;
+import com.pearson.ptb.dataaccess.GenericMongoRepository;
 import com.pearson.ptb.proxy.ArchiveDelegate;
 
-@Repository
+import lombok.RequiredArgsConstructor;
+
+@Repository("archiveRepo")
+@RequiredArgsConstructor
 public class ArchiveRepo implements ArchiveDelegate {
+
+	private final GenericMongoRepository<ArchivedFolder, Long> genericMongoRepository;
 
 	@Override
 	public void archiveFolders(List<ArchivedFolder> folders) {
-		// TODO Auto-generated method stub
-		
+		genericMongoRepository.saveAll(folders);
+
 	}
 
 	@Override
-	public List<ArchivedFolder> getFolders(String userID, String parentFolderId) {
+	public List<ArchivedFolder> getFolders(String userID,
+			String parentFolderId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void saveFolder(ArchivedFolder folder) {
-		// TODO Auto-generated method stub
-		
+		genericMongoRepository.save(folder);
+
 	}
 
+	/**
+	 * Retrieves an {@link ArchivedFolder} entity based on the specified folder
+	 * identifier.
+	 *
+	 * @param folderId
+	 *            The identifier of the folder to retrieve.
+	 * @return The {@link ArchivedFolder} entity matching the specified folder
+	 *         identifier, or null if not found.
+	 */
 	@Override
 	public ArchivedFolder getFolder(String folderId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		return genericMongoRepository.findOne(
+				query.addCriteria(
+						Criteria.where(QueryFields.GUID).is(folderId)),
+				ArchivedFolder.class);
 	}
-
+	/**
+	 * Retrieves an {@link ArchivedFolder} entity based on the specified
+	 * criteria.
+	 *
+	 * @param title
+	 *            The title of the folder to retrieve.
+	 * @param parentId
+	 *            The identifier of the parent folder.
+	 * @param userId
+	 *            The identifier of the user associated with the folder.
+	 * @return The {@link ArchivedFolder} entity matching the specified
+	 *         criteria, or null if not found.
+	 */
 	@Override
-	public ArchivedFolder getFolder(String title, String parentId, String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArchivedFolder getFolder(String title, String parentId,
+			String userId) {
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.USERID).is(userId)
+				.and(QueryFields.PARENTID).is(parentId).and(QueryFields.TITLE)
+				.is(title));
+
+		ArchivedFolder folder = genericMongoRepository.findOne(query,
+				ArchivedFolder.class);
+
+		return folder;
 	}
 
 	@Override
@@ -54,27 +96,32 @@ public class ArchiveRepo implements ArchiveDelegate {
 
 	@Override
 	public List<ArchivedFolder> getChildFolders(String parentFolderId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(
+				Criteria.where(QueryFields.PARENTID).is(parentFolderId));
+		query.with(Sort.by(QueryFields.SEQUENCE));
+		return genericMongoRepository.findAll(query);
 	}
 
 	@Override
 	public void deleteFolders(List<String> ids) {
-		// TODO Auto-generated method stub
-		
+
+		genericMongoRepository.delete(ids);
+
 	}
 
 	@Override
 	public void deleteFolder(String id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/*
 	 * private DataAccessHelper<ArchivedFolder> accessor;
 	 * 
 	 *//**
-		 * Constructor to access DataAccessHelper to perform Container operation.
+		 * Constructor to access DataAccessHelper to perform Container
+		 * operation.
 		 * 
 		 * @throws ConfigException
 		 * @throws UnknownHostException
@@ -90,9 +137,11 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 * accessor.save(folder); }
 	 * 
 	 *//**
-		 * This method will get the root folder of the archived folders from database.
+		 * This method will get the root folder of the archived folders from
+		 * database.
 		 * 
-		 * @param userID ,represents the user.
+		 * @param userID
+		 *            ,represents the user.
 		 * @return ArchivedFolder.
 		 */
 	/*
@@ -117,8 +166,10 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 *//**
 		 * This method will get the archived folders from database.
 		 * 
-		 * @param parentFolderId ,represents the parent folder.
-		 * @param userID         ,represents the user.
+		 * @param parentFolderId
+		 *            ,represents the parent folder.
+		 * @param userID
+		 *            ,represents the user.
 		 * @return list of ArchivedFolders.
 		 */
 	/*
@@ -137,11 +188,13 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 *//**
 		 * This method will get the child folders of the folder from database.
 		 * 
-		 * @param parentFolderId ,represents the parent folder.
+		 * @param parentFolderId
+		 *            ,represents the parent folder.
 		 * @return list of ArchivedFolder.
 		 */
 	/*
-	 * @Override public List<ArchivedFolder> getChildFolders(String parentFolderId){
+	 * @Override public List<ArchivedFolder> getChildFolders(String
+	 * parentFolderId){
 	 * 
 	 * Query<ArchivedFolder> query = accessor.getDataQuery();
 	 * 
@@ -151,7 +204,8 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 *//**
 		 * This method will get the folder from database.
 		 * 
-		 * @param folderId ,represents the folder.
+		 * @param folderId
+		 *            ,represents the folder.
 		 * @return ArchivedFolder.
 		 */
 	/*
@@ -163,9 +217,12 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 *//**
 		 * This method will get the folder from database.
 		 * 
-		 * @param parentId ,represents the parent of the folder.
-		 * @param title    ,represents folder name.
-		 * @param userId   ,represents the user.
+		 * @param parentId
+		 *            ,represents the parent of the folder.
+		 * @param title
+		 *            ,represents folder name.
+		 * @param userId
+		 *            ,represents the user.
 		 * @return ArchivedFolder.
 		 */
 	/*
@@ -173,16 +230,17 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 * String userId){
 	 * 
 	 * ArchivedFolder folder = null; Query<ArchivedFolder> query =
-	 * accessor.getDataQuery(); folder = query .filter(QueryFields.USERID, userId)
-	 * .filter(QueryFields.PARENTID, parentId) .filter(QueryFields.TITLE, title)
-	 * .get();
+	 * accessor.getDataQuery(); folder = query .filter(QueryFields.USERID,
+	 * userId) .filter(QueryFields.PARENTID, parentId)
+	 * .filter(QueryFields.TITLE, title) .get();
 	 * 
 	 * return folder; }
 	 * 
 	 *//**
 		 * This method will get the folder of the test from database.
 		 * 
-		 * @param testId ,represents the test.
+		 * @param testId
+		 *            ,represents the test.
 		 * @return ArchivedFolder.
 		 */
 	/*
@@ -194,17 +252,20 @@ public class ArchiveRepo implements ArchiveDelegate {
 	 *//**
 		 * This method will delete the folders from database.
 		 * 
-		 * @param ids ,list of string represents folders.
+		 * @param ids
+		 *            ,list of string represents folders.
 		 */
 	/*
-	 * @Override public void deleteFolders(List<String> ids) { accessor.delete(ids);
-	 * }
+	 * @Override public void deleteFolders(List<String> ids) {
+	 * accessor.delete(ids); }
 	 * 
 	 *//**
 		 * This method will delete the folder from database.
 		 * 
-		 * @param id ,represents folder.
+		 * @param id
+		 *            ,represents folder.
 		 *//*
-			 * @Override public void deleteFolder(String id) { accessor.delete(id); }
+			 * @Override public void deleteFolder(String id) {
+			 * accessor.delete(id); }
 			 */
 }

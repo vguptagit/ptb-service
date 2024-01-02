@@ -54,53 +54,55 @@ public final class Common {
 	 * This is template string for Evalu8 get question by id end point format
 	 */
 	public static final String QUESTION_END_POINT_FORMAT = "%s/questions/%s";
-	
+
 	/**
 	 * This is template string for Evalu8 - universal request id
 	 */
 	public static final String UNIVERSAL_REQUEST_ID = "universalRequestId";
-	
+
 	/**
 	 * This is template string for Evalu8 - External user id
 	 */
 	public static final String EXT_USER_ID = "extUserId";
-	
+
 	/**
 	 * This is template string for Evalu8 - External user id
-	 */	
+	 */
 	public static final String USER_REQUEST_BODY = "Request body must contain {\"userName\": \"\",\"password\": \"\"}";
-	
+
 	/**
 	 * This is template string for PAF activity creation content type
-	 */	
+	 */
 	public static final String PAF_ACTIVITY_CREATION_CONTENT_TYPE = "application/vnd.pearson.paf.v1.envelope+json;body=\"application/vnd.pearson.paf.v1.assignment+json\"";
-	
+
 	/**
 	 * This is template string for Evalu8 get test by id end point format
 	 */
 	public static final String TEST_END_POINT_FORMAT = "%s/tests/%s";
-	
+
 	/**
-	 * This is template string for Evalu8 get PAF update activity end point format
+	 * This is template string for Evalu8 get PAF update activity end point
+	 * format
 	 */
 	public static final String PAF_UPDATE_ACTIVITY_END_POINT_FORMAT = "%s/%s";
-	
-	
+
 	/**
-	 * This is template string for Evalu8 get PAF version activity creation end point format
+	 * This is template string for Evalu8 get PAF version activity creation end
+	 * point format
 	 */
 	public static final String PAF_VERSION_ACTIVITY_END_POINT_FORMAT = "%s/%s/versions";
-	
+
 	/**
 	 * This is template string for Evalu8 get PAF metadata format
 	 */
-	public static final String PAF_METADATA_FORMAT ="application/vnd.pearson.content.v1.metadata+json";
-	
+	public static final String PAF_METADATA_FORMAT = "application/vnd.pearson.content.v1.metadata+json";
+
 	/**
-	 * This is template string for Evalu8 extended metadata of an activity or question
+	 * This is template string for Evalu8 extended metadata of an activity or
+	 * question
 	 */
-	public static final String EXTENDED_METADATA_SEQUENCE ="sequence";
-		
+	public static final String EXTENDED_METADATA_SEQUENCE = "sequence";
+
 	/**
 	 * Making the Constructor private
 	 */

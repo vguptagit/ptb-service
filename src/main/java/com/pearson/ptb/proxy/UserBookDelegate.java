@@ -10,10 +10,10 @@ import com.pearson.ptb.bean.UserBook;
 public interface UserBookDelegate {
 
 	List<UserBook> getUserBooks(String userId);
-	
+
 	void saveUserBooks(List<UserBook> userBooks);
 
 	UserBook getUserBook(String bookId);
 
-	void saveUserBook(UserBook userBook); 
+	void saveUserBook(UserBook userBook);
 }

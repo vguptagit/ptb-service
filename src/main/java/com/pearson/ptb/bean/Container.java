@@ -12,11 +12,11 @@ import com.googlecode.jmapper.annotations.JMap;
 import com.pearson.ptb.framework.exception.BadDataException;
 
 /**
- * The <code>Container</code> class holds the details of the Container such as created date, modified date,
- * id and questionBindings in the container
+ * The <code>Container</code> class holds the details of the Container such as
+ * created date, modified date, id and questionBindings in the container
  *
  */
-@Document(collection = "Container")
+@Document(collection = "container")
 public class Container extends BaseEntity implements Serializable {
 
 	/**
@@ -24,13 +24,12 @@ public class Container extends BaseEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
 	/**
 	 * Indicate the parentId of Container
 	 */
 	@JMap
 	private String parentId;
-	
+
 	/**
 	 * Indicate the Question Bindings of Container
 	 */
@@ -50,13 +49,13 @@ public class Container extends BaseEntity implements Serializable {
 	@JMap
 	@JsonIgnore
 	private Date modified;
-	
+
 	/**
 	 * Indicate the book id
 	 */
 	@JMap
 	private String bookid;
-	
+
 	/**
 	 * Indicate the sequence
 	 */
@@ -122,16 +121,17 @@ public class Container extends BaseEntity implements Serializable {
 		this.questionBindings = questionBindings;
 	}
 
-	
 	/**
 	 * Validating Container Id field
+	 * 
 	 * @throws BadDataException
 	 */
 	public void validateState() {
 
 		// Validate Container Id field
 		if (StringUtils.isBlank(this.getTitle())) {
-			throw new BadDataException("node title should not be null or Empty");
+			throw new BadDataException(
+					"node title should not be null or Empty");
 		}
 	}
 }

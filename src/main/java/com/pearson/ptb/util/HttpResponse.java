@@ -22,12 +22,12 @@ public class HttpResponse {
 
 	/**
 	 * This is the Apache Http Response.
-	 * */
+	 */
 	private org.apache.http.HttpResponse response = null;
-	
+
 	/**
 	 * Empty Constructor of zero default arguments
-	 * */
+	 */
 	public HttpResponse() {
 		// empty constructor
 	}
@@ -40,17 +40,17 @@ public class HttpResponse {
 	 *            The apache Http Response.
 	 * @throws IOException
 	 *             if an error occurs reading the input stream
-	 * */
+	 */
 	public HttpResponse(org.apache.http.HttpResponse httpResponse)
 			throws IOException {
 		// set http response
 		this.setResponse(httpResponse);
 		// set response message
-		this.setReponseMessage(new String(EntityUtils.toByteArray(this.response
-				.getEntity())));
+		this.setReponseMessage(
+				new String(EntityUtils.toByteArray(this.response.getEntity())));
 		// set response code
-		this.setCode(HttpStatus.valueOf(this.response.getStatusLine()
-				.getStatusCode()));
+		this.setCode(HttpStatus
+				.valueOf(this.response.getStatusLine().getStatusCode()));
 		// consume http response
 		EntityUtils.consume(httpResponse.getEntity());
 	}
@@ -98,19 +98,21 @@ public class HttpResponse {
 	 * @return The reponseMessage
 	 * @throws IOException
 	 */
-	public String getReponseMessage(){
+	public String getReponseMessage() {
 		// get response message
 		return this.reponseMessage;
 	}
-	
+
 	/**
 	 * get the response header value for the given response header key
-	 * @param key, header response key
+	 * 
+	 * @param key,
+	 *            header response key
 	 * @return
 	 */
-	public String getResponseHeader(String key){
+	public String getResponseHeader(String key) {
 		for (Header header : this.response.getAllHeaders()) {
-			if(header.getName().equals(key)){
+			if (header.getName().equals(key)) {
 				return header.getValue();
 			}
 		}

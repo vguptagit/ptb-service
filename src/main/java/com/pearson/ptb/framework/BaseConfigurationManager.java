@@ -1,21 +1,24 @@
 package com.pearson.ptb.framework;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import com.pearson.ptb.framework.exception.ConfigException;
 
 public abstract class BaseConfigurationManager {
 
+	
+	
+	protected static Properties configurationProperties;
 	/**
 	 * This is the map containing all configuration property key value pair
 	 * 
 	 * @author
 	 */
-	protected static Map<String, String> configurationProperties = new HashMap<String, String>();
+	// protected static Map<String, String> configurationProperties = new
+	// HashMap<String, String>();
 
 	/**
 	 * This is the special character regular expression
@@ -44,9 +47,38 @@ public abstract class BaseConfigurationManager {
 	 */
 	protected BaseConfigurationManager(){
 		// load all properties from properties file
-		loadPropertyFile();
+
+		configurationProperties = new Properties();
+		try (InputStream inStream = getClass()
+				.getResourceAsStream("/application.properties")) {
+			if (inStream != null) {
+				configurationProperties.load(inStream);
+				String property = configurationProperties
+						.getProperty("cache.cacheExpiryInSeconds");
+				System.out.println(property + "heloooooooooooooooooooooooo");
+			} else {
+				throw new IOException(
+						"Failed to load properties file. InputStream is null.");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
+	/*
+	 * System.out.println("Attempting to load properties...");
+	 * configurationProperties = new Properties(); try (InputStream inStream =
+	 * getClass() .getResourceAsStream("/application.properties")) { if
+	 * (inStream != null) {
+	 * System.out.println("Loading properties..."+configurationProperties.
+	 * getProperty("cache.cacheExpiryInSeconds"));
+	 * configurationProperties.load(inStream); } else { throw new IOException(
+	 * "Failed to load properties file. InputStream is null."); } } catch
+	 * (IOException e) { e.printStackTrace(); // Handle or log the exception as
+	 * needed }
+	 */
+	
 	protected abstract String getConfigPath();
 
 	/**
@@ -57,37 +89,5 @@ public abstract class BaseConfigurationManager {
 	 * 
 	 * @throws ConfigException 
 	 */
-	private void loadPropertyFile(){
-
-		// create Properties object
-		Properties properties = new Properties();
-		String key = null;
-		String value = null;
-		@SuppressWarnings("rawtypes")
-		Enumeration enumeration = null;
-
-		try {
-			
-			// loads configuration property file
-			properties.load(this.getClass().getResourceAsStream(getConfigPath()));
-		} catch(IOException ex) {
-			
-			throw new ConfigException("Unable to read config file", ex);
-		}
-		// Store all the keys of property file in Enumeration
-		enumeration = properties.keys();
-
-		// iterate over all the elements in Enumeration
-		while (enumeration.hasMoreElements()) {
-
-			// fetch key from Enumeration
-			key = (String) enumeration.nextElement();
-			// fetch value from Enumeration
-			value = ((String) properties.get(key)).replace(
-					SPECIAL_CHARACTER_STRING, "");
-			// put the key value pair in configurationProperties map
-			configurationProperties.put(key, value);
-		}
-	}
 
 }

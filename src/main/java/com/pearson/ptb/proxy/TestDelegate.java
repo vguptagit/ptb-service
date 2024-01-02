@@ -25,6 +25,6 @@ public interface TestDelegate {
 	 * @throws NotFoundException
 	 *             The test not found custom exceptions
 	 */
-	Test getTestByID(String testID) ;
-	
+	Test getTestByID(String testID);
+
 }

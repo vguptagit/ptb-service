@@ -28,15 +28,11 @@ import com.pearson.ptb.util.BookHelper;
 @Repository("book")
 public class BookRepo implements BookDelegate {
 
-	private final GenericMongoRepository<Book, String> genericMongoRepository;
+	private final  GenericMongoRepository<Book, String> genericMongoRepository;
 	
 	@Autowired
 	private com.pearson.ptb.dataaccess.BookDataAccessHelper accessHelper;
 
-	@Autowired
-	public BookRepo(MongoOperations mongoOperations) {
-		this.genericMongoRepository = new GenericMongoRepository<>(mongoOperations, Book.class);
-	}
 
 	@Override
 	public List<Book> getBooks(Map<String, String> criteria) {
@@ -61,8 +57,6 @@ public class BookRepo implements BookDelegate {
 
 		Book book = null;
 		book = genericMongoRepository.findById(bookID);
-		System.out.println(bookID+"++++++++++++++++++++" + book);
-
 		if (book == null) {
 			throw new NotFoundException("Book not found");
 		}
@@ -73,6 +67,7 @@ public class BookRepo implements BookDelegate {
 	@Override
 	public String getTitle(String bookID) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

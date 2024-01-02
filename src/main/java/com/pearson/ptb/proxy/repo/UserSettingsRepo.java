@@ -42,7 +42,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 	@Override
 	public void saveUserSettings(UserSettings userSettings) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -53,26 +53,26 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 	@Override
 	public List<String> getUserBooks(String userid) {
-		// TODO Auto-generated method stub
-		return null;
+		UserSettings userSettings = getUserSettings(userid);
+		return userSettings.getBooks();
 	}
 
 	@Override
 	public void saveUserBooks(String userid, List<String> books) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void saveUserDisciplines(String userid, List<String> disciplines) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void savePrintSettings(String userid, PrintSettings printSettings) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 	@Override
 	public void saveQuestionMetadata(String userid, List<String> disciplines) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/*
@@ -112,16 +112,19 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 			 * 
 			 * UserSettings userSettings = null;
 			 * 
-			 * userSettings = CACHE.get(userid); if (userSettings == null) { userSettings =
-			 * accessor.getById(userid); if (userSettings == null) {
+			 * userSettings = CACHE.get(userid); if (userSettings == null) {
+			 * userSettings = accessor.getById(userid); if (userSettings ==
+			 * null) {
 			 * 
-			 * //user logging in for the first time and hence create the user with default
-			 * settings userSettings = UserHelper.getDefaultSettings(userid);
+			 * //user logging in for the first time and hence create the user
+			 * with default settings userSettings =
+			 * UserHelper.getDefaultSettings(userid);
 			 * accessor.save(userSettings); } CACHE.set(userid, userSettings); }
 			 * 
 			 * return userSettings; }
 			 * 
-			 * @Override public void saveUserSettings(UserSettings userSettings){
+			 * @Override public void saveUserSettings(UserSettings
+			 * userSettings){
 			 * 
 			 * accessor.save(userSettings);
 			 * 
@@ -131,8 +134,8 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 			 * 
 			 * return getUserSettings(userid).getDisciplines(); }
 			 * 
-			 * @Override public void saveUserDisciplines(String userid, List<String>
-			 * disciplines){
+			 * @Override public void saveUserDisciplines(String userid,
+			 * List<String> disciplines){
 			 * 
 			 * UserSettings userSettings = getUserSettings(userid);
 			 * userSettings.setDisciplines(disciplines);
@@ -144,13 +147,16 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 			 * UserSettings userSettings = getUserSettings(userid); return
 			 * userSettings.getBooks(); }
 			 * 
-			 * private void validateBookIds(List<String> books){ List<String> invalidBooks =
-			 * new ArrayList<String>(); for (String bookid : books) { try {
-			 * bookDelegate.getBookByID(bookid); } catch(NotFoundException ex) { // NOSONAR
-			 * invalidBooks.add(bookid); } } if (!invalidBooks.isEmpty()) { throw new
-			 * BadDataException("Invalid book ids: " + invalidBooks.toString()); } }
+			 * private void validateBookIds(List<String> books){ List<String>
+			 * invalidBooks = new ArrayList<String>(); for (String bookid :
+			 * books) { try { bookDelegate.getBookByID(bookid); }
+			 * catch(NotFoundException ex) { // NOSONAR
+			 * invalidBooks.add(bookid); } } if (!invalidBooks.isEmpty()) {
+			 * throw new BadDataException("Invalid book ids: " +
+			 * invalidBooks.toString()); } }
 			 * 
-			 * @Override public void saveUserBooks(String userid, List<String> books) {
+			 * @Override public void saveUserBooks(String userid, List<String>
+			 * books) {
 			 * 
 			 * validateBookIds(books);
 			 * 
@@ -166,8 +172,8 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 			 * 
 			 * }
 			 * 
-			 * @Override public void saveQuestionMetadata(String userid, List<String>
-			 * questionMetadata){
+			 * @Override public void saveQuestionMetadata(String userid,
+			 * List<String> questionMetadata){
 			 * 
 			 * UserSettings userSettings = getUserSettings(userid);
 			 * userSettings.setQuestionMetadata(questionMetadata);
@@ -181,8 +187,8 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 			 * 
 			 * }
 			 * 
-			 * @Override public void savePrintSettings(String userid, PrintSettings
-			 * printSettings){
+			 * @Override public void savePrintSettings(String userid,
+			 * PrintSettings printSettings){
 			 * 
 			 * printSettings.validate();
 			 * 

@@ -33,13 +33,15 @@ public class QTI2p1 implements TestDownload {
 	private QTIParser parser = null;
 	DocumentBuilderFactory factory;
 	DocumentBuilder builder;
-	
-	public QTI2p1(){
+
+	public QTI2p1() {
 		try {
-			factory=DocumentBuilderFactory.newInstance();
+			factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
 		} catch (Exception e) {
-			throw new InternalException("Exception while initializing DocumentBuilderFactory in QTI2p1",e);
+			throw new InternalException(
+					"Exception while initializing DocumentBuilderFactory in QTI2p1",
+					e);
 		}
 	}
 	/**
@@ -102,7 +104,8 @@ public class QTI2p1 implements TestDownload {
 	 */
 	private void buildZIPFile(DownloadInfo downloadInfo,
 			ZipOutputStream zipOuputStream) {
-		Map<String, Document> questionDocuments = getquestionDocuments(downloadInfo);
+		Map<String, Document> questionDocuments = getquestionDocuments(
+				downloadInfo);
 
 		try {
 			for (Map.Entry<String, Document> entry : questionDocuments
@@ -117,8 +120,8 @@ public class QTI2p1 implements TestDownload {
 					.write(documentToByte(getManifestDocument(downloadInfo)));
 
 			zipOuputStream.putNextEntry(new ZipEntry("imsasssessment.xml"));
-			zipOuputStream
-					.write(documentToByte(getAssessmentXMLDocument(downloadInfo)));
+			zipOuputStream.write(
+					documentToByte(getAssessmentXMLDocument(downloadInfo)));
 
 		} catch (Exception e) {
 			throw new InternalException("Exception while writing to ZIP", e);
@@ -136,8 +139,10 @@ public class QTI2p1 implements TestDownload {
 	private Document getAssessmentXMLDocument(DownloadInfo downloadInfo) {
 		// TODO : Hard coded xml format will be moved to template file
 		StringBuilder assessment = new StringBuilder();
-		assessment
-				.append("<?xml version=\"1.0\" encoding=\"utf-8\"?><assessmentTest xmlns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" identifier=\"ASSESSMENT-IDENTIFIER\" title=\"" + downloadInfo.getTestTitle() + "\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd\"><testPart identifier=\"TESTPART\" navigationMode=\"nonlinear\" submissionMode=\"simultaneous\"><assessmentSection identifier=\"SECTION_IDENTIFIER\" title=\"SECTION_TITLE\" visible=\"true\"><ordering shuffle=\"false\" />");
+		assessment.append(
+				"<?xml version=\"1.0\" encoding=\"utf-8\"?><assessmentTest xmlns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" identifier=\"ASSESSMENT-IDENTIFIER\" title=\""
+						+ downloadInfo.getTestTitle()
+						+ "\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd\"><testPart identifier=\"TESTPART\" navigationMode=\"nonlinear\" submissionMode=\"simultaneous\"><assessmentSection identifier=\"SECTION_IDENTIFIER\" title=\"SECTION_TITLE\" visible=\"true\"><ordering shuffle=\"false\" />");
 		for (String questionXML : downloadInfo.getQuestions()) {
 
 			parser.setXMLDocument(questionXML);
@@ -159,21 +164,21 @@ public class QTI2p1 implements TestDownload {
 	private Document getManifestDocument(DownloadInfo downloadInfo) {
 		// TODO : Hard coded xml format will be moved to template file
 		StringBuilder manifest = new StringBuilder();
-		manifest.append("<?xml version=\"1.0\" encoding=\"utf-8\"?><manifest xmlns:imsmd=\"http://www.imsglobal.org/xsd/imsmd_v1p2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:imsqti=\"http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1\" identifier=\""
-				+ UUID.randomUUID().toString()
-				+ "\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p2.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p4.xsd http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1.xsd\" version=\"CP 1.2\" xmlns=\"http://www.imsglobal.org/xsd/imscp_v1p1\">");
-		manifest.append("<metadata><imsmd:lom><imsmd:general><imsmd:title><imsmd:langstring xml:lang=\"en\">"
-				+ UUID.randomUUID().toString()
-				+ "</imsmd:langstring></imsmd:title><imsmd:language>en</imsmd:language></imsmd:general><imsmd:lifecycle><imsmd:version><imsmd:langstring imsmd:lang=\"en\">2.1</imsmd:langstring></imsmd:version><imsmd:status><imsmd:source><imsmd:langstring imsmd:lang=\"x-none\">LOMv1.0</imsmd:langstring></imsmd:source><imsmd:value><imsmd:langstring imsmd:lang=\"x-none\">Final</imsmd:langstring></imsmd:value></imsmd:status></imsmd:lifecycle><imsmd:metametadata><imsmd:metadatascheme>LOMv1.0</imsmd:metadatascheme><imsmd:metadatascheme>QTIv2.1</imsmd:metadatascheme><imsmd:language>en</imsmd:language></imsmd:metametadata></imsmd:lom></metadata><resources>");
+		manifest.append(
+				"<?xml version=\"1.0\" encoding=\"utf-8\"?><manifest xmlns:imsmd=\"http://www.imsglobal.org/xsd/imsmd_v1p2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:imsqti=\"http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1\" identifier=\""
+						+ UUID.randomUUID().toString()
+						+ "\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p2.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p4.xsd http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1.xsd\" version=\"CP 1.2\" xmlns=\"http://www.imsglobal.org/xsd/imscp_v1p1\">");
+		manifest.append(
+				"<metadata><imsmd:lom><imsmd:general><imsmd:title><imsmd:langstring xml:lang=\"en\">"
+						+ UUID.randomUUID().toString()
+						+ "</imsmd:langstring></imsmd:title><imsmd:language>en</imsmd:language></imsmd:general><imsmd:lifecycle><imsmd:version><imsmd:langstring imsmd:lang=\"en\">2.1</imsmd:langstring></imsmd:version><imsmd:status><imsmd:source><imsmd:langstring imsmd:lang=\"x-none\">LOMv1.0</imsmd:langstring></imsmd:source><imsmd:value><imsmd:langstring imsmd:lang=\"x-none\">Final</imsmd:langstring></imsmd:value></imsmd:status></imsmd:lifecycle><imsmd:metametadata><imsmd:metadatascheme>LOMv1.0</imsmd:metadatascheme><imsmd:metadatascheme>QTIv2.1</imsmd:metadatascheme><imsmd:language>en</imsmd:language></imsmd:metametadata></imsmd:lom></metadata><resources>");
 		for (String questionXML : downloadInfo.getQuestions()) {
 			parser.setXMLDocument(questionXML);
 			String identifier = parser.getQTIIdentifier();
 			String title = parser.getQTITitle();
 
-			manifest.append("<resource identifier=\""
-					+ identifier
-					+ "\" type=\"imsqti_item_xmlv2p1\" href=\""
-					+ identifier
+			manifest.append("<resource identifier=\"" + identifier
+					+ "\" type=\"imsqti_item_xmlv2p1\" href=\"" + identifier
 					+ ".xml\"><metadata><qtiMetadata xmlns=\"http://www.imsglobal.org/xsd/imsqti_metadata_v2p1\"><timeDependent>false</timeDependent><interactionType>choiceInteraction</interactionType><feedbackType>none</feedbackType><solutionAvailable>false</solutionAvailable></qtiMetadata><imsmd:lom><imsmd:general><imsmd:identifier>"
 					+ identifier
 					+ "</imsmd:identifier><imsmd:title><imsmd:langstring xml:lang=\"en\">"
@@ -181,12 +186,13 @@ public class QTI2p1 implements TestDownload {
 					+ "</imsmd:langstring></imsmd:title></imsmd:general><imsmd:lifecycle><imsmd:version><imsmd:langstring imsmd:lang=\"en\">2.1</imsmd:langstring></imsmd:version><imsmd:status><imsmd:source><imsmd:langstring imsmd:lang=\"x-none\">LOMv1.0</imsmd:langstring></imsmd:source><imsmd:value><imsmd:langstring imsmd:lang=\"x-none\">Final</imsmd:langstring></imsmd:value></imsmd:status></imsmd:lifecycle><imsmd:technical><imsmd:format>text/x-imsqti-item-xml</imsmd:format></imsmd:technical></imsmd:lom></metadata><file href=\""
 					+ identifier + ".xml\" /></resource>");
 		}
-		manifest.append("<resource identifier=\"ASSESSMENT\" type=\"imsqti_test_xmlv2p1\" href=\"imsasssessment.xml\"><file href=\"imsasssessment.xml\" />");
+		manifest.append(
+				"<resource identifier=\"ASSESSMENT\" type=\"imsqti_test_xmlv2p1\" href=\"imsasssessment.xml\"><file href=\"imsasssessment.xml\" />");
 		for (String questionXML : downloadInfo.getQuestions()) {
 			parser.setXMLDocument(questionXML);
 			String identifier = parser.getQTIIdentifier();
-			manifest.append("<dependency identifierref=\"" + identifier
-					+ "\" />");
+			manifest.append(
+					"<dependency identifierref=\"" + identifier + "\" />");
 		}
 		manifest.append("</resource></resources></manifest>");
 		return stringToDocument(manifest.toString());
@@ -199,7 +205,8 @@ public class QTI2p1 implements TestDownload {
 	 *            , contains the list of questions in qti2.1
 	 * @return
 	 */
-	private Map<String, Document> getquestionDocuments(DownloadInfo downloadInfo) {
+	private Map<String, Document> getquestionDocuments(
+			DownloadInfo downloadInfo) {
 		Map<String, Document> map = new HashMap<String, Document>();
 
 		for (String questionXML : downloadInfo.getQuestions()) {
@@ -221,7 +228,8 @@ public class QTI2p1 implements TestDownload {
 	public byte[] documentToByte(Document document) {
 		byte[] array;
 		try {
-			Transformer transformer=TransformerFactory.newInstance().newTransformer();
+			Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
 			DOMSource source = new DOMSource(document);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			StreamResult result = new StreamResult(bos);

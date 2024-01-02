@@ -18,43 +18,46 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-
 /**
  * User Book APIs for managing migrated IC course contents
  *
  */
 @Controller
 @Api(value = "User Books", description = "User Book APIs for managing migrated IC course contents")
-public class UserBooksController extends BaseController{
-	
+public class UserBooksController extends BaseController {
+
 	@Autowired
 	@Qualifier("userBookService")
 	private UserBookService userBookService;
 
 	/**
-	 * To List of all Users Books migrated from Pegasus, and yet to be imported to Evalu8 
+	 * To List of all Users Books migrated from Pegasus, and yet to be imported
+	 * to Evalu8
+	 * 
 	 * @param request
 	 * @return List of UserBook
 	 */
 	@ApiOperation(value = "List of all Users Books migrated from Pegasus, and yet to be imported to Evalu8", notes = "List all non-imported user books")
 	@RequestMapping(value = "/my/importbooks", method = RequestMethod.GET)
-	@ResponseBody		
+	@ResponseBody
 	public List<UserBook> getUserBooks(HttpServletRequest request) {
-				
+
 		String userId = UserHelper.getUserId(request);
 		return userBookService.getUserBooks(userId);
 	}
-	
+
 	/**
 	 * To import books of given userBookIds
+	 * 
 	 * @param userBookIds
 	 * @param request
 	 */
 	@ApiOperation(value = "Users Books to be imported", notes = "Import selected user books")
 	@RequestMapping(value = "/my/importbooks", method = RequestMethod.POST)
-	@ResponseBody		
-	public void importUserBooks(@RequestBody List<String> userBookIds, HttpServletRequest request) {
-				
+	@ResponseBody
+	public void importUserBooks(@RequestBody List<String> userBookIds,
+			HttpServletRequest request) {
+
 		String userId = UserHelper.getUserId(request);
 		userBookService.importUserBooks(userBookIds, userId);
 	}

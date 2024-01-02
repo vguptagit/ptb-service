@@ -6,7 +6,8 @@ import java.util.Queue;
 import com.pearson.ptb.framework.exception.InternalException;
 
 /**
- * The <code>DownloadInfo</code> class is responsible to hold the details of the Download document
+ * The <code>DownloadInfo</code> class is responsible to hold the details of the
+ * Download document
  *
  */
 public class DownloadInfo implements Cloneable {
@@ -20,7 +21,7 @@ public class DownloadInfo implements Cloneable {
 	 * The questions of the test
 	 */
 	private Queue<String> questions;
-	
+
 	/**
 	 * The printSettings of the document
 	 */
@@ -58,23 +59,26 @@ public class DownloadInfo implements Cloneable {
 
 	/**
 	 * The details for download document
+	 * 
 	 * @return DownloadInfo
 	 * @throws InternalException
-	 */	
-	
+	 */
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public DownloadInfo clone() {
 		try {
-			
+
 			DownloadInfo downloadInfo;
-			downloadInfo= (DownloadInfo) super.clone();
-			downloadInfo.setQuestions((Queue<String>) ((LinkedList<String>) this.questions).clone());
+			downloadInfo = (DownloadInfo) super.clone();
+			downloadInfo.setQuestions(
+					(Queue<String>) ((LinkedList<String>) this.questions)
+							.clone());
 			downloadInfo.setPrintSettings(this.printSettings.clone());
 			return downloadInfo;
 		} catch (CloneNotSupportedException e) {
-			throw new InternalException(
-					"Exception while cloning  DownloadInfo", e);
+			throw new InternalException("Exception while cloning  DownloadInfo",
+					e);
 		}
 	}
 }

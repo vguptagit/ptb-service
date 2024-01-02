@@ -8,7 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageDelegate {
 	/**
 	 * saving image to repository
-	 * @param file, Springframework's file which contains byte array
+	 * 
+	 * @param file,
+	 *            Springframework's file which contains byte array
 	 * @return
 	 */
 	public String uploadImage(MultipartFile file);

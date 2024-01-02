@@ -51,15 +51,16 @@ public class TestVersionInfo {
 	 * @return All validation messages
 	 * @throws ConfigException
 	 */
-	public void validateState(){
+	public void validateState() {
 		ConfigurationManager config = ConfigurationManager.getInstance();
 		// Validate noOfVersions field and this field should be grater than zero
 		if (this.noOfVersions <= 0
 				|| this.noOfVersions >= config.getMaxScrambledVersions()) {
-			throw new BadDataException("VersionInfo.noOfVersions should be grater than zero and less than "
-					+ config.getMaxScrambledVersions());
+			throw new BadDataException(
+					"VersionInfo.noOfVersions should be grater than zero and less than "
+							+ config.getMaxScrambledVersions());
 		}
-		
+
 	}
 
 }

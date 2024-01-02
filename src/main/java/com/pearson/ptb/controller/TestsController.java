@@ -17,7 +17,6 @@ import com.pearson.ptb.service.MetadataService;
 import com.pearson.ptb.service.TestService;
 //import com.pearson.mytest.util.Swagger;
 import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * To list all Tests for given book and Questions in the given test
@@ -46,7 +45,8 @@ public class TestsController extends BaseController {
 	 * @return Test
 	 */
 
-	//@ApiOperation(value = Swagger.GET_TESTS_VALUE, notes = Swagger.GET_TESTS_NOTE)
+	// @ApiOperation(value = Swagger.GET_TESTS_VALUE, notes =
+	// Swagger.GET_TESTS_NOTE)
 
 	@RequestMapping(value = "/tests/{id}", method = RequestMethod.GET)
 
@@ -62,7 +62,8 @@ public class TestsController extends BaseController {
 	 * @return List<Test> of test
 	 */
 
-//	@ApiOperation(value = Swagger.GET_TESTS_VALUE, notes = Swagger.GET_TESTS_NOTE)
+	// @ApiOperation(value = Swagger.GET_TESTS_VALUE, notes =
+	// Swagger.GET_TESTS_NOTE)
 
 	@RequestMapping(value = "/books/{id}/tests", method = RequestMethod.GET)
 
@@ -78,7 +79,8 @@ public class TestsController extends BaseController {
 	 * @return list of questions
 	 */
 
-//	@ApiOperation(value = Swagger.GET_TESTQUESTIONS_VALUE, notes = Swagger.GET_TESTQUESTIONS_NOTE)
+	// @ApiOperation(value = Swagger.GET_TESTQUESTIONS_VALUE, notes =
+	// Swagger.GET_TESTQUESTIONS_NOTE)
 
 	@RequestMapping(value = "/test/{id}/questions", method = RequestMethod.GET)
 
@@ -98,7 +100,8 @@ public class TestsController extends BaseController {
 	 * @param testId
 	 * @return Metadata
 	 */
-//	@ApiOperation(value = Swagger.GET_TESTS_METADATA_VALUE, notes = Swagger.GET_TESTS_METADATA_NOTE)
+	// @ApiOperation(value = Swagger.GET_TESTS_METADATA_VALUE, notes =
+	// Swagger.GET_TESTS_METADATA_NOTE)
 
 	@RequestMapping(value = "test/{testId}/metadata", method = RequestMethod.GET)
 
