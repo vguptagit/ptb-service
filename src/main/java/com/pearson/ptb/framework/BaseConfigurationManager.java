@@ -26,9 +26,8 @@ public abstract class BaseConfigurationManager {
 	 * @author
 	 */
 	protected static String SPECIAL_CHARACTER_STRING = "\\s+";
-	
-	protected static String HEALTH_SPECIAL_CHARACTER = "_";
 
+	protected static String HEALTH_SPECIAL_CHARACTER = "_";
 
 	/**
 	 * This is a lock object.
@@ -43,9 +42,9 @@ public abstract class BaseConfigurationManager {
 	 * ConfigurationManager as a singleton
 	 * </p>
 	 * 
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
-	protected BaseConfigurationManager(){
+	protected BaseConfigurationManager() {
 		// load all properties from properties file
 
 		configurationProperties = new Properties();
@@ -87,7 +86,7 @@ public abstract class BaseConfigurationManager {
 	 * initialize configurationProperties map
 	 * </p>
 	 * 
-	 * @throws ConfigException 
+	 * @throws ConfigException
 	 */
 
 }
