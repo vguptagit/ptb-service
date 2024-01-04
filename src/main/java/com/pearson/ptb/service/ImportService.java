@@ -52,8 +52,17 @@ public class ImportService {
 		convertContainerJsonToList(books.getContainers(), containersTemp, "",
 				book.getGuid());
 
-		bookDelegate.save(book);
-		containerDelegate.save(containersTemp);
+	
+		try {
+			bookDelegate.save(book);
+			containerDelegate.save(containersTemp);
+		} catch (Exception e) {
+			// TODO: handle exception
+		
+		e.printStackTrace();
+		}
+			
+		
 	}
 
 	/**

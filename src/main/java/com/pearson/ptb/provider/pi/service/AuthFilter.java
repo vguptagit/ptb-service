@@ -33,6 +33,7 @@ public class AuthFilter implements HandlerInterceptor {
 	@Bean
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+		
 		boolean requestStatus = false;
 		try {
 			// This is for download usecase
