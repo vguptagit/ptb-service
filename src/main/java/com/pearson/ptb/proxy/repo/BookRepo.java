@@ -34,7 +34,7 @@ public class BookRepo implements BookDelegate {
 	private final  GenericMongoRepository<Book, String> genericMongoRepository;
 	
 	@Autowired
-	private com.pearson.ptb.dataaccess.BookDataAccessHelper accessHelper;
+	private BookDataAccessHelper accessHelper;
 
 
 	@Override
