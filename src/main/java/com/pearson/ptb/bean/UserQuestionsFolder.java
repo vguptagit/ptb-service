@@ -5,11 +5,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * The <code>UserQuestionsFolder</code> class responsible to hold the user
  * created questions
  *
  */
+
+@Document(collection = "folder")
 public class UserQuestionsFolder extends UserFolder {
 
 	private static final long serialVersionUID = 1L;

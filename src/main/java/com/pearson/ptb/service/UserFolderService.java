@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -13,6 +14,7 @@ import com.pearson.ptb.bean.UserQuestionsFolder;
 import com.pearson.ptb.framework.CacheWrapper;
 import com.pearson.ptb.framework.exception.BadDataException;
 import com.pearson.ptb.framework.exception.DuplicateTitleException;
+import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.UserFoldersDelegate;
 import com.pearson.ptb.util.CacheKey;
@@ -239,6 +241,10 @@ public class UserFolderService {
 			}
 		}
 
+		if(CollectionUtils.isEmpty(folders)) {
+			return false;
+		}
+		
 		for (UserFolder userFolder : folders) {
 			if (!userFolder.getGuid().equals(folder.getGuid())
 					&& userFolder.getTitle().equals(folder.getTitle())) {
@@ -259,6 +265,10 @@ public class UserFolderService {
 		List<UserQuestionsFolder> folders = new ArrayList<UserQuestionsFolder>();
 		UserQuestionsFolder rootFolder = userFoldersRepo
 				.getMyQuestionRoot(userId);
+		if(null == rootFolder) {
+			throw new InternalException("Unable to create root folder for question for user Id " + userId);
+		}
+		
 		if (folder.getParentId().equals(rootFolder.getGuid())) {
 			folders = userFoldersRepo.getMyQuestionsFolders(userId);
 		} else {
@@ -268,6 +278,11 @@ public class UserFolderService {
 						.getChildQuestionFolders(folder.getParentId());
 			}
 		}
+		
+		if(CollectionUtils.isEmpty(folders)) {
+			return false;
+		}
+		
 		for (UserQuestionsFolder userFolder : folders) {
 			if (!userFolder.getGuid().equals(folder.getGuid())
 					&& userFolder.getTitle().equals(folder.getTitle())) {

@@ -3,6 +3,7 @@ package com.pearson.ptb.proxy.repo;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -26,7 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserFoldersRepo implements UserFoldersDelegate {
 
+	
 	private final GenericMongoRepository<UserFolder, String> genericMongoRepository;
+	private final GenericMongoRepository<UserQuestionsFolder, String> userQuestionFolderRepository;
 
 	@Override
 	public void saveFolders(List<UserFolder> folders) {
@@ -37,7 +40,7 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	@Override
 	public void saveUserQuestionFolders(List<UserQuestionsFolder> folders) {
 		// TODO Auto-generated method stub
-
+		userQuestionFolderRepository.saveAll(folders);
 	}
 
 	@Override
@@ -124,15 +127,45 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 
 	@Override
 	public UserQuestionsFolder getMyQuestionRoot(String userID) {
-		// TODO Auto-generated method stub
+		Query query = userQuestionFolderRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.USERID).is(userID))
+		.addCriteria(Criteria.where(QueryFields.PARENTID).is(userID));
+		List<UserQuestionsFolder> rootFolders = userQuestionFolderRepository.findAll(query, UserQuestionsFolder.class);
+		
+		
+		if(CollectionUtils.isEmpty(rootFolders)) {
+			
+			UserQuestionsFolder folder = new UserQuestionsFolder();
+			
+			folder.setGuid(UUID.randomUUID().toString());
+			folder.setUserID(userID);
+			folder.setParentId(userID);
+			folder.setSequence(1.0);
+			saveFolder(folder);
+
+			rootFolders = userQuestionFolderRepository.findAll(query, UserQuestionsFolder.class);
+		}
+		
+		if(CollectionUtils.isNotEmpty(rootFolders)) {
+			return rootFolders.get(0);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public List<UserFolder> getChildFolders(String userID,
 			String parentFolderId) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		if(null != parentFolderId) {
+			query.addCriteria(
+					Criteria.where(QueryFields.PARENTID).is(parentFolderId));
+		}
+		
+		query.addCriteria(Criteria.where(QueryFields.USERID).is(userID));
+		query.with(Sort.by(QueryFields.SEQUENCE));
+
+		return genericMongoRepository.findAll(query, UserFolder.class);
 	}
 
 	@Override
@@ -154,14 +187,20 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 
 	@Override
 	public List<UserQuestionsFolder> getMyQuestionsFolders(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = userQuestionFolderRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.PARENTID).is(getMyQuestionRoot(userID).getGuid()))
+		.with(Sort.by(QueryFields.SEQUENCE));;
+		List<UserQuestionsFolder> folders = userQuestionFolderRepository.findAll(query, UserQuestionsFolder.class);		
+		return folders;
 	}
 
 	@Override
 	public List<UserQuestionsFolder> getChildQuestionFolders(String folderid) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = userQuestionFolderRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.PARENTID).is(folderid))
+		.with(Sort.by(QueryFields.SEQUENCE));;
+		List<UserQuestionsFolder> folders = userQuestionFolderRepository.findAll(query, UserQuestionsFolder.class);		
+		return folders;
 	}
 
 	@Override

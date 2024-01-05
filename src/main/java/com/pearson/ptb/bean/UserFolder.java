@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.pearson.ptb.framework.exception.BadDataException;
 import com.pearson.ptb.util.ExceptionHelper;
@@ -17,6 +18,7 @@ import com.pearson.ptb.util.ExceptionHelper;
  * @author nithinjain
  *
  */
+@Document(collection = "folder")
 public class UserFolder extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
