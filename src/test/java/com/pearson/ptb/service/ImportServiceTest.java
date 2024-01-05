@@ -1,11 +1,7 @@
 package com.pearson.ptb.service;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.pearson.ptb.bean.Book;
 import com.pearson.ptb.bean.Books;
 import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.bean.Containers;
-import com.pearson.ptb.proxy.BookDelegate;
-import com.pearson.ptb.proxy.ContainerDelegate;
 import com.pearson.ptb.proxy.repo.BookRepo;
 import com.pearson.ptb.proxy.repo.ContainerRepo;
 

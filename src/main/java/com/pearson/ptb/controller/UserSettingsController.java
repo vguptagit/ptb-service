@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pearson.ptb.bean.PrintSettings;
 import com.pearson.ptb.bean.UserSettings;
@@ -28,8 +29,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 
-@Controller
 
+@RestController
 @Api(value = "User Test Preferences", description = "User Preference APIs")
 public class UserSettingsController extends BaseController {
 
@@ -50,10 +51,9 @@ public class UserSettingsController extends BaseController {
 	 * @return UserSettings
 	 */
 
+	
 	@ApiOperation(value = "Returns User level preference settings")
-
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
-
 	@ResponseBody
 	public UserSettings getUserSettings(HttpServletRequest request) {
 
@@ -98,6 +98,7 @@ public class UserSettingsController extends BaseController {
 	public List<String> getUserDisciplines(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
+		
 
 		return userSettingService.getUserDisciplines(userid);
 	}
