@@ -33,7 +33,6 @@ public class ContainerRepo implements ContainerDelegate {
 	
 	
 
-	private final GenericMongoRepository<Container, String> genericMongoRepository;
 
 	private final GenericMongoRepository<Container, String> genericMongoRepository;
 

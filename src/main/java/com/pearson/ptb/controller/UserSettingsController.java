@@ -1,3 +1,4 @@
+
 package com.pearson.ptb.controller;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pearson.ptb.bean.PrintSettings;
 import com.pearson.ptb.bean.UserSettings;
@@ -26,7 +28,9 @@ import jakarta.servlet.http.HttpServletResponse;
  * User Preference APIs
  *
  */
-@Controller
+
+
+@RestController
 @Api(value = "User Test Preferences", description = "User Preference APIs")
 public class UserSettingsController extends BaseController {
 
@@ -34,7 +38,9 @@ public class UserSettingsController extends BaseController {
 	 * @Qualifier annotation searched for the value books in
 	 *            appServlet-servlet.xml file created instance
 	 */
+
 	@Autowired
+
 	@Qualifier("userSettingService")
 	private UserSettingsService userSettingService;
 
@@ -44,6 +50,8 @@ public class UserSettingsController extends BaseController {
 	 * @param request
 	 * @return UserSettings
 	 */
+
+	
 	@ApiOperation(value = "Returns User level preference settings")
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
 	@ResponseBody
@@ -62,9 +70,11 @@ public class UserSettingsController extends BaseController {
 	 * @param response
 	 * @param userSettings
 	 */
+
 	@RequestMapping(value = "/settings", method = RequestMethod.POST)
 	public void saveUserSettings(HttpServletRequest request,
 			HttpServletResponse response,
+
 			@Valid @RequestBody UserSettings userSettings) {
 
 		String userid = UserHelper.getUserId(request);
@@ -81,11 +91,14 @@ public class UserSettingsController extends BaseController {
 	 * @param request
 	 * @return List of disciplines
 	 */
+
 	@RequestMapping(value = "/settings/disciplines", method = RequestMethod.GET)
+
 	@ResponseBody
 	public List<String> getUserDisciplines(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
+		
 
 		return userSettingService.getUserDisciplines(userid);
 	}
@@ -97,10 +110,13 @@ public class UserSettingsController extends BaseController {
 	 * @param response
 	 * @param disciplines
 	 */
+
 	@RequestMapping(value = "/settings/disciplines", method = RequestMethod.POST)
+
 	@ResponseBody
 	public void saveUserDisciplines(HttpServletRequest request,
 			HttpServletResponse response,
+
 			@RequestBody List<String> disciplines) {
 
 		String userid = UserHelper.getUserId(request);
@@ -116,7 +132,9 @@ public class UserSettingsController extends BaseController {
 	 * @param request
 	 * @return list of books
 	 */
+
 	@RequestMapping(value = "/settings/books", method = RequestMethod.GET)
+
 	@ResponseBody
 	public List<String> getUserBooks(HttpServletRequest request) {
 
@@ -135,7 +153,9 @@ public class UserSettingsController extends BaseController {
 	 * @param response
 	 * @param books
 	 */
+
 	@RequestMapping(value = "/settings/books", method = RequestMethod.POST)
+
 	@ResponseBody
 	public void saveUserBooks(HttpServletRequest request,
 			HttpServletResponse response, @RequestBody List<String> books) {
@@ -153,7 +173,9 @@ public class UserSettingsController extends BaseController {
 	 * @param request
 	 * @return List of Question Metadata
 	 */
+
 	@RequestMapping(value = "/settings/questionmetadata", method = RequestMethod.GET)
+
 	@ResponseBody
 	public List<String> getQuestionMetadata(HttpServletRequest request) {
 
@@ -172,10 +194,13 @@ public class UserSettingsController extends BaseController {
 	 * @param response
 	 * @param questionMetadata
 	 */
+
 	@RequestMapping(value = "/settings/questionmetadata", method = RequestMethod.POST)
+
 	@ResponseBody
 	public void saveQuestionMetadata(HttpServletRequest request,
 			HttpServletResponse response,
+
 			@RequestBody List<String> questionMetadata) {
 
 		String userid = UserHelper.getUserId(request);
@@ -191,7 +216,9 @@ public class UserSettingsController extends BaseController {
 	 * @param request
 	 * @return PrintSettings
 	 */
+
 	@RequestMapping(value = "/settings/printsettings", method = RequestMethod.GET)
+
 	@ResponseBody
 	public PrintSettings getPrintSettings(HttpServletRequest request) {
 
@@ -211,9 +238,11 @@ public class UserSettingsController extends BaseController {
 	 * @param printSettings
 	 */
 	@RequestMapping(value = "/settings/printsettings", method = RequestMethod.POST)
+
 	@ResponseBody
 	public void savePrintsettings(HttpServletRequest request,
 			HttpServletResponse response,
+
 			@RequestBody PrintSettings printSettings) {
 
 		String userid = UserHelper.getUserId(request);
