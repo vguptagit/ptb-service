@@ -21,7 +21,7 @@
 		<org.aspectj-weaver>1.6.1</org.aspectj-weaver>
 
 		<java.version>17</java.version>
-
+		<finalName>ptb</finalName>
 
 	</properties>
 	<dependencies>
@@ -389,6 +389,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${finalName}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
