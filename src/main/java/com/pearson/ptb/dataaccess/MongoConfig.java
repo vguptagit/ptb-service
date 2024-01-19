@@ -23,7 +23,17 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	@Value("${spring.data.mongodb.database}")
 	private String dbName;
 
-	
+	@Value("${spring.data.mongodb.host}")
+	private String host;
+
+	@Value("${spring.data.mongodb.username}")
+	private String username;
+
+	@Value("${spring.data.mongodb.password}")
+	private String password;
+
+	@Value("${spring.data.mongodb.port}")
+	private int port;
 
 	@Override
 	protected String getDatabaseName() {
@@ -35,48 +45,16 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 		return MongoClients.create(mongoClientSettings());
 	}
 
-	@Override // Add this annotation to explicitly indicate you are overriding
-				// the method
+	@Override
 	protected MongoClientSettings mongoClientSettings() {
 		ConnectionString connectionString = new ConnectionString(
-				"mongodb://localhost:27017/dbName");
-		MongoClientSettings.Builder builder = MongoClientSettings.builder()
-				.applyConnectionString(connectionString);
-		// Add additional settings if needed
+				"mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + dbName);
+		MongoClientSettings.Builder builder = MongoClientSettings.builder().applyConnectionString(connectionString);
 		return builder.build();
 	}
 
 	@Bean
 	public MongoOperations mongoOperations() {
-		return new MongoTemplate(new SimpleMongoClientDatabaseFactory(
-				mongoClient(), getDatabaseName()));
+		return new MongoTemplate(new SimpleMongoClientDatabaseFactory(mongoClient(), getDatabaseName()));
 	}
-	/*
-	 * 
-	 * @Value("${spring.data.mongodb.database}") private String dbName;
-	 * 
-	 * 
-	 * @Value("${spring.data.mongodb.uri}") private String mongoUri;
-	 * 
-	 * 
-	 * @Autowired private ApplicationContext applicationContext;
-	 * 
-	 * @Override protected String getDatabaseName() { return dbName; }
-	 * 
-	 * @Override public MongoClient mongoClient() { return
-	 * MongoClients.create(); }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * @Override
-	 * 
-	 * @Bean public MongoClientSettings mongoClientSettings() { ConnectionString
-	 * connectionString = new ConnectionString(mongoUri); return
-	 * MongoClientSettings.builder() .applyConnectionString(connectionString) //
-	 * Add other settings as needed .build(); }
-	 * 
-	 * 
-	 */
-
 }
