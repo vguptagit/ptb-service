@@ -23,17 +23,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	@Value("${spring.data.mongodb.database}")
 	private String dbName;
 
-	@Value("${spring.data.mongodb.host}")
-	private String host;
-
-	@Value("${spring.data.mongodb.username}")
-	private String username;
-
-	@Value("${spring.data.mongodb.password}")
-	private String password;
-
-	@Value("${spring.data.mongodb.port}")
-	private int port;
+	
 
 	@Override
 	protected String getDatabaseName() {
@@ -45,16 +35,22 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 		return MongoClients.create(mongoClientSettings());
 	}
 
-	@Override
+	@Override // Add this annotation to explicitly indicate you are overriding
+				// the method
 	protected MongoClientSettings mongoClientSettings() {
 		ConnectionString connectionString = new ConnectionString(
-				"mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + dbName);
-		MongoClientSettings.Builder builder = MongoClientSettings.builder().applyConnectionString(connectionString);
+				"mongodb://localhost:27017/dbName");
+		MongoClientSettings.Builder builder = MongoClientSettings.builder()
+				.applyConnectionString(connectionString);
+		// Add additional settings if needed
 		return builder.build();
 	}
 
 	@Bean
 	public MongoOperations mongoOperations() {
-		return new MongoTemplate(new SimpleMongoClientDatabaseFactory(mongoClient(), getDatabaseName()));
+		return new MongoTemplate(new SimpleMongoClientDatabaseFactory(
+				mongoClient(), getDatabaseName()));
 	}
+
+
 }
