@@ -74,8 +74,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pearson.ptb.proxy.MetadataService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
+@Tag(name="Dashboard")
 @RestController
 // @RequestMapping("/api")
 @AllArgsConstructor

@@ -2,8 +2,6 @@ package com.pearson.ptb.framework;
 
 import com.pearson.ptb.framework.exception.ConfigException;
 
-import scala.collection.generic.BitOperations.Int;
-
 /**
  * This class will is used to read the configuration.
  */

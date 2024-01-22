@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,9 +17,9 @@ import com.pearson.ptb.bean.PrintSettings;
 import com.pearson.ptb.bean.UserSettings;
 import com.pearson.ptb.service.UserSettingsService;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -29,9 +28,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 
-
+@Tag(name="User Test Preferences", description = "User Preference APIs")
 @RestController
-@Api(value = "User Test Preferences", description = "User Preference APIs")
 public class UserSettingsController extends BaseController {
 
 	/**
@@ -51,8 +49,7 @@ public class UserSettingsController extends BaseController {
 	 * @return UserSettings
 	 */
 
-	
-	@ApiOperation(value = "Returns User level preference settings")
+    @Operation(summary = "Returns User level preference settings")
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
 	@ResponseBody
 	public UserSettings getUserSettings(HttpServletRequest request) {

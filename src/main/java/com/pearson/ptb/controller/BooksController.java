@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,10 +17,11 @@ import com.pearson.ptb.bean.Book;
 import com.pearson.ptb.service.BookService;
 import com.pearson.ptb.util.URLHelper;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+
 
 /**
  * To get the books and disciplines for the user
@@ -29,8 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:9000")
-
-@Api(value = "Books", description = "Book APIs")
+@Tag(name="Books", description = "Book APIs")
 public class BooksController extends BaseController {
 
 	private static final Logger logger = LogManager
@@ -50,7 +49,7 @@ public class BooksController extends BaseController {
 	 * @return List<Book>, a list of all books
 	 *
 	 */
-	@ApiOperation(value = "Returns a list of all Books", notes = "Returns a list of all books")
+    @Operation(summary = "Returns a list of all Books", description = "Returns a list of all books")
 	@GetMapping("/books")
 	@ResponseBody
 	public List<Book> getAllBooks(HttpServletRequest request) {

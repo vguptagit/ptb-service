@@ -17,16 +17,18 @@ import com.pearson.ptb.provider.pi.service.AuthenticationProvider;
 import com.pearson.ptb.provider.pi.service.AuthenticationService;
 import com.pearson.ptb.provider.pi.service.Email;
 import com.pearson.ptb.provider.pi.service.UserProfile;
-//import com.pearson.mytest.proxy.mytest.repo.LoginRepo;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Authentication of the user
  *
  */
 @RestController
-@Api(value = "Authenticate", description = "Get Pearson Token from Access Token")
+@Tag(name="Authentication", description = "Get Pearson Token from Access Token")
+@ApiResponse(description = "Get Pearson Token from Access Token")
 public class AuthenticationController extends BaseController {
 
 	@Autowired
@@ -39,7 +41,7 @@ public class AuthenticationController extends BaseController {
 	 * @return Pearson Token as a string
 	 *
 	 */
-	@ApiOperation(value = "Returns Pearson Token", notes = "Returns Pearson Token as a string")
+    @Operation(summary = "Returns Pearson Token", description = "Returns Pearson Token as a string")
 	@RequestMapping(value = "/login", method = {RequestMethod.POST,
 			RequestMethod.HEAD})
 	@ResponseBody

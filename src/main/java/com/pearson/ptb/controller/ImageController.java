@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pearson.ptb.service.ImageService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * To upload the image to eps
  *
  */
 @Controller
-@Api(value = "Image", description = "Image APIs")
+@Tag(name = "Image", description = "Image APIs")
 public class ImageController extends BaseController {
 
 	@Autowired()
@@ -32,7 +33,7 @@ public class ImageController extends BaseController {
 	 *            imagefile
 	 * @return image stored path, url
 	 */
-	@ApiOperation(value = "returns the path of saved the image", notes = "returns the path of saved the image")
+	@Operation(summary = "returns the path of saved the image", description = "returns the path of saved the image")
 	@RequestMapping(value = "/image/upload", method = RequestMethod.POST)
 	@ResponseBody
 	public String upload(@RequestParam("file") MultipartFile file) {

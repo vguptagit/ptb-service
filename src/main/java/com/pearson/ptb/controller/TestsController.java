@@ -15,8 +15,8 @@ import com.pearson.ptb.bean.QuestionOutput;
 import com.pearson.ptb.bean.Test;
 import com.pearson.ptb.service.MetadataService;
 import com.pearson.ptb.service.TestService;
-//import com.pearson.mytest.util.Swagger;
-import com.wordnik.swagger.annotations.Api;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * To list all Tests for given book and Questions in the given test
@@ -24,8 +24,7 @@ import com.wordnik.swagger.annotations.Api;
  */
 
 @Controller
-
-@Api(value = "tests", description = "tests")
+@Tag(name="MyTests", description = "tests")
 public class TestsController extends BaseController {
 
 	@Autowired
