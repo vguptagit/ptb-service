@@ -11,23 +11,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pearson.ptb.util.Swagger;
 import com.pearson.ptb.bean.ArchiveItem;
 import com.pearson.ptb.bean.ArchivedFolder;
 import com.pearson.ptb.bean.TestMetadata;
 import com.pearson.ptb.bean.UserFolder;
 import com.pearson.ptb.service.ArchiveService;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Provides the archive, restore and delete functionality for test and folder
  *
  */
-
+@Tag(name = "Archive", description = "Archive restore APIs")
 @RestController
-@Api(value = "Archive", description = "Archive restore APIs")
+@ApiResponse(description = "Archive restore APIs")
 public class ArchiveController extends BaseController {
 
 	@Autowired
@@ -40,9 +43,8 @@ public class ArchiveController extends BaseController {
 	 * @return <code>ArchivedFolder</code>
 	 */
 
-	// @ApiOperation(value = Swagger.ARCHIVEFOLDER_VALUE, notes =
-	// Swagger.ARCHIVEFOLDER_NOTE)
-
+	@Operation(summary = Swagger.ARCHIVEFOLDER_VALUE, description = 
+	 Swagger.ARCHIVEFOLDER_NOTE)
 	@RequestMapping(value = "/my/archive/folders", method = RequestMethod.POST)
 	@ResponseBody
 	// done
@@ -56,8 +58,8 @@ public class ArchiveController extends BaseController {
 	 * @param archiveItem
 	 * @return UserFolder
 	 */
-	// @ApiOperation(value = Swagger.RESTOREFOLDER_VALUE, notes =
-	// Swagger.RESTOREFOLDER_NOTE)
+	 @Operation(summary = Swagger.RESTOREFOLDER_VALUE, description =
+	 Swagger.RESTOREFOLDER_NOTE)
 
 	@RequestMapping(value = "/my/restore/folders", method = RequestMethod.POST)
 	@ResponseBody
@@ -71,8 +73,8 @@ public class ArchiveController extends BaseController {
 	 * @param folderId
 	 *            as String
 	 */
-	// @ApiOperation(value = Swagger.DELETEFOLDER_VALUE, notes =
-	// Swagger.DELETEFOLDER_NOTE)
+	 @Operation(summary = Swagger.DELETEFOLDER_VALUE, description = 
+	 Swagger.DELETEFOLDER_NOTE)
 
 	@RequestMapping(value = "/my/delete/folders/{folderId}", method = RequestMethod.DELETE)
 
@@ -88,8 +90,8 @@ public class ArchiveController extends BaseController {
 	 * @return List<ArchivedFolder> of the archived folder
 	 */
 
-	// @ApiOperation(value = Swagger.GET_ARCHIVEROOT_FOLDERS_VALUE, notes =
-	// Swagger.GET_ARCHIVEROOT_FOLDERS_NOTE)
+	 @Operation(summary = Swagger.GET_ARCHIVEROOT_FOLDERS_VALUE, description =
+	 Swagger.GET_ARCHIVEROOT_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders", method = RequestMethod.GET)
 
@@ -106,8 +108,8 @@ public class ArchiveController extends BaseController {
 	 * @return List<ArchivedFolder> of the archived folder
 	 */
 
-	// @ApiOperation(value = Swagger.GET_ARCHIVEFOLDERS_VALUE, notes =
-	// Swagger.GET_ARCHIVEFOLDERS_NOTE)
+	 @Operation(summary = Swagger.GET_ARCHIVEFOLDERS_VALUE, description =
+	 Swagger.GET_ARCHIVEFOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders/{folderId}/folders", method = RequestMethod.GET)
 
@@ -170,8 +172,8 @@ public class ArchiveController extends BaseController {
 	 * @param request
 	 */
 
-	// @ApiOperation(value = Swagger.DELETETEST_VALUE, notes =
-	// Swagger.DELETETEST_NOTE)
+	@Operation(summary = Swagger.DELETETEST_VALUE, description =
+	 Swagger.DELETETEST_NOTE)
 
 	@RequestMapping(value = "/my/delete/folders/{folderId}/tests/{testId}", method = RequestMethod.DELETE)
 
@@ -192,8 +194,8 @@ public class ArchiveController extends BaseController {
 	 * @param testId
 	 */
 
-	// @ApiOperation(value = Swagger.DELETEROOTTEST_VALUE, notes =
-	// Swagger.DELETEROOTTEST_NOTE)
+	@Operation(summary = Swagger.DELETEROOTTEST_VALUE, description =
+	 Swagger.DELETEROOTTEST_NOTE)
 
 	@RequestMapping(value = "/my/delete/tests/{testId}", method = RequestMethod.DELETE)
 
@@ -213,8 +215,8 @@ public class ArchiveController extends BaseController {
 	 * @param folderId
 	 * @return List<TestMetadata>, list of test metadata
 	 */
-	// @ApiOperation(value = Swagger.GET_ARCHIVEFOLDER_TESTS_VALUE, notes =
-	// Swagger.GET_ARCHIVEFOLDER_TESTS_NOTE)
+	@Operation(summary = Swagger.GET_ARCHIVEFOLDER_TESTS_VALUE, description =
+	 Swagger.GET_ARCHIVEFOLDER_TESTS_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders/{folderId}/tests", method = RequestMethod.GET)
 

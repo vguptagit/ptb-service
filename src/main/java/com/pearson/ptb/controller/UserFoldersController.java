@@ -17,8 +17,8 @@ import com.pearson.ptb.bean.UserFolder;
 import com.pearson.ptb.bean.UserQuestionsFolder;
 import com.pearson.ptb.service.UserFolderService;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -28,8 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 
 @Controller
-
-@Api(value = "User folders", description = "User folders API")
+@Tag(name="User folders", description = "User folders API")
 public class UserFoldersController extends BaseController {
 
 	@Autowired

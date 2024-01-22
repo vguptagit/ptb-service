@@ -28,15 +28,16 @@ import com.pearson.ptb.framework.exception.ExpectationException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.provider.pi.service.AuthenticationProvider;
 import com.pearson.ptb.service.DownloadService;
-//import com.pearson.mytest.util.Swagger;
-import com.wordnik.swagger.annotations.Api;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * To download the specific test with specified format
  *
  */
 @Controller
-@Api(value = "tests", description = "tests")
+
+@Tag(name = "Tests", description = "tests")
 public class TestDownloadController extends BaseController {
 
 	private static final int PARAMETER_LENGTH = 2;

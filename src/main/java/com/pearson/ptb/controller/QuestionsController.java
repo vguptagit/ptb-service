@@ -20,9 +20,9 @@ import com.pearson.ptb.service.QuestionService;
 import com.pearson.ptb.util.SearchHelper;
 import com.pearson.ptb.util.URLHelper;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiParam;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -32,8 +32,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 
 @Controller
-
-@Api(value = "questions", description = "questions")
+@Tag(name="Questions", description = "questions")
+//@Api(value = "questions")
 public class QuestionsController extends BaseController {
 
 	/**
@@ -149,7 +149,7 @@ public class QuestionsController extends BaseController {
 
 	@ResponseBody
 	public List<String> saveQuestions(
-			@ApiParam(name = "body") @RequestBody List<QuestionEnvelop> questions,
+            @Parameter(name = "body") @RequestBody List<QuestionEnvelop> questions,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		List<String> responseMessage = questionService.saveQuestions(questions,

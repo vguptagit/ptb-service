@@ -14,14 +14,15 @@ import com.pearson.ptb.framework.exception.ConfigException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.service.ImportService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiParam;
+
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * importing additional books
  */
 @RestController
-@Api(value = "Books", description = "Import Book APIs")
+@Tag(name = "Books", description = "Import Book APIs")
 public class ImportController extends BaseController {
 
 	@Autowired
@@ -47,7 +48,7 @@ public class ImportController extends BaseController {
 	@RequestMapping(value = "/books/import", method = RequestMethod.POST)
 	@ResponseBody
 	// done
-	public void importBooks(@ApiParam(name = "body") @RequestBody Books books) {
+    public void importBooks(@Parameter(name = "body") @RequestBody Books books) {
 
 		importService.importBooks(books);
 		System.out.println("Created sssssss");

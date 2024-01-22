@@ -16,9 +16,9 @@ import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.service.ContainerService;
 import com.pearson.ptb.util.SearchHelper;
 import com.pearson.ptb.util.URLHelper;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@Api(value = "Containers", description = "Containers")
+@Tag(name = "Containers", description = "Containers")
 public class ContainersController extends BaseController {
 
 	/**
@@ -47,9 +47,8 @@ public class ContainersController extends BaseController {
 	 * @param flat
 	 * @return List<Container> of the container
 	 */
-
-	@ApiOperation(value = "Returns a list of all containers for the given Book", notes = "Returns the list of "
-			+ "all containers for the given book identified through the {bookid}")
+    @Operation(summary = "Returns a list of all containers for the given Book", description = "Returns the list of "
+            + "all containers for the given book identified through the {bookid}")
 	@RequestMapping(value = "/books/{bookid}/nodes", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Container> getContainersByBook(@PathVariable String bookid,
@@ -73,8 +72,9 @@ public class ContainersController extends BaseController {
 	 * @param includeSelf
 	 * @return List<Container> of the container
 	 */
-	@ApiOperation(value = "Return container childern for the given id", notes = "Return the list of container childrens identified by {id} for the given book "
-			+ "identified through {bookid}")
+    
+    @Operation(summary = "Return container childern for the given id", description = "Return the list of container childrens identified by {id} for the given book "
+            + "identified through {bookid}")
 	@RequestMapping(value = "/books/{bookid}/nodes/{id}/nodes", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Container> getContainerChildrenById(@PathVariable String bookid,

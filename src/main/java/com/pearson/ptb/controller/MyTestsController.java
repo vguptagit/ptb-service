@@ -20,10 +20,10 @@ import com.pearson.ptb.bean.TestVersionInfo;
 import com.pearson.ptb.service.MyTestService;
 import com.pearson.ptb.service.TestVersionService;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -33,9 +33,9 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 
+@Tag(name="MyTests", description = "My Tests")
 @Controller
 
-@Api(value = "My Tests", description = "My Tests")
 public class MyTestsController extends BaseController {
 
 	@Autowired
@@ -62,8 +62,7 @@ public class MyTestsController extends BaseController {
 	@RequestMapping(value = "my/folders/{folderId}/tests", method = RequestMethod.POST)
 	@ResponseBody
 	public TestResult saveTestEnvelop(
-
-			@ApiParam(name = "body") @RequestBody TestEnvelop testEnvelop,
+            @Parameter(name = "body") @RequestBody TestEnvelop testEnvelop,
 
 			@PathVariable String folderId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -111,7 +110,7 @@ public class MyTestsController extends BaseController {
 	@ResponseBody
 	public List<TestResult> createVersions(
 
-			@ApiParam(name = "body") @RequestBody TestVersionInfo versionInfo,
+			@Parameter(name = "body") @RequestBody TestVersionInfo versionInfo,
 
 			@PathVariable String testId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -131,8 +130,7 @@ public class MyTestsController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@ApiOperation(value = "Importing test", notes = "Importing test")
-
+    @Operation(summary = "Importing test", description = "Importing test")
 	@RequestMapping(value = "my/folders/{folderId}/tests/import", method = RequestMethod.POST)
 
 	@ResponseBody

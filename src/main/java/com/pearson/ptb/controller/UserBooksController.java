@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pearson.ptb.bean.UserBook;
 import com.pearson.ptb.service.UserBookService;
 import com.pearson.ptb.util.UserHelper;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  */
 @Controller
-@Api(value = "User Books", description = "User Book APIs for managing migrated IC course contents")
+@Tag(name="User Books", description = "User Book APIs for managing migrated IC course contents")
 public class UserBooksController extends BaseController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class UserBooksController extends BaseController {
 	 * @param request
 	 * @return List of UserBook
 	 */
-	@ApiOperation(value = "List of all Users Books migrated from Pegasus, and yet to be imported to Evalu8", notes = "List all non-imported user books")
+	@Operation(summary = "List of all Users Books migrated from Pegasus, and yet to be imported to Evalu8", description = "List all non-imported user books")
 	@RequestMapping(value = "/my/importbooks", method = RequestMethod.GET)
 	@ResponseBody
 	public List<UserBook> getUserBooks(HttpServletRequest request) {
@@ -52,7 +52,7 @@ public class UserBooksController extends BaseController {
 	 * @param userBookIds
 	 * @param request
 	 */
-	@ApiOperation(value = "Users Books to be imported", notes = "Import selected user books")
+    @Operation(summary = "Users Books to be imported", description = "Import selected user books")
 	@RequestMapping(value = "/my/importbooks", method = RequestMethod.POST)
 	@ResponseBody
 	public void importUserBooks(@RequestBody List<String> userBookIds,
