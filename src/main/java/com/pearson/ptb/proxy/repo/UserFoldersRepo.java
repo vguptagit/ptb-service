@@ -38,9 +38,13 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	}
 
 	@Override
-	public void saveUserQuestionFolders(List<UserQuestionsFolder> folders) {
-		// TODO Auto-generated method stub
-		userQuestionFolderRepository.saveAll(folders);
+	public void saveUserQuestionFolders(List<UserQuestionsFolder> questionFolders) {
+		if(CollectionUtils.isNotEmpty(questionFolders)) {
+			for(UserQuestionsFolder questionFolder : questionFolders) {
+				userQuestionFolderRepository.save(questionFolder);
+			}
+		}
+		
 	}
 
 	@Override

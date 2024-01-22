@@ -18,7 +18,7 @@ import com.pearson.ptb.util.ExceptionHelper;
  * @author nithinjain
  *
  */
-@Document(collection = "folder")
+@Document(collection = "userTestsFolder")
 public class UserFolder extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
