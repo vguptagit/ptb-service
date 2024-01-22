@@ -1,10 +1,17 @@
 package com.pearson.ptb.bean;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * The <code>QuestionEnvelop</code> class is responsible to hold the details of
  * the Question Envelop such as metadata and content body
  *
  */
+
 public class QuestionEnvelop {
 
 	/**

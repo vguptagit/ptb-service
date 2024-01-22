@@ -5,6 +5,7 @@ package com.pearson.ptb.proxy.repo;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -38,8 +39,12 @@ public class ContainerRepo implements ContainerDelegate {
 
 	@Override
 	public List<Container> getRootLevelContainersByBookId(String bookID) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.BOOKID).is(bookID))
+			  .addCriteria(Criteria.where(QueryFields.PARENTID).is(StringUtils.EMPTY))
+			  .with(Sort.by(QueryFields.SEQUENCE));
+		List<Container> containerList = genericMongoRepository.findAll(query);
+		return containerList;
 	}
 
 	/**
@@ -101,8 +106,9 @@ public class ContainerRepo implements ContainerDelegate {
 
 	@Override
 	public Container getContainerByContainerId(String containerid) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = genericMongoRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.GUID).is(containerid));		
+		return genericMongoRepository.findOne(query, Container.class);
 	}
 
 	@Override

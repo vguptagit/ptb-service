@@ -443,14 +443,15 @@ public class QuestionService {
 		String questionResult;
 		questionResult = questionRepo.saveQuestion(question, bookID, chapterID);
 
-		String metadataCacheKey = String.format(CacheKey.METADATA_FORMAT,
+		//TODO - Enable caching 
+		/*String metadataCacheKey = String.format(CacheKey.METADATA_FORMAT,
 				question.getmetadata().getGuid());
 		CACHE.set(metadataCacheKey, question.getmetadata());
 
 		String questionCacheKey = String.format(CacheKey.QUESTION_XML_FORMAT,
 				question.getmetadata().getGuid());
 		CACHE.set(questionCacheKey, question.getBody(),
-				cacheExpiryTimeForQuestionXML);
+				cacheExpiryTimeForQuestionXML);*/
 
 		return questionResult;
 	}
@@ -490,10 +491,11 @@ public class QuestionService {
 		}
 
 		if (isAnyQuestionEdited) {
-			String userQuestionsCacheKey = String.format(
+			// TODO -- Enable Cache
+			/*String userQuestionsCacheKey = String.format(
 					CacheKey.USER_QUESTIONS_FORMAT,
 					myQuestionsFolder.getGuid());
-			CACHE.delete(userQuestionsCacheKey);
+			CACHE.delete(userQuestionsCacheKey);*/
 		}
 
 		return questionResults;
