@@ -21,8 +21,8 @@
 		<org.aspectj-weaver>1.6.1</org.aspectj-weaver>
 
 		<java.version>17</java.version>
-		
-		
+		<finalName>ptb</finalName>
+
 	</properties>
 	<dependencies>
 		<!--<dependency>
@@ -378,13 +378,18 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.14</version>
 		</dependency>
-		
-		
-		
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 
 	</dependencies>
 
 	<build>
+		<finalName>${finalName}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  */
 
-@Document(collection = "folder")
+@Document(collection = "userQuestionsFolder")
 public class UserQuestionsFolder extends UserFolder {
 
 	private static final long serialVersionUID = 1L;
