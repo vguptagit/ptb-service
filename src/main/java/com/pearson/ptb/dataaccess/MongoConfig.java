@@ -51,7 +51,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 			connectionString = new ConnectionString("mongodb://localhost:27017/dbName");
 		} else {
 			connectionString = new ConnectionString(
-					"mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + dbName);
+					"mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + dbName+"?retryWrites=false");
 
 		}
 		MongoClientSettings.Builder builder = MongoClientSettings.builder().applyConnectionString(connectionString);
