@@ -1,8 +1,7 @@
+
 package com.pearson.ptb.dataaccess;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -23,7 +22,17 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	@Value("${spring.data.mongodb.database}")
 	private String dbName;
 
-	
+	@Value("${spring.data.mongodb.host}")
+	private String host;
+
+	@Value("${spring.data.mongodb.username}")
+	private String username;
+
+	@Value("${spring.data.mongodb.password}")
+	private String password;
+
+	@Value("${spring.data.mongodb.port}")
+	private int port;
 
 	@Override
 	protected String getDatabaseName() {
@@ -35,22 +44,22 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 		return MongoClients.create(mongoClientSettings());
 	}
 
-	@Override // Add this annotation to explicitly indicate you are overriding
-				// the method
+	@Override
 	protected MongoClientSettings mongoClientSettings() {
-		ConnectionString connectionString = new ConnectionString(
-				"mongodb://localhost:27017/dbName");
-		MongoClientSettings.Builder builder = MongoClientSettings.builder()
-				.applyConnectionString(connectionString);
-		// Add additional settings if needed
+		ConnectionString connectionString;
+		if (host.equals("localhost")) {
+			connectionString = new ConnectionString("mongodb://localhost:27017/dbName");
+		} else {
+			connectionString = new ConnectionString(
+					"mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + dbName);
+
+		}
+		MongoClientSettings.Builder builder = MongoClientSettings.builder().applyConnectionString(connectionString);
 		return builder.build();
 	}
 
 	@Bean
 	public MongoOperations mongoOperations() {
-		return new MongoTemplate(new SimpleMongoClientDatabaseFactory(
-				mongoClient(), getDatabaseName()));
+		return new MongoTemplate(new SimpleMongoClientDatabaseFactory(mongoClient(), getDatabaseName()));
 	}
-
-
 }
