@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pearson.ptb.util.Swagger;
 import com.pearson.ptb.bean.QuestionEnvelop;
 import com.pearson.ptb.bean.QuestionMetadata;
 import com.pearson.ptb.bean.QuestionOutput;
@@ -21,6 +22,9 @@ import com.pearson.ptb.util.SearchHelper;
 import com.pearson.ptb.util.URLHelper;
 import com.pearson.ptb.util.UserHelper;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,13 +36,12 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 
 @Controller
-@Tag(name="Questions", description = "questions")
-//@Api(value = "questions")
+@Tag(name = "Questions", description = "questions")
 public class QuestionsController extends BaseController {
 
 	/**
-	 * @Qualifier annotation searched for the value books in
-	 *            appServlet-servlet.xml file created instance
+	 * @Qualifier annotation searched for the value books in appServlet-servlet.xml
+	 *            file created instance
 	 */
 
 	@Autowired
@@ -50,33 +53,28 @@ public class QuestionsController extends BaseController {
 	 * To get all Questions for given Book id and Container id
 	 * 
 	 * @param bookid
-	 * @param nodeId
-	 *            id of the Container
+	 * @param nodeId  id of the Container
 	 * @param request
 	 * @param flat
 	 * @return List of QuestionMetadata
 	 */
 
-	// @ApiOperation(value = "Returns list of all Questions for given Book and
-	// Container", notes = Swagger.GET_QUESTIONS_BY_CONTAINER_NOTE)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = "Returns list of all Questions for given Book and Container", description = Swagger.GET_QUESTIONS_BY_CONTAINER_NOTE)
 	@RequestMapping(value = "/books/{bookid}/nodes/{nodeId}/questions", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<QuestionMetadata> getQuestionsByContainer(
-			@PathVariable String bookid, @PathVariable String nodeId,
+	public List<QuestionMetadata> getQuestionsByContainer(@PathVariable String bookid, @PathVariable String nodeId,
 			HttpServletRequest request,
 
 			// @ApiParam(value = Swagger.INCLUDE_INNER_CONTAINER, required =
 			// false)
 			@RequestParam(required = false, defaultValue = "0") boolean flat) {
 
-		Map<String, String> filterCriteria = URLHelper.getQueryMap(
-				request.getQueryString(),
+		Map<String, String> filterCriteria = URLHelper.getQueryMap(request.getQueryString(),
 				SearchHelper.getQuestionFilterCriteriaMap());
 		SearchHelper.updateSearchValues(filterCriteria);
-		return questionService.getQuestions(bookid, nodeId, filterCriteria,
-				flat);
+		return questionService.getQuestions(bookid, nodeId, filterCriteria, flat);
 	}
 
 	/**
@@ -86,9 +84,8 @@ public class QuestionsController extends BaseController {
 	 * @return Question
 	 */
 
-	// @ApiOperation(value = Swagger.GET_QUESTION_BY_ID_VALUE, notes =
-	// Swagger.GET_QUESTION_BY_ID_NOTE)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = Swagger.GET_QUESTION_BY_ID_VALUE, description = Swagger.GET_QUESTION_BY_ID_NOTE)
 	@RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
 
 	@ResponseBody
@@ -107,15 +104,12 @@ public class QuestionsController extends BaseController {
 	 * @return list of QuestionOutput
 	 */
 
-	// @ApiOperation(value = Swagger.GET_USERQUESTIONS_VALUE, notes =
-	// Swagger.GET_USERQUESTIONS_NOTE)
-
-	@RequestMapping(value = "/my/questions", method = {RequestMethod.GET,
-			RequestMethod.HEAD})
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = Swagger.GET_USERQUESTIONS_VALUE, description = Swagger.GET_USERQUESTIONS_NOTE)
+	@RequestMapping(value = "/my/questions", method = { RequestMethod.GET, RequestMethod.HEAD })
 
 	@ResponseBody
-	public List<QuestionOutput> getUserQuestions(
-			@RequestParam(required = false) String folderId,
+	public List<QuestionOutput> getUserQuestions(@RequestParam(required = false) String folderId,
 			HttpServletRequest request, HttpServletResponse response,
 
 			@RequestParam(required = false, defaultValue = "0") boolean flat) {
@@ -123,13 +117,11 @@ public class QuestionsController extends BaseController {
 		String userId = UserHelper.getUserId(request);
 
 		int userQuestionsCount = questionService.getUserQuestionsCount(userId);
-		response.addHeader("X-Return-Count",
-				String.valueOf(userQuestionsCount));
+		response.addHeader("X-Return-Count", String.valueOf(userQuestionsCount));
 
 		List<QuestionOutput> questions = null;
 		if (request.getMethod() == RequestMethod.GET.name()) {
-			questions = questionService.getUserQuestions(userId, folderId,
-					flat);
+			questions = questionService.getUserQuestions(userId, folderId, flat);
 		}
 
 		return questions;
@@ -143,17 +135,15 @@ public class QuestionsController extends BaseController {
 	 * @param response
 	 * @return List
 	 */
-	// @ApiOperation(value = "Save Questions", notes = Swagger.SAVE_QUESTIONS)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = "Save Questions", description = Swagger.SAVE_QUESTIONS)
 	@RequestMapping(value = "/my/questions", method = RequestMethod.POST)
 
 	@ResponseBody
-	public List<String> saveQuestions(
-            @Parameter(name = "body") @RequestBody List<QuestionEnvelop> questions,
+	public List<String> saveQuestions(@Parameter(name = "body") @RequestBody List<QuestionEnvelop> questions,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		List<String> responseMessage = questionService.saveQuestions(questions,
-				UserHelper.getUserId(request), null);
+		List<String> responseMessage = questionService.saveQuestions(questions, UserHelper.getUserId(request), null);
 		response.setStatus(HttpServletResponse.SC_CREATED);
 		return responseMessage;
 

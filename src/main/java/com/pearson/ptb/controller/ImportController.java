@@ -14,7 +14,11 @@ import com.pearson.ptb.framework.exception.ConfigException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.service.ImportService;
+import com.pearson.ptb.util.Swagger;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -32,23 +36,22 @@ public class ImportController extends BaseController {
 	/**
 	 * Save the question to repository
 	 * 
-	 * @param question,
-	 *            JSON data having meta data and qti2.1 xml
-	 * @param bookid,
-	 *            Book id under which question has to be created.
-	 * @param nodeId,
-	 *            Node id under which question has to be created.
+	 * @param question, JSON data having meta data and qti2.1 xml
+	 * @param bookid,   Book id under which question has to be created.
+	 * @param nodeId,   Node id under which question has to be created.
 	 * @return response message from repository
 	 * @throws NotFoundException
 	 * @throws InternalException
 	 * @throws ConfigException
 	 * @throws BadDataException
 	 */
-	// @ApiOperation(value = "import books", notes = Swagger.SAVE_QUESTION)
+	@Operation(summary = "import books", description = Swagger.SAVE_QUESTION)
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Created") })
+
 	@RequestMapping(value = "/books/import", method = RequestMethod.POST)
 	@ResponseBody
 	// done
-    public void importBooks(@Parameter(name = "body") @RequestBody Books books) {
+	public void importBooks(@Parameter(name = "body") @RequestBody Books books) {
 
 		importService.importBooks(books);
 		System.out.println("Created sssssss");

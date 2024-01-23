@@ -60,7 +60,6 @@
 
 package com.pearson.ptb.controller;
 
-
 import java.io.IOException;
 
 import org.springframework.core.io.InputStreamResource;
@@ -77,7 +76,7 @@ import com.pearson.ptb.proxy.MetadataService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
-@Tag(name="Dashboard")
+@Tag(name = "Dashboard")
 @RestController
 // @RequestMapping("/api")
 @AllArgsConstructor

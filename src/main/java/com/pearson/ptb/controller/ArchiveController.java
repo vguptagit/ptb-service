@@ -21,6 +21,7 @@ import com.pearson.ptb.util.UserHelper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -38,13 +39,12 @@ public class ArchiveController extends BaseController {
 	private ArchiveService archiveService;
 
 	/**
-	 * @param archiveItem
-	 *            item to be archived
+	 * @param archiveItem item to be archived
 	 * @return <code>ArchivedFolder</code>
 	 */
 
-	@Operation(summary = Swagger.ARCHIVEFOLDER_VALUE, description = 
-	 Swagger.ARCHIVEFOLDER_NOTE)
+	@Operation(summary = Swagger.ARCHIVEFOLDER_VALUE, description = Swagger.ARCHIVEFOLDER_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Created") })
 	@RequestMapping(value = "/my/archive/folders", method = RequestMethod.POST)
 	@ResponseBody
 	// done
@@ -58,9 +58,8 @@ public class ArchiveController extends BaseController {
 	 * @param archiveItem
 	 * @return UserFolder
 	 */
-	 @Operation(summary = Swagger.RESTOREFOLDER_VALUE, description =
-	 Swagger.RESTOREFOLDER_NOTE)
-
+	@Operation(summary = Swagger.RESTOREFOLDER_VALUE, description = Swagger.RESTOREFOLDER_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Created") })
 	@RequestMapping(value = "/my/restore/folders", method = RequestMethod.POST)
 	@ResponseBody
 	public UserFolder restoreFolder(@RequestBody ArchiveItem archiveItem) {
@@ -70,14 +69,12 @@ public class ArchiveController extends BaseController {
 	/**
 	 * To delete folder
 	 * 
-	 * @param folderId
-	 *            as String
+	 * @param folderId as String
 	 */
-	 @Operation(summary = Swagger.DELETEFOLDER_VALUE, description = 
-	 Swagger.DELETEFOLDER_NOTE)
+	@Operation(summary = Swagger.DELETEFOLDER_VALUE, description = Swagger.DELETEFOLDER_NOTE)
 
 	@RequestMapping(value = "/my/delete/folders/{folderId}", method = RequestMethod.DELETE)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@ResponseBody
 	public void deleteFolder(@PathVariable String folderId) {
 		archiveService.deleteFolder(folderId);
@@ -90,10 +87,10 @@ public class ArchiveController extends BaseController {
 	 * @return List<ArchivedFolder> of the archived folder
 	 */
 
-	 @Operation(summary = Swagger.GET_ARCHIVEROOT_FOLDERS_VALUE, description =
-	 Swagger.GET_ARCHIVEROOT_FOLDERS_NOTE)
+	@Operation(summary = Swagger.GET_ARCHIVEROOT_FOLDERS_VALUE, description = Swagger.GET_ARCHIVEROOT_FOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders", method = RequestMethod.GET)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
 	public List<ArchivedFolder> getRootFolders(HttpServletRequest request) {
@@ -103,21 +100,18 @@ public class ArchiveController extends BaseController {
 	/**
 	 * To get a list of children folders of a given archive folder
 	 * 
-	 * @param folderId
-	 *            as String
+	 * @param folderId as String
 	 * @return List<ArchivedFolder> of the archived folder
 	 */
 
-	 @Operation(summary = Swagger.GET_ARCHIVEFOLDERS_VALUE, description =
-	 Swagger.GET_ARCHIVEFOLDERS_NOTE)
+	@Operation(summary = Swagger.GET_ARCHIVEFOLDERS_VALUE, description = Swagger.GET_ARCHIVEFOLDERS_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders/{folderId}/folders", method = RequestMethod.GET)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
-	public List<ArchivedFolder> getFolders(@PathVariable String folderId,
-			HttpServletRequest request) {
-		return archiveService.getFolders(UserHelper.getUserId(request),
-				folderId);
+	public List<ArchivedFolder> getFolders(@PathVariable String folderId, HttpServletRequest request) {
+		return archiveService.getFolders(UserHelper.getUserId(request), folderId);
 	}
 
 	/**
@@ -129,6 +123,7 @@ public class ArchiveController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/my/archive/tests", method = RequestMethod.POST)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
 	public ArchivedFolder archiveTest(
@@ -137,8 +132,7 @@ public class ArchiveController extends BaseController {
 
 		String userId = UserHelper.getUserId(request);
 
-		return archiveService.archiveTest(userId, archiveItem.getId(),
-				archiveItem.getFolderId());
+		return archiveService.archiveTest(userId, archiveItem.getId(), archiveItem.getFolderId());
 	}
 
 	/**
@@ -148,6 +142,7 @@ public class ArchiveController extends BaseController {
 	 * @param request
 	 * @return UserFolder
 	 */
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@RequestMapping(value = "/my/restore/tests", method = RequestMethod.POST)
 
@@ -158,22 +153,19 @@ public class ArchiveController extends BaseController {
 
 		String userId = UserHelper.getUserId(request);
 
-		return archiveService.restoreTest(userId, archiveItem.getId(),
-				archiveItem.getFolderId());
+		return archiveService.restoreTest(userId, archiveItem.getId(), archiveItem.getFolderId());
 	}
 
 	/**
 	 * To delete test
 	 * 
-	 * @param folderId
-	 *            as String
-	 * @param testId
-	 *            as String
+	 * @param folderId as String
+	 * @param testId   as String
 	 * @param request
 	 */
 
-	@Operation(summary = Swagger.DELETETEST_VALUE, description =
-	 Swagger.DELETETEST_NOTE)
+	@Operation(summary = Swagger.DELETETEST_VALUE, description = Swagger.DELETETEST_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@RequestMapping(value = "/my/delete/folders/{folderId}/tests/{testId}", method = RequestMethod.DELETE)
 
@@ -194,8 +186,8 @@ public class ArchiveController extends BaseController {
 	 * @param testId
 	 */
 
-	@Operation(summary = Swagger.DELETEROOTTEST_VALUE, description =
-	 Swagger.DELETEROOTTEST_NOTE)
+	@Operation(summary = Swagger.DELETEROOTTEST_VALUE, description = Swagger.DELETEROOTTEST_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@RequestMapping(value = "/my/delete/tests/{testId}", method = RequestMethod.DELETE)
 
@@ -209,20 +201,20 @@ public class ArchiveController extends BaseController {
 	}
 
 	/**
-	 * To list of all created tests for the given archive folder identified
-	 * through the {folderid}
+	 * To list of all created tests for the given archive folder identified through
+	 * the {folderid}
 	 * 
 	 * @param folderId
 	 * @return List<TestMetadata>, list of test metadata
 	 */
-	@Operation(summary = Swagger.GET_ARCHIVEFOLDER_TESTS_VALUE, description =
-	 Swagger.GET_ARCHIVEFOLDER_TESTS_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
+	@Operation(summary = Swagger.GET_ARCHIVEFOLDER_TESTS_VALUE, description = Swagger.GET_ARCHIVEFOLDER_TESTS_NOTE)
 
 	@RequestMapping(value = "/my/archive/folders/{folderId}/tests", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<TestMetadata> getTests(@PathVariable String folderId,
-			HttpServletRequest request) {
+	public List<TestMetadata> getTests(@PathVariable String folderId, HttpServletRequest request) {
 
 		return archiveService.getTests(UserHelper.getUserId(request), folderId);
 	}
