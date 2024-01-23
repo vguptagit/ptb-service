@@ -27,11 +27,10 @@ public class HealthController extends BaseController {
 	private HealthService healthService;
 
 	/**
-	 * @param request
-	 *            Request object
+	 * @param request Request object
 	 * @return health check details
 	 */
-    @Operation(summary = "Returns health check details", description = "Returns health check details")
+	@Operation(summary = "Returns health check details", description = "Returns health check details")
 	@RequestMapping(value = "/health", method = RequestMethod.GET)
 	@ResponseBody
 	public HealthApis getHealth(HttpServletRequest request) {

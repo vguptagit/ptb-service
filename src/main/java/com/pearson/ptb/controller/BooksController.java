@@ -18,10 +18,11 @@ import com.pearson.ptb.service.BookService;
 import com.pearson.ptb.util.URLHelper;
 import com.pearson.ptb.util.UserHelper;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-
 
 /**
  * To get the books and disciplines for the user
@@ -29,15 +30,14 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:9000")
-@Tag(name="Books", description = "Book APIs")
+@Tag(name = "Books", description = "Book APIs")
 public class BooksController extends BaseController {
 
-	private static final Logger logger = LogManager
-			.getLogger(BooksController.class);
+	private static final Logger logger = LogManager.getLogger(BooksController.class);
 
 	/**
-	 * @Qualifier annotation searched for the value books in
-	 *            appServlet-servlet.xml file created instance
+	 * @Qualifier annotation searched for the value books in appServlet-servlet.xml
+	 *            file created instance
 	 */
 	@Autowired
 	@Qualifier("bookService")
@@ -49,15 +49,16 @@ public class BooksController extends BaseController {
 	 * @return List<Book>, a list of all books
 	 *
 	 */
-    @Operation(summary = "Returns a list of all Books", description = "Returns a list of all books")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
+	@Operation(summary = "Returns a list of all Books", description = "Returns a list of all books")
 	@GetMapping("/books")
 	@ResponseBody
 	public List<Book> getAllBooks(HttpServletRequest request) {
 		logger.info("Request received to get all books.");
 		List<Book> books = null;
 		String userId = UserHelper.getUserId(request);
-		Map<String, String> searchCriteria = URLHelper
-				.getQueryMap(request.getQueryString());
+		Map<String, String> searchCriteria = URLHelper.getQueryMap(request.getQueryString());
 
 		logger.info("User ID: {}", userId);
 		logger.info("Search Criteria: {}", searchCriteria);
@@ -73,11 +74,13 @@ public class BooksController extends BaseController {
 	/**
 	 * To get book for the given id
 	 * 
-	 * @param id
-	 *            of the required book
+	 * @param id of the required book
 	 * @return Book
 	 */
 	@GetMapping("/books/{id}")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = "Return Book for given id", description = "Return details of the book for the given {id}")
+
 	@ResponseBody
 	// done
 	public Book getBookById(@PathVariable String id) {
@@ -91,6 +94,7 @@ public class BooksController extends BaseController {
 	 *
 	 */
 	@GetMapping("/disciplines")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@ResponseBody
 	// done
 	public List<String> getDisciplines() {
@@ -99,12 +103,11 @@ public class BooksController extends BaseController {
 		System.out.println("printing the bookservice object " + disciplines);
 		return disciplines;
 	}
-	
-	
+
 	/*
-	 * @GetMapping("/redis") public void name() throws IOException {
-	 * CacheWrapper instance = CacheWrapper.getInstance();
-	 * //instance.initializeJedis(); instance.set("manoj", "manojkvakue");
+	 * @GetMapping("/redis") public void name() throws IOException { CacheWrapper
+	 * instance = CacheWrapper.getInstance(); //instance.initializeJedis();
+	 * instance.set("manoj", "manojkvakue");
 	 * 
 	 * }
 	 */

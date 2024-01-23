@@ -16,7 +16,8 @@ import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.service.ContainerService;
 import com.pearson.ptb.util.SearchHelper;
 import com.pearson.ptb.util.URLHelper;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,8 +31,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ContainersController extends BaseController {
 
 	/**
-	 * @Qualifier annotation searched for the value books in
-	 *            appServlet-servlet.xml file created instance
+	 * @Qualifier annotation searched for the value books in appServlet-servlet.xml
+	 *            file created instance
 	 */
 
 	@Autowired
@@ -42,22 +43,21 @@ public class ContainersController extends BaseController {
 	 * To List all containers for the given Book
 	 * 
 	 * @param bookid
-	 * @param quizTypes
-	 *            optional
+	 * @param quizTypes optional
 	 * @param flat
 	 * @return List<Container> of the container
 	 */
-    @Operation(summary = "Returns a list of all containers for the given Book", description = "Returns the list of "
-            + "all containers for the given book identified through the {bookid}")
+	@Operation(summary = "Returns a list of all containers for the given Book", description = "Returns the list of "
+			+ "all containers for the given book identified through the {bookid}")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "/books/{bookid}/nodes", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Container> getContainersByBook(@PathVariable String bookid,
-			HttpServletRequest request,
+	public List<Container> getContainersByBook(@PathVariable String bookid, HttpServletRequest request,
 			// @ApiParam(value = Swagger.GET_ALL_CONTAINERS, required = false)
 			@RequestParam(required = false, defaultValue = "0") boolean flat) {
 
-		Map<String, String> filterCriteria = URLHelper.getQueryMap(
-				request.getQueryString(),
+		Map<String, String> filterCriteria = URLHelper.getQueryMap(request.getQueryString(),
 				SearchHelper.getQuestionFilterCriteriaMap());
 		SearchHelper.updateSearchValues(filterCriteria);
 		return containerService.getContainers(bookid, flat, filterCriteria);
@@ -72,21 +72,20 @@ public class ContainersController extends BaseController {
 	 * @param includeSelf
 	 * @return List<Container> of the container
 	 */
-    
-    @Operation(summary = "Return container childern for the given id", description = "Return the list of container childrens identified by {id} for the given book "
-            + "identified through {bookid}")
+
+	@Operation(summary = "Return container childern for the given id", description = "Return the list of container childrens identified by {id} for the given book "
+			+ "identified through {bookid}")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "/books/{bookid}/nodes/{id}/nodes", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Container> getContainerChildrenById(@PathVariable String bookid,
-			@PathVariable String id, HttpServletRequest request,
-			@RequestParam(required = false, defaultValue = "0") boolean includeSelf) {
+	public List<Container> getContainerChildrenById(@PathVariable String bookid, @PathVariable String id,
+			HttpServletRequest request, @RequestParam(required = false, defaultValue = "0") boolean includeSelf) {
 
-		Map<String, String> filterCriteria = URLHelper.getQueryMap(
-				request.getQueryString(),
+		Map<String, String> filterCriteria = URLHelper.getQueryMap(request.getQueryString(),
 				SearchHelper.getQuestionFilterCriteriaMap());
 		SearchHelper.updateSearchValues(filterCriteria);
-		return containerService.getContainers(bookid, id, filterCriteria,
-				includeSelf);
+		return containerService.getContainers(bookid, id, filterCriteria, includeSelf);
 	}
 
 }

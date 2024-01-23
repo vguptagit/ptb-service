@@ -18,6 +18,8 @@ import com.pearson.ptb.bean.UserSettings;
 import com.pearson.ptb.service.UserSettingsService;
 import com.pearson.ptb.util.UserHelper;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,13 +30,13 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 
-@Tag(name="User Test Preferences", description = "User Preference APIs")
+@Tag(name = "User Test Preferences", description = "User Preference APIs")
 @RestController
 public class UserSettingsController extends BaseController {
 
 	/**
-	 * @Qualifier annotation searched for the value books in
-	 *            appServlet-servlet.xml file created instance
+	 * @Qualifier annotation searched for the value books in appServlet-servlet.xml
+	 *            file created instance
 	 */
 
 	@Autowired
@@ -49,7 +51,9 @@ public class UserSettingsController extends BaseController {
 	 * @return UserSettings
 	 */
 
-    @Operation(summary = "Returns User level preference settings")
+	@Operation(summary = "Returns User level preference settings")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "/settings", method = RequestMethod.GET)
 	@ResponseBody
 	public UserSettings getUserSettings(HttpServletRequest request) {
@@ -68,9 +72,10 @@ public class UserSettingsController extends BaseController {
 	 * @param userSettings
 	 */
 
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "/settings", method = RequestMethod.POST)
-	public void saveUserSettings(HttpServletRequest request,
-			HttpServletResponse response,
+	public void saveUserSettings(HttpServletRequest request, HttpServletResponse response,
 
 			@Valid @RequestBody UserSettings userSettings) {
 
@@ -90,12 +95,12 @@ public class UserSettingsController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/settings/disciplines", method = RequestMethod.GET)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
 	public List<String> getUserDisciplines(HttpServletRequest request) {
 
 		String userid = UserHelper.getUserId(request);
-		
 
 		return userSettingService.getUserDisciplines(userid);
 	}
@@ -109,10 +114,10 @@ public class UserSettingsController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/settings/disciplines", method = RequestMethod.POST)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
-	public void saveUserDisciplines(HttpServletRequest request,
-			HttpServletResponse response,
+	public void saveUserDisciplines(HttpServletRequest request, HttpServletResponse response,
 
 			@RequestBody List<String> disciplines) {
 
@@ -131,6 +136,7 @@ public class UserSettingsController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/settings/books", method = RequestMethod.GET)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
 	public List<String> getUserBooks(HttpServletRequest request) {
@@ -151,11 +157,13 @@ public class UserSettingsController extends BaseController {
 	 * @param books
 	 */
 
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "/settings/books", method = RequestMethod.POST)
 
 	@ResponseBody
-	public void saveUserBooks(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody List<String> books) {
+	public void saveUserBooks(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody List<String> books) {
 
 		String userid = UserHelper.getUserId(request);
 
@@ -170,6 +178,8 @@ public class UserSettingsController extends BaseController {
 	 * @param request
 	 * @return List of Question Metadata
 	 */
+
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@RequestMapping(value = "/settings/questionmetadata", method = RequestMethod.GET)
 
@@ -192,11 +202,12 @@ public class UserSettingsController extends BaseController {
 	 * @param questionMetadata
 	 */
 
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "/settings/questionmetadata", method = RequestMethod.POST)
 
 	@ResponseBody
-	public void saveQuestionMetadata(HttpServletRequest request,
-			HttpServletResponse response,
+	public void saveQuestionMetadata(HttpServletRequest request, HttpServletResponse response,
 
 			@RequestBody List<String> questionMetadata) {
 
@@ -215,6 +226,7 @@ public class UserSettingsController extends BaseController {
 	 */
 
 	@RequestMapping(value = "/settings/printsettings", method = RequestMethod.GET)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
 	public PrintSettings getPrintSettings(HttpServletRequest request) {
@@ -235,10 +247,10 @@ public class UserSettingsController extends BaseController {
 	 * @param printSettings
 	 */
 	@RequestMapping(value = "/settings/printsettings", method = RequestMethod.POST)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 
 	@ResponseBody
-	public void savePrintsettings(HttpServletRequest request,
-			HttpServletResponse response,
+	public void savePrintsettings(HttpServletRequest request, HttpServletResponse response,
 
 			@RequestBody PrintSettings printSettings) {
 

@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pearson.ptb.service.ImageService;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -29,11 +31,12 @@ public class ImageController extends BaseController {
 	/**
 	 * To upload the image
 	 * 
-	 * @param file
-	 *            imagefile
+	 * @param file imagefile
 	 * @return image stored path, url
 	 */
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@Operation(summary = "returns the path of saved the image", description = "returns the path of saved the image")
+
 	@RequestMapping(value = "/image/upload", method = RequestMethod.POST)
 	@ResponseBody
 	public String upload(@RequestParam("file") MultipartFile file) {

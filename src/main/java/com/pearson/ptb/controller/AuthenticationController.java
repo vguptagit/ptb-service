@@ -17,7 +17,7 @@ import com.pearson.ptb.provider.pi.service.AuthenticationProvider;
 import com.pearson.ptb.provider.pi.service.AuthenticationService;
 import com.pearson.ptb.provider.pi.service.Email;
 import com.pearson.ptb.provider.pi.service.UserProfile;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  *
  */
 @RestController
-@Tag(name="Authentication", description = "Get Pearson Token from Access Token")
+@Tag(name = "Authentication", description = "Get Pearson Token from Access Token")
 @ApiResponse(description = "Get Pearson Token from Access Token")
 public class AuthenticationController extends BaseController {
 
@@ -41,17 +41,15 @@ public class AuthenticationController extends BaseController {
 	 * @return Pearson Token as a string
 	 *
 	 */
-    @Operation(summary = "Returns Pearson Token", description = "Returns Pearson Token as a string")
-	@RequestMapping(value = "/login", method = {RequestMethod.POST,
-			RequestMethod.HEAD})
+	@Operation(summary = "Returns Pearson Token", description = "Returns Pearson Token as a string")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.HEAD })
 	@ResponseBody
-	public String authenticate(HttpServletRequest request,
-			HttpServletResponse response) {
+	public String authenticate(HttpServletRequest request, HttpServletResponse response) {
 
 		String accessToken = request.getHeader("AccessToken");
 
-		String pearsonToken = authenticationService
-				.getPITokenFromAccessToken(accessToken);
+		String pearsonToken = authenticationService.getPITokenFromAccessToken(accessToken);
 
 		if (request.getMethod().equals(RequestMethod.HEAD.name())) {
 			response.addHeader("x-authorization", pearsonToken);
@@ -61,20 +59,16 @@ public class AuthenticationController extends BaseController {
 		String extUserId = pi.authenticate(pearsonToken);
 
 		if (!authenticationService.isIntructor(pearsonToken, extUserId)) {
-			throw new AccessDeniedException(
-					"Only instructors allowed. Invalid attempt by user id : "
-							+ extUserId);
+			throw new AccessDeniedException("Only instructors allowed. Invalid attempt by user id : " + extUserId);
 		}
 		// int loginCount = (new LoginRepo()).logLogin(extUserId);
 
-		UserProfile userProfile = authenticationService
-				.getUserProfileFromPIApi(accessToken, extUserId);
+		UserProfile userProfile = authenticationService.getUserProfileFromPIApi(accessToken, extUserId);
 
 		return buildResponse(pearsonToken, 1, userProfile);
 	}
 
-	private String buildResponse(String pearsonToken, int loginCount,
-			UserProfile userProfile) {
+	private String buildResponse(String pearsonToken, int loginCount, UserProfile userProfile) {
 		StringBuilder response = new StringBuilder();
 		response.append("{");
 		response.append("\"token\": \"" + pearsonToken + "\", ");
@@ -83,15 +77,12 @@ public class AuthenticationController extends BaseController {
 		List<Email> emails = userProfile.data.emails;
 		for (Email email : emails) {
 			if (email.isPrimary) {
-				response.append(
-						"\"emailAddress\": \"" + email.emailAddress + "\", ");
+				response.append("\"emailAddress\": \"" + email.emailAddress + "\", ");
 			}
 		}
 
-		response.append(
-				"\"familyName\": \"" + userProfile.data.familyName + "\", ");
-		response.append(
-				"\"givenName\": \"" + userProfile.data.givenName + "\"");
+		response.append("\"familyName\": \"" + userProfile.data.familyName + "\", ");
+		response.append("\"givenName\": \"" + userProfile.data.givenName + "\"");
 		response.append("}");
 		return response.toString();
 	}

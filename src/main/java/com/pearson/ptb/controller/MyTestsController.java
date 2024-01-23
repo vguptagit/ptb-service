@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pearson.ptb.util.Swagger;
 import com.pearson.ptb.bean.TestEnvelop;
 import com.pearson.ptb.bean.TestMetadata;
 import com.pearson.ptb.bean.TestResult;
@@ -21,6 +22,8 @@ import com.pearson.ptb.service.MyTestService;
 import com.pearson.ptb.service.TestVersionService;
 import com.pearson.ptb.util.UserHelper;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,7 +36,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 
-@Tag(name="MyTests", description = "My Tests")
+@Tag(name = "MyTests", description = "My Tests")
 @Controller
 
 public class MyTestsController extends BaseController {
@@ -56,18 +59,14 @@ public class MyTestsController extends BaseController {
 	 * @return TestResult
 	 */
 
-	// @ApiOperation(value = Swagger.SAVE_TEST_VALUE, notes =
-	// Swagger.SAVE_TEST_NOTE)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = Swagger.SAVE_TEST_VALUE, description = Swagger.SAVE_TEST_NOTE)
 	@RequestMapping(value = "my/folders/{folderId}/tests", method = RequestMethod.POST)
 	@ResponseBody
-	public TestResult saveTestEnvelop(
-            @Parameter(name = "body") @RequestBody TestEnvelop testEnvelop,
+	public TestResult saveTestEnvelop(@Parameter(name = "body") @RequestBody TestEnvelop testEnvelop,
 
-			@PathVariable String folderId, HttpServletRequest request,
-			HttpServletResponse response) {
-		TestResult result = myTestService.saveTest(testEnvelop,
-				UserHelper.getUserId(request), folderId);
+			@PathVariable String folderId, HttpServletRequest request, HttpServletResponse response) {
+		TestResult result = myTestService.saveTest(testEnvelop, UserHelper.getUserId(request), folderId);
 		response.setStatus(HttpServletResponse.SC_CREATED);
 		return result;
 	}
@@ -80,16 +79,14 @@ public class MyTestsController extends BaseController {
 	 * @return List<TestMetadata> of metadata
 	 */
 
-	// @ApiOperation(value = Swagger.GET_MYFOLDER_TESTS_VALUE, notes =
-	// Swagger.GET_MYFOLDER_TESTS_NOTE)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = Swagger.GET_MYFOLDER_TESTS_VALUE, description = Swagger.GET_MYFOLDER_TESTS_NOTE)
 	@RequestMapping(value = "my/folders/{folderId}/tests", method = RequestMethod.GET)
 
 	@ResponseBody
-	public List<TestMetadata> getMyFolderTests(@PathVariable String folderId,
-			HttpServletRequest request, boolean flat) {
-		return myTestService.getMyFolderTests(UserHelper.getUserId(request),
-				folderId, flat);
+	public List<TestMetadata> getMyFolderTests(@PathVariable String folderId, HttpServletRequest request,
+			boolean flat) {
+		return myTestService.getMyFolderTests(UserHelper.getUserId(request), folderId, flat);
 	}
 
 	/**
@@ -102,9 +99,8 @@ public class MyTestsController extends BaseController {
 	 * @return List<TestResult> of TestResult
 	 */
 
-	// @ApiOperation(value = Swagger.CREATE_TEST_VERSION, notes =
-	// Swagger.CREATE_TEST_VERSION_NOTE)
-
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+	@Operation(summary = Swagger.CREATE_TEST_VERSION, description = Swagger.CREATE_TEST_VERSION_NOTE)
 	@RequestMapping(value = "my/tests/{testId}/versions", method = RequestMethod.POST)
 
 	@ResponseBody
@@ -112,11 +108,10 @@ public class MyTestsController extends BaseController {
 
 			@Parameter(name = "body") @RequestBody TestVersionInfo versionInfo,
 
-			@PathVariable String testId, HttpServletRequest request,
-			HttpServletResponse response) {
+			@PathVariable String testId, HttpServletRequest request, HttpServletResponse response) {
 
-		List<TestResult> result = testVersionService.createVersionTests(
-				versionInfo, testId, UserHelper.getUserId(request));
+		List<TestResult> result = testVersionService.createVersionTests(versionInfo, testId,
+				UserHelper.getUserId(request));
 		response.setStatus(HttpServletResponse.SC_CREATED);
 
 		return result;
@@ -130,12 +125,13 @@ public class MyTestsController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-    @Operation(summary = "Importing test", description = "Importing test")
+	@Operation(summary = "Importing test", description = "Importing test")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
+
 	@RequestMapping(value = "my/folders/{folderId}/tests/import", method = RequestMethod.POST)
 
 	@ResponseBody
-	public TestResult importTest(@RequestParam("file") MultipartFile file,
-			HttpServletRequest request) {
+	public TestResult importTest(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		return myTestService.importTest(file, UserHelper.getUserId(request));
 	}
 

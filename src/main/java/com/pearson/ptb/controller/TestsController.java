@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pearson.ptb.util.Swagger;
 import com.pearson.ptb.bean.Metadata;
 import com.pearson.ptb.bean.QuestionOutput;
 import com.pearson.ptb.bean.Test;
 import com.pearson.ptb.service.MetadataService;
 import com.pearson.ptb.service.TestService;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
@@ -24,7 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 
 @Controller
-@Tag(name="MyTests", description = "tests")
+@Tag(name = "MyTests", description = "tests")
 public class TestsController extends BaseController {
 
 	@Autowired
@@ -44,9 +48,8 @@ public class TestsController extends BaseController {
 	 * @return Test
 	 */
 
-	// @ApiOperation(value = Swagger.GET_TESTS_VALUE, notes =
-	// Swagger.GET_TESTS_NOTE)
-
+	@Operation(summary = Swagger.GET_TESTS_VALUE, description = Swagger.GET_TESTS_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@RequestMapping(value = "/tests/{id}", method = RequestMethod.GET)
 
 	@ResponseBody
@@ -61,9 +64,8 @@ public class TestsController extends BaseController {
 	 * @return List<Test> of test
 	 */
 
-	// @ApiOperation(value = Swagger.GET_TESTS_VALUE, notes =
-	// Swagger.GET_TESTS_NOTE)
-
+	@Operation(summary = Swagger.GET_TESTS_VALUE, description = Swagger.GET_TESTS_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@RequestMapping(value = "/books/{id}/tests", method = RequestMethod.GET)
 
 	@ResponseBody
@@ -78,9 +80,8 @@ public class TestsController extends BaseController {
 	 * @return list of questions
 	 */
 
-	// @ApiOperation(value = Swagger.GET_TESTQUESTIONS_VALUE, notes =
-	// Swagger.GET_TESTQUESTIONS_NOTE)
-
+	@Operation(summary = Swagger.GET_TESTQUESTIONS_VALUE, description = Swagger.GET_TESTQUESTIONS_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@RequestMapping(value = "/test/{id}/questions", method = RequestMethod.GET)
 
 	@ResponseBody
@@ -99,9 +100,8 @@ public class TestsController extends BaseController {
 	 * @param testId
 	 * @return Metadata
 	 */
-	// @ApiOperation(value = Swagger.GET_TESTS_METADATA_VALUE, notes =
-	// Swagger.GET_TESTS_METADATA_NOTE)
-
+	@Operation(summary = Swagger.GET_TESTS_METADATA_VALUE, description = Swagger.GET_TESTS_METADATA_NOTE)
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@RequestMapping(value = "test/{testId}/metadata", method = RequestMethod.GET)
 
 	@ResponseBody
