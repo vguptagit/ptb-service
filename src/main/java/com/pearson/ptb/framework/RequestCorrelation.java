@@ -1,10 +1,5 @@
 package com.pearson.ptb.framework;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 public final class RequestCorrelation {
 
 	public static final String HEADER = "Correlation-Id";
@@ -17,9 +12,7 @@ public final class RequestCorrelation {
 	 * api's like PAF,PI & EPS.
 	 */
 	public static String getId() {
-		// HttpServletRequest request = ((ServletRequestAttributes)
-		// RequestContextHolder.currentRequestAttributes()).getRequest();
-		// return request.getHeader(RequestCorrelation.HEADER);
+		
 		return null;
 	}
 

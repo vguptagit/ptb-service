@@ -14,9 +14,7 @@ public class SearchHelper {
 
 	static Map<String, String> searchCriteriaMap = null;
 
-	/*
-	 * Constants which has actual text for the abbreviated value
-	 */
+	
 	private static final String QUIZTYPE_ESSAY = "Essay";
 	private static final String QUIZTYPE_MULTIPLERESPONSE = "MultipleResponse";
 	private static final String QUIZTYPE_MATCHING = "Matching";
@@ -28,9 +26,7 @@ public class SearchHelper {
 	private static final String DIFFICULTYLEVEL_MODERATE = "Moderate";
 	private static final String DIFFICULTYLEVEL_DIFFICULT = "Difficult";
 
-	/*
-	 * Static method which represents the keys of the question meta data
-	 */
+	
 	public static enum QuestionSearchCriteria {
 		quizType, questionLevelOfDifficulty, topic, objective, pageReference, skill, questionId
 	}
@@ -38,10 +34,7 @@ public class SearchHelper {
 	private SearchHelper() {
 
 	}
-	/*
-	 * Updates the map which has search key and value.It will update the value
-	 * part. i.e it replaces the abbreviated value to actual text
-	 */
+	
 	public static void updateSearchValues(Map<String, String> filterCriteria) {
 
 		for (Map.Entry<String, String> entry : filterCriteria.entrySet()) {
@@ -66,11 +59,7 @@ public class SearchHelper {
 			}
 		}
 	}
-	/*
-	 * This represents the key mapping for question search.Question will be
-	 * searched based on many criteria, each criteria is sent as abbreviated
-	 * text.This map will have mapping of abbreviated text and actual value.
-	 */
+	
 
 	public static Map<String, String> getQuestionFilterCriteriaMap() {
 		if (searchCriteriaMap == null) {
@@ -93,14 +82,7 @@ public class SearchHelper {
 		}
 		return searchCriteriaMap;
 	}
-	/*
-	 * This method will check the question whether the question is meeting the
-	 * search criteria,if it matches it will add the question to a list.
-	 * questionMetadata : question for which need to be validated against search
-	 * criteria filterCriteria : search criteria for searching question
-	 * filteredQuestions : List of questions. THis will be filled if question
-	 * meets search criteria.
-	 */
+	
 	public static void filterQuestionBySearchCriteria(
 			QuestionMetadata questionMetadata,
 			Map<String, String> filterCriteria,

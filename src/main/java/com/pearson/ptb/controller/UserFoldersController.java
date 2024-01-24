@@ -230,8 +230,7 @@ public class UserFoldersController extends BaseController {
 	 * @param request
 	 * @return UserFolder
 	 */
-	// @ApiOperation(value = Swagger.GET_QUESTIONFOLDERS_ROOT_VALUE, notes =
-	// Swagger.GET_QUESTIONFOLDERS_ROOT_NOTE)
+	
 
 	@RequestMapping(value = "/my/questionfoldersroot", method = RequestMethod.GET)
 

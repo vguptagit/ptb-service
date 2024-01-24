@@ -10,7 +10,6 @@ public interface MetadataService {
     public void upload(MultipartFile file) throws IOException;
     public ResponseEntity<InputStreamResource> download(String id);
 
-    //   public S3Object download(String id);
-    //public List<FileMeta> list();
+    
 
 }

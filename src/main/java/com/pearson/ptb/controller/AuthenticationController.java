@@ -61,7 +61,7 @@ public class AuthenticationController extends BaseController {
 		if (!authenticationService.isIntructor(pearsonToken, extUserId)) {
 			throw new AccessDeniedException("Only instructors allowed. Invalid attempt by user id : " + extUserId);
 		}
-		// int loginCount = (new LoginRepo()).logLogin(extUserId);
+		
 
 		UserProfile userProfile = authenticationService.getUserProfileFromPIApi(accessToken, extUserId);
 

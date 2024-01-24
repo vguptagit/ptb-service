@@ -66,7 +66,7 @@ public class ArchiveService {
 	 * 
 	 */
 	public ArchiveService() {
-		// CACHE = CacheWrapper.getInstance();
+		
 	}
 
 	public void initializeCache() {
@@ -132,7 +132,7 @@ public class ArchiveService {
 		for (ArchivedFolder archivedFolder : archivedFolders) {
 
 			for (TestBinding testBinding : archivedFolder.getTestBindings()) {
-				// Delete test from PAF
+				
 				myTestsRepo.delete(testBinding.getTestId());
 			}
 		}
@@ -165,7 +165,7 @@ public class ArchiveService {
 
 			if (testBinding.getTestId().equals(testId)) {
 				indexToRemove = index;
-				// Delete test from PAF
+				
 				myTestsRepo.delete(testBinding.getTestId());
 				CACHE.delete(String.format(CacheKey.TEST_FORMAT,
 						testBinding.getTestId()));
@@ -277,8 +277,7 @@ public class ArchiveService {
 
 	private List<UserFolder> userParentsAndSelf(String folderId) {
 
-		// The below block of code will generate the parent (folders) hierarchy
-		// to be archived.
+		
 		List<ArchivedFolder> archivedFolders = new ArrayList<ArchivedFolder>();
 		fillArchivedParentFolders(archivedFolders, folderId);
 
@@ -302,8 +301,7 @@ public class ArchiveService {
 
 	private List<ArchivedFolder> archiveParentsAndSelf(String folderId) {
 
-		// The below block of code will generate the parent (folders) hierarchy
-		// to be archived.
+		
 		List<UserFolder> userFolders = new ArrayList<UserFolder>();
 		fillParentFolders(userFolders, folderId);
 
@@ -325,8 +323,7 @@ public class ArchiveService {
 
 	private void archiveChildren(String folderId, String archivedFolderId) {
 
-		// The below block of code will generate the child (folders and tests)
-		// hierarchy to be archived.
+		
 		List<String> folderIds = new ArrayList<>(Arrays.asList(folderId));
 		List<UserFolder> userFolders = new ArrayList<UserFolder>();
 
@@ -357,16 +354,13 @@ public class ArchiveService {
 			}
 		}
 
-		// The below block of code will delete the child folders that are
-		// already archived
-		// based on their folder IDs.
+		
 		userFoldersRepo.deleteFolders(folderIds);
 	}
 
 	private void restoreChildren(String folderId, String userFolderId) {
 
-		// The below block of code will generate the child (folders and tests)
-		// hierarchy to be archived.
+		
 		List<String> folderIds = new ArrayList<>(Arrays.asList(folderId));
 		List<ArchivedFolder> archivedFolders = new ArrayList<ArchivedFolder>();
 
@@ -385,9 +379,7 @@ public class ArchiveService {
 			}
 		}
 
-		// The below block of code will delete the child folders that are
-		// already archived
-		// based on their folder IDs.
+		
 		archiveRepo.deleteFolders(folderIds);
 	}
 

@@ -16,7 +16,7 @@ public class AccessDeniedException extends BaseException {
 	 *            exception
 	 */
 	public AccessDeniedException(String message) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message);
 	}
 
@@ -32,7 +32,7 @@ public class AccessDeniedException extends BaseException {
 	 *            The instance of the internal exception.
 	 */
 	public AccessDeniedException(String message, Exception innerException) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message, innerException);
 	}
 }

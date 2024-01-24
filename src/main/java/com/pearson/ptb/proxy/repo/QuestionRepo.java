@@ -42,7 +42,7 @@ public class QuestionRepo implements QuestionDelegate {
 
 	@Override
 	public List<QuestionMetadata> getQuestions(String bookID) {
-		// PAF related
+		
 
 		return null;
 	}
@@ -66,13 +66,13 @@ public class QuestionRepo implements QuestionDelegate {
 		awsQuestion.getMetadata().setChapterTitle(chapterTitle);
 		awsQuestion.setGuid(question.getmetadata().getGuid());
 		
-		// Add metadata to be stored along with body xml
+		
 		Map<String, String> awsMetadata = new HashMap<>();
 		String awsFileName = awsQuestion.getMetadata().getGuid();
 		
 		amazonS3Service.upload(bucketName, awsFileName, Optional.of(awsMetadata), IOUtils.toInputStream(awsQuestion.getBody()));
 			
-		// Convert body filed to s3 filename & store in mongodb
+		
 		Converter.updateBodyWithAwsRefId(awsQuestion, awsFileName);
 		questionEnvelopRepoHelper.save(awsQuestion);
 		

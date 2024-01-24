@@ -11,20 +11,19 @@ public class MyTestRepo implements MyTestDelegate {
 
 	@Override
 	public TestResult create(TestEnvelop test) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public TestResult update(TestEnvelop test) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public void delete(String testId) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

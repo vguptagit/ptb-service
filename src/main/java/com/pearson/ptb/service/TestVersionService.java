@@ -113,7 +113,7 @@ public class TestVersionService {
 					e);
 		}
 
-		// Validate the version bean
+		
 		versionInfo.validateState();
 		List<TestResult> results = createVersionTests(versionInfo, testId,
 				folder);
@@ -175,11 +175,11 @@ public class TestVersionService {
 			List<String> questionList = new ArrayList<String>();
 			List<String> versionedTestNames = new ArrayList<String>();
 
-			// Get the test envelop of a given test
+			
 			TestEnvelop testEnvelop = this.getTestEnvelop(testId);
 			double maxSequence = myTestService
 					.getFolderTestsMaxExtMetadataSequence(folder);
-			// Get the source test title which is passed to create version tests
+			
 			String testTitile = testEnvelop.getBody().getTitle();
 
 			List<AssignmentBinding> originalBindings = testEnvelop.getBody()
@@ -199,11 +199,10 @@ public class TestVersionService {
 			int totalVersions = existingNoOfVersions
 					+ versionInfo.getNoOfVersions();
 
-			// Loop through for number of version count to create that many
-			// version tests
+			
 			for (int versionNo = 1; versionNo <= totalVersions; versionNo++) {
 				boolean isNameExists = false;
-				// New version activity title preparation
+				
 				String versionTestTitile = testTitile + "_v" + versionNo;
 				for (String titleName : versionedTestNames) {
 					if (titleName.equals(versionTestTitile)) {
@@ -214,8 +213,7 @@ public class TestVersionService {
 
 				if (!isNameExists) {
 					maxSequence = maxSequence + versionNo;
-					// Updating the sequence extended metadata to show the newly
-					// created test at last position
+					
 					this.updateSequenceExtMetadata(testEnvelop.getmetadata(),
 							maxSequence);
 					testEnvelop.getBody().setTitle(versionTestTitile);
@@ -259,8 +257,7 @@ public class TestVersionService {
 			getVersionedTests(activityList, questionList, versionedTestNames,
 					testTitile, possibleVersions);
 		} catch (NotFoundException e) { // NOSONAR
-			// Ignoring not found exception as there my be no versions for given
-			// test.if there is no versions existing version count will be zero
+			
 		} catch (Exception e) {
 			throw new InternalException("", e);
 		}
@@ -498,7 +495,7 @@ public class TestVersionService {
 		int firstQuestion = 0;
 		Gson gson = new Gson();
 		if (result != null && !result.isEmpty()) {
-			// Get the type of test result bean list
+			
 			Type type = new TypeToken<List<QuestionOutput>>() {
 				private static final long serialVersionUID = 1L;
 			}.getType();

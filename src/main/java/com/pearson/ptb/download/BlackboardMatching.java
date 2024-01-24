@@ -57,9 +57,7 @@ public class BlackboardMatching extends BlackboardQTIConvert {
 		return bbQuestionXML;
 	}
 
-	/*
-	 * Updating answer choice i.e answer choice and matching answers
-	 */
+	
 	private void updateAnswerChoice(Multimap<String, String> answerChoices) {
 		createResponseBlock(answerChoices);
 		createRightMatchBlock(answerChoices);
@@ -139,9 +137,7 @@ public class BlackboardMatching extends BlackboardQTIConvert {
 		}
 	}
 
-	/*
-	 * Updating response processing
-	 */
+	
 	private void updateResprocessing(Multimap<String, String> answerChoices) {
 		Node resprocessing = getXMLNode(RESPROCESSING_SCOREMODEL_SUMOFSCORES,
 				true);

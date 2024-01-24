@@ -130,12 +130,12 @@ public class UserFolder extends BaseEntity {
 	public void validateState() {
 
 		List<String> messages = new ArrayList<String>();
-		// Validate the sequence field and its value should be grater than zero
+		
 		if (this.getSequence() <= 0) {
 			messages.add("sequence should be grater than zero");
 		}
 
-		// Validate userId field
+		
 		if (StringUtils.isBlank(this.userId)) {
 			messages.add("userId should not be null or Empty");
 		}

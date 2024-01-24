@@ -19,6 +19,6 @@ public class FileMeta {
 	private String filePath;
 	private String version;
 
-	// Constructors, getters, and setters
+	
 
 }

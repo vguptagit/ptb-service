@@ -7,7 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-//import org.mongodb.morphia.query.Query;
+
 import org.springframework.stereotype.Repository;
 
 import com.pearson.ptb.bean.UserFolder;
@@ -101,13 +101,13 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 
 	@Override
 	public UserQuestionsFolder getQuestionFoldersRoot(String userID) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public UserFolder getTestFolder(String testId) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -125,7 +125,7 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	@Override
 	public UserQuestionsFolder getQuestionsFolderByTitle(String title,
 			String parentId, String userId) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
@@ -185,7 +185,7 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	@Override
 	public UserQuestionsFolder getMyQuestionsFolder(String userID,
 			String folderid) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -209,13 +209,13 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 
 	@Override
 	public double getUserFolderMinSeq(String userID) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public double getUserQuestionsFolderMinSeq(String userId) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	/*

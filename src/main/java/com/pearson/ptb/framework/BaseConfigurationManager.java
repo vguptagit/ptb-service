@@ -2,7 +2,6 @@ package com.pearson.ptb.framework;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Properties;
 
 import com.pearson.ptb.framework.exception.ConfigException;
@@ -17,8 +16,7 @@ public abstract class BaseConfigurationManager {
 	 * 
 	 * @author
 	 */
-	// protected static Map<String, String> configurationProperties = new
-	// HashMap<String, String>();
+	
 
 	/**
 	 * This is the special character regular expression
@@ -45,7 +43,7 @@ public abstract class BaseConfigurationManager {
 	 * @throws ConfigException
 	 */
 	protected BaseConfigurationManager() {
-		// load all properties from properties file
+		
 
 		configurationProperties = new Properties();
 		try (InputStream inStream = getClass()
@@ -60,23 +58,12 @@ public abstract class BaseConfigurationManager {
 						"Failed to load properties file. InputStream is null.");
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 
-	/*
-	 * System.out.println("Attempting to load properties...");
-	 * configurationProperties = new Properties(); try (InputStream inStream =
-	 * getClass() .getResourceAsStream("/application.properties")) { if
-	 * (inStream != null) {
-	 * System.out.println("Loading properties..."+configurationProperties.
-	 * getProperty("cache.cacheExpiryInSeconds"));
-	 * configurationProperties.load(inStream); } else { throw new IOException(
-	 * "Failed to load properties file. InputStream is null."); } } catch
-	 * (IOException e) { e.printStackTrace(); // Handle or log the exception as
-	 * needed }
-	 */
+	
 	
 	protected abstract String getConfigPath();
 

@@ -46,7 +46,7 @@ public class TestService {
 	 * 
 	 */
 	public TestService() {
-		// CACHE = CacheWrapper.getInstance();
+		
 	}
 	
 	public void initializeCache() {
@@ -94,8 +94,7 @@ public class TestService {
 				try {
 
 					tests.add(getTestByID(testId));
-				} catch (Exception e) { // NOSONAR
-					// To skip if PAF fails for any one test
+				} catch (Exception e) { 
 				}
 			}
 

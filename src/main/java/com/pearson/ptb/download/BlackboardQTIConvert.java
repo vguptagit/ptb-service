@@ -60,9 +60,7 @@ public abstract class BlackboardQTIConvert {
 		setTemplateXML();
 	}
 
-	/*
-	 * sets the question template by the template path to the variable.
-	 */
+	
 	private Document setTemplateXML() {
 		try {
 			File inputFile = new File(this.getClass()

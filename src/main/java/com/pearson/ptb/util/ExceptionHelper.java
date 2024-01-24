@@ -13,13 +13,13 @@ public class ExceptionHelper {
 	 */
 	public String convertStackTraceToString(Throwable cause) {
 		StringBuilder stringBuilder = new StringBuilder();
-		// add to the message the string representation of the error
+		
 		stringBuilder.append(cause.toString() + "---");
-		// for each class in its part add the trace
+		
 		for (int i = 0; i < cause.getStackTrace().length; i++) {
 			stringBuilder.append(cause.getStackTrace()[i] + "---");
 		}
-		// return message with exception details as a string
+		
 		return stringBuilder.toString();
 	}
 
@@ -34,9 +34,9 @@ public class ExceptionHelper {
 		StringBuilder builder = new StringBuilder();
 		if (!messages.isEmpty()) {
 
-			// Loop through with all messages list to build the single message
+			
 			for (String msg : messages) {
-				// Check for first message is adding to string builder
+				
 				if (builder.length() == 0) {
 					builder.append("The following input fields are invalid! ")
 							.append(msg);

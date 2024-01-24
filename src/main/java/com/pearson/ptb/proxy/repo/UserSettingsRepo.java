@@ -1,21 +1,17 @@
 package com.pearson.ptb.proxy.repo;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.amazonaws.services.appstream.model.UserSetting;
 import com.pearson.ptb.bean.PrintSettings;
 import com.pearson.ptb.bean.UserSettings;
 import com.pearson.ptb.dataaccess.GenericMongoRepository;
 import com.pearson.ptb.framework.CacheWrapper;
 import com.pearson.ptb.framework.exception.BadDataException;
-import com.pearson.ptb.framework.exception.ConfigException;
 import com.pearson.ptb.framework.exception.NotFoundException;
-import com.pearson.ptb.framework.exception.ServiceUnavailableException;
 import com.pearson.ptb.proxy.BookDelegate;
 import com.pearson.ptb.proxy.UserSettingsDelegate;
 import com.pearson.ptb.util.UserHelper;
@@ -53,8 +49,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 			userSettings = genericMongoRepository.findById(userid);
 			if (userSettings == null) {
 
-				// user logging in for the first time and hence create the user
-				// with default settings
+				
 				userSettings = UserHelper.getDefaultSettings(userid);
 				genericMongoRepository.save(userSettings);
 			}

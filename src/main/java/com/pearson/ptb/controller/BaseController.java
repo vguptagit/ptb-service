@@ -62,13 +62,13 @@ public abstract class BaseController {
 			return "---nil---";
 		}
 		StringBuilder stringBuilder = new StringBuilder();
-		// add to the message the string representation of the error
+		
 		stringBuilder.append(cause.toString() + "---");
-		// for each class in its part add the trace
+		
 		for (int i = 0; i < cause.getStackTrace().length; i++) {
 			stringBuilder.append(cause.getStackTrace()[i] + "---");
 		}
-		// return message with exception details as a string
+		
 		return stringBuilder.toString();
 	}
 
@@ -80,19 +80,19 @@ public abstract class BaseController {
 	 * @return A response string with given http status
 	 */
 	private ResponseEntity<ErrorResponse> handleException(BaseException exception, HttpStatus httpStatus) {
-		// create the response headers
+		
 		HttpHeaders responseHeaders = new HttpHeaders();
 
-		// Set the content type to the JSON
+	
 		responseHeaders.add("Content-Type", "application/json; charset=utf-8");
 
-		// create an error response.
+		
 		ErrorResponse errorResponse = new ErrorResponse();
 
-		// set the response message.
+		
 		errorResponse.setMessage(exception.getMessage());
 
-		// Returns the responseEntity containing the JSON object and Status Code
+	
 		return new ResponseEntity<ErrorResponse>(errorResponse, responseHeaders, httpStatus);
 	}
 

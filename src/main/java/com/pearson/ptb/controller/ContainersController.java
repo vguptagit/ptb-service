@@ -54,7 +54,7 @@ public class ContainersController extends BaseController {
 	@RequestMapping(value = "/books/{bookid}/nodes", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Container> getContainersByBook(@PathVariable String bookid, HttpServletRequest request,
-			// @ApiParam(value = Swagger.GET_ALL_CONTAINERS, required = false)
+			
 			@RequestParam(required = false, defaultValue = "0") boolean flat) {
 
 		Map<String, String> filterCriteria = URLHelper.getQueryMap(request.getQueryString(),

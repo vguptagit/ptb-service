@@ -14,12 +14,12 @@ public class InternalException extends BaseException {
 	 * This constructors logs the basic error
 	 */
 	public InternalException(String message) {
-		// get message from super class
+		
 		super(message);
 	}
 
 	public InternalException(String message, Exception innerException) {
-		// get message from super class
+		
 		super(message, innerException);
 
 	}

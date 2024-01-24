@@ -52,7 +52,7 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 		return bbQuestionXML;
 	}
 
-	// update Multiple-Choice question AnswerChoices
+	
 	private void updateAnswerChoices() {
 		try {
 			Node renderChoice = getXMLNode(RENDER_CHOICE, true);
@@ -104,7 +104,7 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 		}
 	}
 
-	// update Resproces element
+	
 	private void updateResprocessing() {
 		try {
 			Node resprocessingmaxvalue = getXMLNode(RESPCONDITION_MAXVALUE,
@@ -129,7 +129,7 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 		}
 	}
 
-	// To get index of the Answer choice.
+	
 	private int getMaximumScoreIndex() {
 		String maxScore = getMaximumScore();
 		int i = 1;
@@ -142,7 +142,7 @@ public class BlackboardMultipleChoice extends BlackboardQTIConvert {
 		return i;
 	}
 
-	// update Multiple-Choice Itemfeedback
+	
 	private void updateItemfeedback() {
 		try {
 			Node rootNode = getXMLNode(ITEM, true);

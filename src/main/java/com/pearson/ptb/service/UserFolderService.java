@@ -177,7 +177,7 @@ public class UserFolderService {
 	 */
 	public UserFolder saveFolder(UserFolder folder, String userId) {
 
-		// Check for userId and its value should not be null or empty
+		
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -186,7 +186,7 @@ public class UserFolderService {
 		}
 		folder.setUserID(userId);
 
-		// Validate the user folder values
+		
 		folder.validateState();
 
 		List<UserFolder> folders = new ArrayList<UserFolder>();
@@ -203,7 +203,7 @@ public class UserFolderService {
 	 */
 	public UserFolder updateFolder(UserFolder folder, String userId) {
 
-		// Check for userId and its value should not be null or empty
+		
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -212,7 +212,7 @@ public class UserFolderService {
 		}
 		folder.setUserID(userId);
 
-		// Validate the user folder values
+		
 		folder.validateState();
 
 		List<UserFolder> folders = new ArrayList<UserFolder>();
@@ -297,7 +297,7 @@ public class UserFolderService {
 	public UserQuestionsFolder saveUserQuestionFolder(
 			UserQuestionsFolder folder, String userId) {
 
-		// Check for userId and its value should not be null or empty
+	
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -323,7 +323,7 @@ public class UserFolderService {
 	public UserQuestionsFolder updateUserQuestionFolder(
 			UserQuestionsFolder folder, String userId) {
 
-		// Check for userId and its value should not be null or empty
+	
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}

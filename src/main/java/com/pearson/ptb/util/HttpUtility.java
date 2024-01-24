@@ -60,7 +60,7 @@ public class HttpUtility {
 	 *             property file.
 	 */
 	public HttpUtility() {
-		// Initialize the client with the httpParam
+		
 		client = new DefaultHttpClient(httpParams());
 
 	}
@@ -101,7 +101,7 @@ public class HttpUtility {
 		String query = "%s=%s";
 		StringBuilder sb = new StringBuilder();
 		String buildUrl = url;
-		// Set query string
+		
 		if (queryString != null && !queryString.isEmpty()) {
 			buildUrl = buildUrl.concat("?");
 
@@ -142,12 +142,12 @@ public class HttpUtility {
 	private void setRequestHeaders(AbstractHttpMessage httpRequest,
 			ContentType contentType, Map<String, String> headers) {
 
-		// Set the content type
+		
 		if (contentType != null) {
 			httpRequest.setHeader(Common.CONTENT_TYPE, contentType.toString());
 		}
 
-		// Set headers
+		
 		if (headers != null && !headers.isEmpty()) {
 			for (String key : headers.keySet()) {
 				httpRequest.setHeader(key, headers.get(key));
@@ -176,9 +176,9 @@ public class HttpUtility {
 			ContentType contentType, Map<String, String> queryString)
 			throws IOException {
 
-		// Create an HttpPost object
+		
 		HttpGet httpGet = new HttpGet(buildQueryString(url, queryString));
-		// Set headers
+		
 		setRequestHeaders(httpGet, contentType, headers);
 
 		return getResponse(httpGet, url, "MakeGet");
@@ -209,16 +209,16 @@ public class HttpUtility {
 			ContentType contentType, Map<String, String> queryString,
 			String payload) {
 
-		// Create an HttpPost object
+		
 		HttpPost httpPost = new HttpPost(buildQueryString(url, queryString));
 
-		// Set payload
+		
 		httpPost.setEntity(createRequestEntity(payload));
 
-		// Set Headers
+		
 		setRequestHeaders(httpPost, contentType, headers);
 
-		// return the http Response
+		
 		return getResponse(httpPost, url, "MakePost");
 
 	}
@@ -246,16 +246,16 @@ public class HttpUtility {
 			ContentType contentType, Map<String, String> queryString,
 			String payload) throws IOException {
 
-		// Create an HttpPut object
+		
 		HttpPut httpPut = new HttpPut(buildQueryString(url, queryString));
 
-		// Set payload
+		
 		httpPut.setEntity(createRequestEntity(payload));
 
-		// Set Headers
+		
 		setRequestHeaders(httpPut, contentType, headers);
 
-		// return the http Response
+		
 		try {
 			return new HttpResponse(client.execute(httpPut));
 		} catch (Exception ex) {
@@ -287,14 +287,14 @@ public class HttpUtility {
 			ContentType contentType, Map<String, String> queryString)
 			throws IOException {
 
-		// Create an HttpDelete object
+		
 		HttpDelete httpDelete = new HttpDelete(
 				buildQueryString(url, queryString));
 
-		// Set Headers
+		
 		setRequestHeaders(httpDelete, contentType, headers);
 
-		// return the http Response
+		
 		return getResponse(httpDelete, url, "MakeDelete");
 	}
 
@@ -322,16 +322,16 @@ public class HttpUtility {
 	public HttpResponse makePutOnJSON(String url, String payload,
 			Map<String, String> headers) throws IOException {
 
-		// Create an HttpPost object
+		
 		HttpPut httpPut = new HttpPut(url);
 
-		// Set payload
+		
 		httpPut.setEntity(createRequestEntity(payload));
 
-		// Set headers
+		
 		setRequestHeaders(httpPut, ContentType.APPLICATION_JSON, headers);
 
-		// return the http Response
+		
 		return new HttpResponse(client.execute(httpPut));
 	}
 
@@ -345,7 +345,7 @@ public class HttpUtility {
 	 *             If the payload type is unsupported.
 	 */
 	private InputStreamEntity createRequestEntity(String payload) {
-		// Create an new object of InputStreamEntity
+		
 		InputStreamEntity requestEntity = null;
 
 		try {
@@ -359,7 +359,7 @@ public class HttpUtility {
 		requestEntity.setContentType(Common.BINARY_OCTET_STREAM);
 		requestEntity.setChunked(true);
 
-		// return the requestEntity
+		
 		return requestEntity;
 
 	}
