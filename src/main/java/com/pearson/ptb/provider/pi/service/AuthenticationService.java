@@ -149,8 +149,7 @@ public class AuthenticationService {
 	}
 
 	class PIJson {
-		String pi_token; // NOSONAR as this property name is as per the json
-							// returned by PI api
+		String pi_token; 
 	}
 
 	class Groups {

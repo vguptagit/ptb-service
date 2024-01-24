@@ -52,9 +52,7 @@ public class BlackboardTrueFalse extends BlackboardQTIConvert {
 
 		return bbQuestionXML;
 	}
-	/*
-	 * Updating answer choice
-	 */
+	
 	private void updateAnswerChoices() {
 		try {
 			NodeList responselabels = getXMLNodes("response_label", false);
@@ -81,9 +79,7 @@ public class BlackboardTrueFalse extends BlackboardQTIConvert {
 		}
 	}
 
-	/*
-	 * Updating response processing
-	 */
+	
 	private void updateResprocessing() {
 		try {
 			Node resprocessingMaxvalue = getXMLNode(RESPCONDITION_MAXVALUE,
@@ -109,9 +105,7 @@ public class BlackboardTrueFalse extends BlackboardQTIConvert {
 		}
 	}
 
-	/*
-	 * Updating feedback
-	 */
+	
 	private void updateItemfeedback() {
 		NodeList itemfeedbacks;
 		try {
@@ -134,9 +128,7 @@ public class BlackboardTrueFalse extends BlackboardQTIConvert {
 		}
 	}
 
-	/*
-	 * getting the feedback for a answer choice
-	 */
+	
 	private String answerChoiceFeedback(String answer) {
 		Map<String, String> answerChoicesWithFeedback = ptbQTIParser
 				.getAnswerChoicesWithFeedback();

@@ -59,7 +59,7 @@ public final class CacheWrapper {
 
 		CONFIG = ConfigurationManager.getInstance();
 		CACHECONFIG = CacheConfigManager.getInstance();
-		// create an instance of pool
+		
 		jedisPool = new JedisPool(new JedisPoolConfig(),
 				(String) CACHECONFIG.getCacheServer());
 	}
@@ -76,10 +76,10 @@ public final class CacheWrapper {
 	public static CacheWrapper getInstance() {
 		try {
 			if (CacheWrapper.cacheWrapper == null) {
-				// null check in synchronization for race condition
+				
 				synchronized (CacheWrapper.mutex) {
 					if (CacheWrapper.cacheWrapper == null) {
-						// create cache wrapper instance as singleton
+						
 						CacheWrapper.cacheWrapper = new CacheWrapper();
 					}
 				}
@@ -126,20 +126,18 @@ public final class CacheWrapper {
 
 				jedis = jedisPool.getResource();
 
-				// create the key as app name + string so that we may use the
-				// same
-				// server for multiple apps.
+				
 				String cacheKey = CONFIG.environmentName() + ":"
 						+ CONFIG.applicationName() + ":" + key;
 				jedis.setex(SerializationUtils.serialize(cacheKey), timeOut,
 						SerializationUtils.serialize(value));
 
-				// return the client to pool
+				
 				if (jedis != null) {
 					jedisPool.returnResource(jedis);
 				}
 			} catch (Exception ex) {
-				// on error return broken client
+				
 				if (jedis != null) {
 					jedisPool.returnBrokenResource(jedis);
 				}
@@ -189,19 +187,19 @@ public final class CacheWrapper {
 						.get(SerializationUtils.serialize(cacheKey));
 
 				if (byteArray != null) {
-					// if not null then generate the original Object
+					
 					object = SerializationUtils.deserialize(byteArray);
 				}
 
-				// slide expiration time on every get
+				
 				jedis.expire(SerializationUtils.serialize(cacheKey), timeout);
 
-				// return the client to pool
+			
 				if (jedis != null) {
 					jedisPool.returnResource(jedis);
 				}
 			} catch (Exception ex) {
-				// on error return broken client
+				
 				if (jedis != null) {
 					jedisPool.returnBrokenResource(jedis);
 				}
@@ -224,7 +222,7 @@ public final class CacheWrapper {
 		Jedis jedis = null;
 		if (CACHECONFIG.getIsCacheEnabled()) {
 			try {
-				// get an instance of resource
+				
 				jedis = this.jedisPool.getResource();
 
 				jedis.flushAll();
@@ -232,7 +230,7 @@ public final class CacheWrapper {
 					this.jedisPool.returnResource(jedis);
 				}
 			} catch (Exception ex) {
-				// on error return broken client
+				
 				if (jedis != null) {
 					jedisPool.returnBrokenResource(jedis);
 				}
@@ -250,7 +248,7 @@ public final class CacheWrapper {
 	 */
 	public void delete(String key) {
 
-		// get an instance of resource
+		
 		Jedis jedis = null;
 		if (CACHECONFIG.getIsCacheEnabled()) {
 			try {
@@ -262,7 +260,7 @@ public final class CacheWrapper {
 					this.jedisPool.returnResource(jedis);
 				}
 			} catch (Exception ex) {
-				// on error return broken client
+			
 				if (jedis != null) {
 					jedisPool.returnBrokenResource(jedis);
 				}

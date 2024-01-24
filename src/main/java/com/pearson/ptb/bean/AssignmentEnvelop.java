@@ -1,7 +1,6 @@
 package com.pearson.ptb.bean;
 
 import com.googlecode.jmapper.annotations.JMap;
-import com.pearson.ptb.bean.Assignment;
 
 /**
  * This <code>AssignmentEnvelop</code> is entity of PAF to represents the

@@ -6,9 +6,7 @@ package com.pearson.ptb.proxy.repo;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.google.common.collect.ImmutableMap;
 import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.dataaccess.GenericMongoRepository;
-import com.pearson.ptb.framework.exception.BaseException;
-import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.ContainerDelegate;
 
 import lombok.RequiredArgsConstructor;
@@ -114,13 +110,13 @@ public class ContainerRepo implements ContainerDelegate {
 	@Override
 	public List<Container> getContainerByQuestionids(String bookID,
 			List<String> questionids) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public String getTitle(String bookID, String containerID) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

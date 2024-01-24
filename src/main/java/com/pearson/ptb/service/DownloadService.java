@@ -183,9 +183,7 @@ public class DownloadService {
 				}
 			}
 
-		} catch (NotFoundException e) { // NOSONAR
-			// Ignoring not found exception as there my be no versions for given
-			// test.if there is no versions existing version count will be zero
+		} catch (NotFoundException e) { 
 		} catch (Exception e) {
 			throw new InternalException("Exception while getting versions", e);
 		}
@@ -228,7 +226,7 @@ public class DownloadService {
 			Set<String> addedNames, int versionNo,
 			List<DownloadInfo> validVersionLst) {
 		boolean isNewlyAdded = false;
-		// ArchiveRepo archiveRepo = new ArchiveRepo();
+		
 		Metadata metadata = metadataService.getMetadata(guid);
 		if (metadata != null) {
 			String versionedTestTitle = parentTestTitle + "_v"
@@ -264,19 +262,19 @@ public class DownloadService {
 			if (downloadInfo.getPrintSettings().getIncludeAnswerKeyIn()
 					.equals(AnswerKeys.SEPARATEFILE)) {
 
-				// Setup print setting to generate test file
+				
 				downloadInfo.getPrintSettings()
 						.setIncludeAnswerKeyIn(AnswerKeys.NONE);
 				downloadToZip(zipOuputStream, downloader, downloadInfo, false);
 
-				// Setup print setting to generate answer keys
+				
 				downloadInfo.getPrintSettings()
 						.setIncludeAnswerKeyIn(AnswerKeys.SEPARATEFILE);
 				downloadToZip(zipOuputStream, downloader, downloadInfo, true);
 
 			} else {
 
-				// Use the download info being set by the user to download
+				
 				downloadToZip(zipOuputStream, downloader, downloadInfo, false);
 
 			}

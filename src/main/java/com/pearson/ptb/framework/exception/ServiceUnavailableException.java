@@ -16,7 +16,7 @@ public class ServiceUnavailableException extends BaseException {
 	 *            exception
 	 */
 	public ServiceUnavailableException(String message) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message);
 	}
 
@@ -33,7 +33,7 @@ public class ServiceUnavailableException extends BaseException {
 	 */
 	public ServiceUnavailableException(String message,
 			Exception innerException) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message, innerException);
 	}
 }

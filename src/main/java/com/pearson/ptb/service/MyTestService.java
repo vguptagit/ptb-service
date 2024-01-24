@@ -72,7 +72,7 @@ public class MyTestService {
 	 * 
 	 */
 	public MyTestService() {
-		// CACHE = CacheWrapper.getInstance();
+		
 	}
 
 	public void initializeCache() {
@@ -434,7 +434,7 @@ public class MyTestService {
 	 */
 	private void validateDuplicateTestTitle(String userID, String testTitle) {
 		List<TestMetadata> tests = getMyFolderTests(userID, null, false);
-		// TODO: Change to lambda expression
+		
 		boolean existTest = false;
 		for (TestMetadata testMetadata : tests) {
 			if (testMetadata.getTitle() != null
@@ -457,7 +457,7 @@ public class MyTestService {
 		if (isInValidPackage(file.getContentType())) {
 			throw new BadDataException("Invalid file");
 		}
-		// ToDo: Need to move it on properties file
+		
 		if (file.getSize() > (1024 * 1024 * 4)) {
 			throw new BadDataException("Exceed file size limit");
 		}

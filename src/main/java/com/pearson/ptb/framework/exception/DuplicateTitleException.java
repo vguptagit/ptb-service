@@ -16,7 +16,7 @@ public class DuplicateTitleException extends BaseException {
 	 *            exception
 	 */
 	public DuplicateTitleException(String message) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message);
 	}
 
@@ -32,7 +32,7 @@ public class DuplicateTitleException extends BaseException {
 	 *            The instance of the internal exception.
 	 */
 	public DuplicateTitleException(String message, Exception innerException) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message, innerException);
 	}
 }

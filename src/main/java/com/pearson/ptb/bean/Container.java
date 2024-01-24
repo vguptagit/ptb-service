@@ -128,7 +128,7 @@ public class Container extends BaseEntity implements Serializable {
 	 */
 	public void validateState() {
 
-		// Validate Container Id field
+		
 		if (StringUtils.isBlank(this.getTitle())) {
 			throw new BadDataException(
 					"node title should not be null or Empty");

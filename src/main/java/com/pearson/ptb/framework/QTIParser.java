@@ -267,7 +267,7 @@ public class QTIParser {
 							.getElementsByTagName(BASEVALUE_NODE).item(0)
 							.getFirstChild().getNodeValue();
 
-					if (isIdentifierMatches(identifier, matchIdentifiew)) { // NOSONAR
+					if (isIdentifierMatches(identifier, matchIdentifiew)) { 
 						Node scoreNode = elRM.getNextSibling();
 						String score = scoreNode.getChildNodes().item(0)
 								.getFirstChild().getNodeValue();
@@ -457,9 +457,7 @@ public class QTIParser {
 
 	}
 
-	/*
-	 * Getting the recommended answer for answer key.
-	 */
+	
 	private String getAnswerKeysForEssay() {
 		String recommendedAnswer = "";
 		try {
@@ -935,9 +933,7 @@ public class QTIParser {
 		}
 	}
 
-	/*
-	 * Getting answer area space for essay question.
-	 */
+	
 	public int getAnswerAreaForEssay() {
 
 		int lineBreakLength = 0;
@@ -955,9 +951,7 @@ public class QTIParser {
 		return lineBreakLength;
 	}
 
-	/*
-	 * Getting the answer choice orientation i.e horizontal or vertical
-	 */
+	
 	public String getAnswerChoiceOrientation() {
 		String answerChoiceOrientation = "";
 		try {
@@ -1470,7 +1464,7 @@ public class QTIParser {
 						nodeContent = nodeContent
 								+ getNodeOuterXML(node.getFirstChild());
 					} catch (TransformerException e) {
-						// TODO Auto-generated catch block
+					
 						throw new InternalException(
 								"Error while Setting the CData to Node ", e);
 					}

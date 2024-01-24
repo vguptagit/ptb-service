@@ -52,7 +52,7 @@ public class BookRepo implements BookDelegate {
 
 	@Override
 	public List<Book> getBooksByDisciplines(List<String> disciplines) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -78,7 +78,7 @@ public class BookRepo implements BookDelegate {
 
 	@Override
 	public String getTitle(String bookID) {
-		// TODO Auto-generated method stub
+		
 		
 		return null;
 	}

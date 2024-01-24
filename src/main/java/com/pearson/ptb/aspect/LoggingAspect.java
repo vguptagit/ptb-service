@@ -56,9 +56,9 @@ public class LoggingAspect {
 	@Before("execution(* com.pearson.mytest.controller.*.*(..))")
 	public void traceEntry(JoinPoint joinPoint) {
 
-		// if debug level logging is enabled
+		
 		if (ConfigurationManager.getInstance().isDebugEnabled()) {
-			// log the class, method name and the method arguments
+			
 			LoggingAspect.LOG
 					.debug(String.format(LoggingAspect.TRACE_ENTRY_LOG_TEMPLATE,
 							joinPoint.getTarget().getClass(),
@@ -81,9 +81,9 @@ public class LoggingAspect {
 	@AfterReturning(pointcut = "execution(* com.pearson.mytest.controller.*.*(..))", returning = "result")
 	public void traceExit(JoinPoint joinPoint, Object result) {
 
-		// if debug level logging is enabled
+		
 		if (ConfigurationManager.getInstance().isDebugEnabled()) {
-			// log the method details along with its results
+			
 			LoggingAspect.LOG
 					.debug(String.format(LoggingAspect.EXIT_LOG_TEMPLATE,
 							joinPoint.getTarget().getClass(),
@@ -107,7 +107,7 @@ public class LoggingAspect {
 	@AfterThrowing(pointcut = "execution(* com.pearson.mytest.controller.*.*(..))", throwing = "throwable")
 	public void traceException(JoinPoint joinPoint, Throwable throwable) {
 
-		// log the method details along with the exception thrown
+		
 		LoggingAspect.LOG.error(String.format(LoggingAspect.ERROR_LOG_TEMPLATE,
 				joinPoint.getTarget().getClass(),
 				joinPoint.getSignature().getName(),
@@ -125,16 +125,16 @@ public class LoggingAspect {
 	 */
 	public String convertStackTraceToString(Throwable throwable) {
 
-		// append the string representation of the error
+		
 		StringBuilder stackTraceBuilder = new StringBuilder();
 		stackTraceBuilder.append(throwable.toString() + "---");
 
-		// add trace of each stack
+		
 		for (int i = 0; i < throwable.getStackTrace().length; i++) {
 			stackTraceBuilder.append(throwable.getStackTrace()[i] + "---");
 		}
 
-		// return formated exception details as a string
+		
 		return stackTraceBuilder.toString();
 	}
 }

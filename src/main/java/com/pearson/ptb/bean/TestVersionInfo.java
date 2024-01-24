@@ -53,7 +53,7 @@ public class TestVersionInfo {
 	 */
 	public void validateState() {
 		ConfigurationManager config = ConfigurationManager.getInstance();
-		// Validate noOfVersions field and this field should be grater than zero
+		
 		if (this.noOfVersions <= 0
 				|| this.noOfVersions >= config.getMaxScrambledVersions()) {
 			throw new BadDataException(

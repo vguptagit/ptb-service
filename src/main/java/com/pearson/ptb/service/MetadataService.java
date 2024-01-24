@@ -27,7 +27,7 @@ public class MetadataService {
 	 * caching operation.
 	 */
 	public MetadataService() {
-		// CACHE = CacheWrapper.getInstance();
+		
 	}
 
 	public void initializeCache() {

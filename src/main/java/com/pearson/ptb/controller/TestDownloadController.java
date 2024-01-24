@@ -108,7 +108,7 @@ public class TestDownloadController extends BaseController {
 			response.addHeader("contentType", "application/" + output.getContentType());
 			response.addHeader("content-disposition", "attachment; filename=\"" + output.getFileName() + "\"");
 			response.getOutputStream().write(dstStream.toByteArray());
-		} catch (ExpectationException e) { // NOSONAR
+		} catch (ExpectationException e) {
 
 			response.addHeader("contentType", "text/html");
 			response.getOutputStream().write("No versions are there for this test".getBytes());

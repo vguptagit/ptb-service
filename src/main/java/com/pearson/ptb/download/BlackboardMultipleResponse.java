@@ -47,9 +47,7 @@ public class BlackboardMultipleResponse extends BlackboardQTIConvert {
 		return bbQuestionXML;
 	}
 
-	/*
-	 * update Multiple-Response question AnswerChoices
-	 */
+	
 	private void updateAnswerChoices() {
 		try {
 			Node renderChoice = getXMLNode(RENDER_CHOICE, true);
@@ -101,7 +99,7 @@ public class BlackboardMultipleResponse extends BlackboardQTIConvert {
 		}
 	}
 
-	// update Resprocessing element
+	
 	private void updateResprocessing() {
 		try {
 			Node resprocessingMaxvalue = getXMLNode(RESPCONDITION_MAXVALUE,

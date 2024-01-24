@@ -29,7 +29,7 @@ public class HttpResponse {
 	 * Empty Constructor of zero default arguments
 	 */
 	public HttpResponse() {
-		// empty constructor
+		
 	}
 
 	/**
@@ -43,15 +43,15 @@ public class HttpResponse {
 	 */
 	public HttpResponse(org.apache.http.HttpResponse httpResponse)
 			throws IOException {
-		// set http response
+		
 		this.setResponse(httpResponse);
-		// set response message
+		
 		this.setReponseMessage(
 				new String(EntityUtils.toByteArray(this.response.getEntity())));
-		// set response code
+		
 		this.setCode(HttpStatus
 				.valueOf(this.response.getStatusLine().getStatusCode()));
-		// consume http response
+	
 		EntityUtils.consume(httpResponse.getEntity());
 	}
 
@@ -60,7 +60,7 @@ public class HttpResponse {
 	 *            the code to set
 	 */
 	public void setCode(HttpStatus code) {
-		// set code
+		
 		this.code = code;
 	}
 
@@ -69,7 +69,7 @@ public class HttpResponse {
 	 *            the reponseMessage to set
 	 */
 	public void setReponseMessage(String reponseMessage) {
-		// set response message
+		
 		this.reponseMessage = reponseMessage;
 	}
 
@@ -78,7 +78,7 @@ public class HttpResponse {
 	 *            the httpResponse to set
 	 */
 	public void setResponse(org.apache.http.HttpResponse httpResponse) {
-		// set http response
+		
 		this.response = httpResponse;
 	}
 
@@ -88,7 +88,7 @@ public class HttpResponse {
 	 * @return the response code
 	 */
 	public HttpStatus getCode() {
-		// get code
+		
 		return this.code;
 	}
 
@@ -99,7 +99,7 @@ public class HttpResponse {
 	 * @throws IOException
 	 */
 	public String getReponseMessage() {
-		// get response message
+		
 		return this.reponseMessage;
 	}
 

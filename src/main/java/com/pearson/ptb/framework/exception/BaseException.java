@@ -14,12 +14,12 @@ public abstract class BaseException extends RuntimeException {
 	 * This constructors logs the basic error
 	 */
 	public BaseException(String message) {
-		// get message from super class
+		
 		super(message);
 	}
 
 	public BaseException(String message, Exception innerException) {
-		// get message from super class
+		
 		super(message, innerException);
 	}
 

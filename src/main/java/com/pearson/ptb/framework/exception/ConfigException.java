@@ -16,7 +16,7 @@ public class ConfigException extends BaseException {
 	 *            The entity which generated the exception.
 	 */
 	public ConfigException() {
-		// Call the constructor of the BaseException
+		
 		this(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
 	}
 
@@ -30,7 +30,7 @@ public class ConfigException extends BaseException {
 	 *            exception
 	 */
 	public ConfigException(String message) {
-		// Call the constructor of the BaseException
+		
 		super(message);
 	}
 
@@ -46,7 +46,7 @@ public class ConfigException extends BaseException {
 	 *            The instance of the internal exception.
 	 */
 	public ConfigException(String message, Exception innerException) {
-		// Call the constructor of the BaseException
+		
 		super(message, innerException);
 	}
 

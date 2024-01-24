@@ -28,10 +28,10 @@ public class CurrentThreadContext {
 	 */
 	public static String getUniversalId() {
 
-		// check if thread local HashMap is initialized
+		
 		if (threadLocal.get() == null) {
 
-			// initialize the HashMap first
+		
 			threadLocal.set(UUID.randomUUID());
 
 		}

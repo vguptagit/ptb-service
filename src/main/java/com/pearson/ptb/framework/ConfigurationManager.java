@@ -28,8 +28,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @throws ConfigException
 	 */
 	protected ConfigurationManager() {
-		// Calling parent class Constructor to load all properties from config
-		// properties file
+		
 		super();
 	}
 
@@ -61,17 +60,17 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @throws ConfigException
 	 */
 	public static ConfigurationManager getInstance() {
-		// synchronized block for creating ConfigurationManager singleton
+	
 		if (configurationManager == null) {
-			// null check in synchronization for race condition
+			
 			synchronized (CacheConfigManager.mutex) {
 				if (configurationManager == null) {
-					// create ConfigurationManager instance as singleton
+					
 					configurationManager = new ConfigurationManager();
 				}
 			}
 		}
-		// return ConfigurationManager
+		
 		return configurationManager;
 
 	}
@@ -85,7 +84,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @author
 	 */
 	public Boolean isDebugEnabled() {
-		// returns the IsDebugEnabled
+		
 		String string = (String) ConfigurationManager.configurationProperties
 				.get("IsDebugEnabled");
 
@@ -150,7 +149,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @author nithinjain
 	 */
 	public String getPAFConsumerKey() {
-		// returns the paf consumer key
+		
 		return (String) ConfigurationManager.configurationProperties
 				.get("PAFConsumerKey");
 	}
@@ -164,7 +163,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @author nithinjain
 	 */
 	public String getPAFDataSecretKey() {
-		// returns the paf DataSecret Key
+		
 		return (String) ConfigurationManager.configurationProperties
 				.get("PAFDataSecretKey");
 	}
@@ -178,7 +177,7 @@ public final class ConfigurationManager extends BaseConfigurationManager {
 	 * @author nithinjain
 	 */
 	public String getPAFOauthAlgorithm() {
-		// returns the paf Oauth Algorithm
+		
 		return (String) ConfigurationManager.configurationProperties
 				.get("PAFOauthAlgorithm");
 	}

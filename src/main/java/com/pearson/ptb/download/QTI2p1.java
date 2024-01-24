@@ -137,7 +137,7 @@ public class QTI2p1 implements TestDownload {
 	 * @return Document form of imsassessment file
 	 */
 	private Document getAssessmentXMLDocument(DownloadInfo downloadInfo) {
-		// TODO : Hard coded xml format will be moved to template file
+		
 		StringBuilder assessment = new StringBuilder();
 		assessment.append(
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?><assessmentTest xmlns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" identifier=\"ASSESSMENT-IDENTIFIER\" title=\""
@@ -162,7 +162,7 @@ public class QTI2p1 implements TestDownload {
 	 * @return Document form of imsmanifest file
 	 */
 	private Document getManifestDocument(DownloadInfo downloadInfo) {
-		// TODO : Hard coded xml format will be moved to template file
+		
 		StringBuilder manifest = new StringBuilder();
 		manifest.append(
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?><manifest xmlns:imsmd=\"http://www.imsglobal.org/xsd/imsmd_v1p2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:imsqti=\"http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1\" identifier=\""
@@ -223,8 +223,7 @@ public class QTI2p1 implements TestDownload {
 	 * @param document
 	 * @return
 	 */
-	// TODO : Duplicate method as in Blackboard.java. Need to move this method
-	// to a helper or utility class
+	
 	public byte[] documentToByte(Document document) {
 		byte[] array;
 		try {
@@ -248,8 +247,7 @@ public class QTI2p1 implements TestDownload {
 	 * @param xmlString
 	 * @return
 	 */
-	// TODO : Duplicate method as in Blackboard.java. Need to move this method
-	// to a helper or utility class
+	
 	private Document stringToDocument(String xmlString) {
 		Document doc;
 		try {

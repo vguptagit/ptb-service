@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.services.glue.model.EntityNotFoundException;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 import com.pearson.ptb.bean.FileMeta;
@@ -48,11 +47,11 @@ public class MetadataServiceImpl implements MetadataService {
         String path = String.format("%s/%s", bucketName, UUID.randomUUID());
         String fileName = String.format("%s", file.getOriginalFilename());
 
-        // Uploading file to s3
+     
         PutObjectResult putObjectResult = amazonS3Service.upload(
                 path, fileName, Optional.of(metadata), file.getInputStream());
         String id= UUID.randomUUID().toString();
-        // Saving metadata to db
+       
         fileMetaRepository.insert(new FileMeta(id,fileName, path, putObjectResult.getMetadata().getVersionId()));
 
     }

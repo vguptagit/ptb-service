@@ -16,7 +16,7 @@ public class NotFoundException extends BaseException {
 	 *            The entity which generated the exception.
 	 */
 	public NotFoundException() {
-		// Call the constructor of the BaseAMSException
+		
 		this(HttpStatus.NOT_FOUND.getReasonPhrase());
 	}
 
@@ -30,7 +30,7 @@ public class NotFoundException extends BaseException {
 	 *            exception
 	 */
 	public NotFoundException(String message) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message);
 	}
 
@@ -46,7 +46,7 @@ public class NotFoundException extends BaseException {
 	 *            The instance of the internal exception.
 	 */
 	public NotFoundException(String message, Exception innerException) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message, innerException);
 	}
 

@@ -52,9 +52,7 @@ public class BlackboardFillInBlank extends BlackboardQTIConvert {
 		return bbQuestionXML;
 	}
 
-	/*
-	 * Updating the response processing
-	 */
+	
 	private void updateResprocessing() {
 
 		Node resprocessingMaxvalue = getXMLNode(RESPCONDITION_MAXVALUE, true);
@@ -94,9 +92,7 @@ public class BlackboardFillInBlank extends BlackboardQTIConvert {
 
 	}
 
-	/*
-	 * Updating the item feedback
-	 */
+	
 	private void updateItemfeedback() {
 		Node itemfeedback = getXMLNode(ITEMFEEDBACK, true);
 		Node itemNode = getXMLNode("item", false);

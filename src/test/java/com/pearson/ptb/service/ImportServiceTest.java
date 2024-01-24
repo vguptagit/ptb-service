@@ -32,14 +32,14 @@ class ImportServiceTest {
 	@InjectMocks
 	ImportService importService;
 
-	// to hold Fake objects
+	
 	Book bookFake;
 	Books booksFake;
 	List<Container> containersFake;
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		// prepare fake objects
+		
 		bookFake = generateFakeBook();
 		containersFake = generateFakeContainers();
 		booksFake = generateFakeBooks();
@@ -47,16 +47,12 @@ class ImportServiceTest {
 
 	@Test()
 	void testImportBooks() throws Exception {
-//		Mockito.doThrow(new RuntimeException("bookRepo")).when(bookRepo)
-//				.save(Mockito.any(Book.class));
-//		Mockito.doThrow(new RuntimeException("containerRepo"))
-//				.when(containerRepo).save(Mockito.anyList());
+//		
 		doNothing().when(bookRepo).save(any());
 		doNothing().when(containerRepo).save(anyList());
 		importService.importBooks(booksFake);
 		
-		//verify(bookRepo, times(1)).save(bookFake);
-		//vrify(containerRepo, times(1)).save(containersFake);
+		;
 	}
 
 	private Books generateFakeBooks() {

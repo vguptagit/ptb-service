@@ -19,7 +19,7 @@ public class BadDataException extends BaseException {
 	 * @author pranav.jain
 	 */
 	public BadDataException(String message) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message);
 	}
 
@@ -36,7 +36,7 @@ public class BadDataException extends BaseException {
 	 * @author pranav.jain
 	 */
 	public BadDataException(String message, Exception innerException) {
-		// Call the constructor of the BaseAMSException
+		
 		super(message, innerException);
 	}
 

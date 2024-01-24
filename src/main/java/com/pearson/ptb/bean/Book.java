@@ -271,25 +271,25 @@ public class Book extends BaseEntity {
 	 */
 	public void validateState() {
 		List<String> messages = new ArrayList<String>();
-		// Validate Book Id field
+		
 
 		if (StringUtils.isBlank(this.getGuid())) {
 			messages.add("book id should not be null or Empty");
 		}
-		// Validate Book title field
+		
 		if (StringUtils.isBlank(this.getTitle())) {
 			messages.add("book title should not be null or Empty");
 		}
 
-		// Validate Book Discipline field
+		
 		if (StringUtils.isBlank(this.getDiscipline())) {
 			messages.add("book Discipline should not be null or Empty");
 		}
-		// Validate Book Authors field
+		
 		if (this.getAuthors().isEmpty()) {
 			messages.add("book Authors should not be null or Empty");
 		}
-		// Validate Book Publisher field
+		
 		if (StringUtils.isBlank(this.getPublisher())) {
 			messages.add("book Publisher should not be null or Empty");
 		}

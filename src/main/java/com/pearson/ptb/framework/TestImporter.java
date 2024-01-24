@@ -210,10 +210,7 @@ public class TestImporter {
 			for (ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry()) {
 				if (ze.getName().contains("media/")) {
 					question = zipfile.getInputStream(ze);
-					// MultipartFile image = new
-					// MockMultipartFile("file",ze.getName().substring("media/".length()),"*/*",
-					// question);
-					// imageFileMap.put(ze.getName(), image);
+					
 					question.close();
 				} else {
 					zipMap.put(ze.getName(), ze);

@@ -26,8 +26,6 @@ import com.pearson.ptb.proxy.QuestionDelegate;
 import com.pearson.ptb.util.CacheKey;
 import com.pearson.ptb.util.SearchHelper;
 
-import jakarta.annotation.PostConstruct;
-
 /**
  * This <code>QuestionService</code> is responsible to fetch the questions for
  * book, container from PAf and save the user created questions to appropriate
@@ -217,9 +215,7 @@ public class QuestionService {
 		return containerQuestions;
 	}
 
-	/*
-	 * To get the parent of the container recursively
-	 */
+	
 	private void getContainerHierarchy(String containerId,
 			Map<String, String> containerParentChild, List<String> hierarchy) {
 		for (Map.Entry<String, String> entry : containerParentChild
@@ -246,7 +242,7 @@ public class QuestionService {
 	private List<QuestionMetadata> getQuestionsFlatView(String bookId,
 			String containerId, Map<String, String> filterCriteria) {
 
-		// getting the container list
+		
 		List<QuestionMetadata> questions = new ArrayList<QuestionMetadata>();
 		Map<String, String> containerParentChild = new HashMap<String, String>();
 		fillQuestions(questions, bookId, containerId, filterCriteria,

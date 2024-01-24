@@ -15,8 +15,7 @@ public final class CacheConfigManager extends BaseConfigurationManager {
 	private static final String PROPERTY_FILE_PATH = "/config.properties";
 
 	protected CacheConfigManager() {
-		// Calling parent class Constructor to load all properties from cache
-		// properties file
+		
 		super();
 	}
 
@@ -54,17 +53,17 @@ public final class CacheConfigManager extends BaseConfigurationManager {
 	 * @throws ConfigException
 	 */
 	protected static CacheConfigManager getInstance() {
-		// synchronized block for creating CacheConfigManager singleton
+		
 		if (cacheConfigManager == null) {
-			// null check in synchronization for race condition
+			
 			synchronized (CacheConfigManager.mutex) {
 				if (cacheConfigManager == null) {
-					// create CacheConfigManager instance as singleton
+					
 					cacheConfigManager = new CacheConfigManager();
 				}
 			}
 		}
-		// return CacheConfigManager
+		
 		return cacheConfigManager;
 	}
 

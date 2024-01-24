@@ -67,8 +67,7 @@ public class QuestionsController extends BaseController {
 	public List<QuestionMetadata> getQuestionsByContainer(@PathVariable String bookid, @PathVariable String nodeId,
 			HttpServletRequest request,
 
-			// @ApiParam(value = Swagger.INCLUDE_INNER_CONTAINER, required =
-			// false)
+			
 			@RequestParam(required = false, defaultValue = "0") boolean flat) {
 
 		Map<String, String> filterCriteria = URLHelper.getQueryMap(request.getQueryString(),

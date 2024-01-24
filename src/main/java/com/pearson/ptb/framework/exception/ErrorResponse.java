@@ -23,7 +23,7 @@ public class ErrorResponse implements Serializable {
 	 * @return the message
 	 */
 	public String getMessage() {
-		// return message
+		
 		return this.message;
 	}
 
@@ -34,7 +34,7 @@ public class ErrorResponse implements Serializable {
 	 *            the message to set
 	 */
 	public void setMessage(String message) {
-		// set the message
+		
 		this.message = message;
 	}
 

@@ -29,14 +29,14 @@ public class AuthFilter implements HandlerInterceptor {
 
 	private static final Logger LOG = LogWrapper.getInstance(AuthFilter.class);
 
-	// @Override
+	
 	@Bean
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		
 		boolean requestStatus = false;
 		try {
-			// This is for download usecase
+			
 			String keyword = "/books/import";
 			String requestURI = request.getRequestURI();
 			if (requestURI.contains(keyword)) {
@@ -55,13 +55,13 @@ public class AuthFilter implements HandlerInterceptor {
 					Map<String, String> oauthParameters = OAuthUtil
 							.decodeAuthorization(authorizationHeader);
 
-					// if realm is in here get rid of it
+					
 					oauthParameters.remove("realm");
 
 					alphaSortedMap.putAll(oauthParameters);
 				}
 
-				// This secret key is from QUAD.
+				
 				String secret = ConfigurationManager.getInstance()
 						.getQUADDataSecretKey();
 				String url = request.getRequestURL().toString();
@@ -88,14 +88,14 @@ public class AuthFilter implements HandlerInterceptor {
 					response.getWriter()
 							.write("x-authorization header not found");
 
-					// abort the request
+					
 					requestStatus = false;
 				} else {
 					AuthenticationProvider pi = new AuthenticationProvider();
 					request.setAttribute("extUserId",
 							pi.authenticate(piAuthtoken));
 
-					// continue with the request
+					
 					requestStatus = true;
 				}
 
@@ -132,30 +132,30 @@ public class AuthFilter implements HandlerInterceptor {
 		LOG.error("Error is logged from AuthFilter.preHandle() method", e);
 		response.setStatus(httpStatus);
 		response.getWriter().write(exceptionMessage);
-		// abort the request
+		
 		return false;
 	}
 
 	/**
 	 * This method is part of handler not required for MyTest
 	 */
-	// @Override
+	
 	@Bean
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		// This is part of handler not required for MyTest
+		
 	}
 
 	/**
 	 * This method is part of handler not required for MyTest
 	 */
-	// @Override
+	
 	@Bean
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		// This is part of handler not required for MyTest
+		
 	}
 
 }

@@ -49,9 +49,7 @@ public class BlackboardEssay extends BlackboardQTIConvert {
 		return bbQuestionXML;
 	}
 
-	/*
-	 * Updating the response processing
-	 */
+	
 	private void updateResprocessing() {
 		try {
 			Node resprocessingMaxvalue = getXMLNode(RESPCONDITION_MAXVALUE,
@@ -65,9 +63,7 @@ public class BlackboardEssay extends BlackboardQTIConvert {
 		}
 	}
 
-	/*
-	 * Updating the feedback
-	 */
+	
 	private void updateItemfeedback() {
 		try {
 			XPathExpression expr = xpath
