@@ -14,7 +14,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Pearson Test Builder</name>
 	<description>Pearson Test Builder</description>
-	<packaging>war</packaging>
 	<properties>
 
 		<org.aspectj-version>1.6.11</org.aspectj-version>
@@ -385,12 +384,12 @@
 			<version>4.5.14</version>
 		</dependency>
 
-		<dependency>
+	<!--	<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+		-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
