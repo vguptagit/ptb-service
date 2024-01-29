@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository("usersettings")
+
 public class UserSettingsRepo implements UserSettingsDelegate {
 
 	@Autowired
@@ -33,6 +34,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 	private static CacheWrapper CACHE;
 
+	@Autowired
 	private GenericMongoRepository<UserSettings, String> genericMongoRepository;
 
 	public UserSettingsRepo() {
