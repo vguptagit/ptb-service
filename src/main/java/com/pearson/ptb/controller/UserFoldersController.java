@@ -50,7 +50,7 @@ public class UserFoldersController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@Operation(summary = Swagger.GET_ROOT_FOLDERS_VALUE, description = Swagger.GET_ROOT_FOLDERS_NOTE)
 
-	@RequestMapping(value = "/my/folders", method = RequestMethod.GET)
+	@RequestMapping(value = "/my/testfolders", method = RequestMethod.GET)
 
 	@ResponseBody
 	public List<UserFolder> getRootFolders(HttpServletRequest request) {
@@ -109,7 +109,7 @@ public class UserFoldersController extends BaseController {
 	@Operation(summary = Swagger.SAVE_FOLDERS_VALUE, description = Swagger.SAVE_FOLDERS_NOTE)
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Created") })
 
-	@RequestMapping(value = "/my/folders", method = RequestMethod.POST)
+	@RequestMapping(value = "/my/testfolders", method = RequestMethod.POST)
 
 	@ResponseBody
 	public UserFolder saveFolders(@Valid @RequestBody UserFolder folder, HttpServletRequest request,
@@ -131,7 +131,7 @@ public class UserFoldersController extends BaseController {
 
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@Operation(summary = Swagger.UPDATE_FOLDERS_VALUE, description = Swagger.UPDATE_FOLDERS_NOTE)
-	@RequestMapping(value = "/my/folders", method = RequestMethod.PUT)
+	@RequestMapping(value = "/my/testfolders", method = RequestMethod.PUT)
 
 	@ResponseBody
 	public UserFolder updateFolder(@Valid @RequestBody UserFolder folder, HttpServletRequest request,
