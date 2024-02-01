@@ -36,7 +36,6 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public void upload(MultipartFile file) throws IOException {
-
         if (file.isEmpty())
             throw new IllegalStateException("Cannot upload empty file");
 
@@ -44,16 +43,13 @@ public class MetadataServiceImpl implements MetadataService {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
-        String path = String.format("%s/%s", bucketName, UUID.randomUUID());
+        String fileId = UUID.randomUUID().toString(); // Generate a random ID for the file
         String fileName = String.format("%s", file.getOriginalFilename());
 
-     
         PutObjectResult putObjectResult = amazonS3Service.upload(
-                path, fileName, Optional.of(metadata), file.getInputStream());
-        String id= UUID.randomUUID().toString();
-       
-        fileMetaRepository.insert(new FileMeta(id,fileName, path, putObjectResult.getMetadata().getVersionId()));
+                fileId, fileName, Optional.of(metadata), file.getInputStream());
 
+        fileMetaRepository.insert(new FileMeta(fileId, fileName, null, putObjectResult.getMetadata().getVersionId()));
     }
 
     @Override
