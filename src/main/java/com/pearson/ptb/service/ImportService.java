@@ -49,7 +49,7 @@ public class ImportService {
 		book.setReferenceBookid(book.getGuid());
 		book.setGuid(UUID.randomUUID().toString());
 
-		convertContainerJsonToList(books.getContainers(), containersTemp, "",
+		convertContainerJsonToList(books.getContainers(), containersTemp,
 				book.getGuid());
 
 	
@@ -74,11 +74,11 @@ public class ImportService {
 	 */
 
 	private void convertContainerJsonToList(List<Containers> containerList,
-			List<Container> containersTemp, String parentId, String bookId) {
+			List<Container> containersTemp, String bookId) {
 		for (Containers containers : containerList) {
 			Container container = Converter.getDestinationBean(containers,
 					Container.class, Containers.class);
-			container.setParentId(parentId);
+			container.setParentId(container.getParentId());
 			container.setBookid(bookId);
 
 			// Validate the container values
@@ -88,7 +88,7 @@ public class ImportService {
 			if (containers.getContainers() != null
 					&& !containers.getContainers().isEmpty()) {
 				convertContainerJsonToList(containers.getContainers(),
-						containersTemp, container.getGuid(), bookId);
+						containersTemp, bookId);
 			}
 		}
 	}
