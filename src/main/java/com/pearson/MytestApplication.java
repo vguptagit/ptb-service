@@ -16,7 +16,7 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.tags.Tag;
 
 @SpringBootApplication
-public class MytestApplication  {
+public class MytestApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MytestApplication.class, args);
