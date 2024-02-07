@@ -102,7 +102,8 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	@Override
 	public UserQuestionsFolder getQuestionFoldersRoot(String userID) {
 		
-		return null;
+        return userQuestionFolderRepository.findOneByUserIdAndParentId(userID, userID);
+
 	}
 
 	@Override
@@ -193,7 +194,7 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	public List<UserQuestionsFolder> getMyQuestionsFolders(String userID) {
 		Query query = userQuestionFolderRepository.createDataQuery();
 		query.addCriteria(Criteria.where(QueryFields.PARENTID).is(getMyQuestionRoot(userID).getGuid()))
-		.with(Sort.by(QueryFields.SEQUENCE));;
+		.with(Sort.by(QueryFields.SEQUENCE));
 		List<UserQuestionsFolder> folders = userQuestionFolderRepository.findAll(query, UserQuestionsFolder.class);		
 		return folders;
 	}

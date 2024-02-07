@@ -233,4 +233,10 @@ public class GenericMongoRepository<T, ID> {
 		criteria.forEach((key, value) -> criteriaObject.and(key).is(value));
 		return new Query(criteriaObject);
 	}
+	
+	public T findOneByUserIdAndParentId(String userId, String parentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId).and("parentId").is(parentId));
+        return mongoOperations.findOne(query, clazz);
+    }
 }
