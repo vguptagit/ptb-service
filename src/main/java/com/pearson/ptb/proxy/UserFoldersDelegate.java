@@ -21,6 +21,8 @@ public interface UserFoldersDelegate {
 	 *            The list of user folder to save in repository
 	 */
 	void saveFolders(List<UserFolder> folders);
+	
+	void updateFolder(UserFolder folder);
 
 	/**
 	 * This method is responsible for saving the User Question to repository
