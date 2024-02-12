@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -35,6 +36,14 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	public void saveFolders(List<UserFolder> folders) {
 		genericMongoRepository.saveAll(folders);
 
+	}
+	
+	@Override
+	public void updateFolder(UserFolder folder) {
+		UserFolder folderToUpdate = getFolder(folder.getGuid());
+		folderToUpdate.setParentId(folder.getParentId());
+		folderToUpdate.setSequence(folder.getSequence());
+		genericMongoRepository.save(folderToUpdate);
 	}
 
 	@Override

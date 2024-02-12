@@ -215,13 +215,7 @@ public class UserFolderService {
 		
 		folder.validateState();
 
-		List<UserFolder> folders = new ArrayList<UserFolder>();
-
-		if (!checkForUserFolderDuplicate(folder, userId)) {
-			folders.add(folder);
-		}
-
-		userFoldersRepo.saveFolders(folders);
+		userFoldersRepo.updateFolder(folder);
 
 		return folder;
 	}
