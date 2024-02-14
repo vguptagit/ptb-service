@@ -211,9 +211,9 @@ public class UserFolderService {
 			throw new BadDataException("folderId should not be null or empty");
 		}
 		folder.setUserID(userId);
-
 		
 		folder.validateState();
+		checkForUserFolderDuplicate(folder, userId);
 
 		userFoldersRepo.updateFolder(folder);
 
