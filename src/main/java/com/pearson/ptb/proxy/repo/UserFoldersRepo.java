@@ -27,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 @Repository("userFoldersRepo")
 @RequiredArgsConstructor
 public class UserFoldersRepo implements UserFoldersDelegate {
-
 	
 	private final GenericMongoRepository<UserFolder, String> genericMongoRepository;
 	private final GenericMongoRepository<UserQuestionsFolder, String> userQuestionFolderRepository;
@@ -41,8 +40,9 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	@Override
 	public void updateFolder(UserFolder folder) {
 		UserFolder folderToUpdate = getFolder(folder.getGuid());
-		folderToUpdate.setParentId(folder.getParentId());
+		if(folder.getParentId() != null) folderToUpdate.setParentId(folder.getParentId());
 		folderToUpdate.setSequence(folder.getSequence());
+		if(folder.getTitle() != null) folderToUpdate.setTitle(folder.getTitle());
 		genericMongoRepository.save(folderToUpdate);
 	}
 
