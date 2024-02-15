@@ -24,6 +24,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
 	@Value("${spring.data.mongodb.host}")
 	private String host;
+	
+	@Value("${spring.data.mongodb.url}")
+	private String uri;
 
 	@Value("${spring.data.mongodb.username}")
 	private String username;
@@ -47,13 +50,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	@Override
 	protected MongoClientSettings mongoClientSettings() {
 		ConnectionString connectionString;
-		if (host.equals("localhost")) {
-			connectionString = new ConnectionString("mongodb://localhost:27017/dbName");
-		} else {
-			connectionString = new ConnectionString(
-					"mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + dbName+"?retryWrites=false");
-
-		}
+			connectionString = new ConnectionString(uri);
 		MongoClientSettings.Builder builder = MongoClientSettings.builder().applyConnectionString(connectionString);
 		return builder.build();
 	}
