@@ -13,19 +13,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pearson.ptb.util.Swagger;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pearson.ptb.bean.QuestionEnvelop;
 import com.pearson.ptb.bean.QuestionMetadata;
 import com.pearson.ptb.bean.QuestionOutput;
+import com.pearson.ptb.proxy.aws.bean.QuestionResponse;
 import com.pearson.ptb.service.QuestionService;
 import com.pearson.ptb.util.SearchHelper;
+import com.pearson.ptb.util.Swagger;
 import com.pearson.ptb.util.URLHelper;
 import com.pearson.ptb.util.UserHelper;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -139,10 +142,10 @@ public class QuestionsController extends BaseController {
 	@RequestMapping(value = "/my/questions", method = RequestMethod.POST)
 
 	@ResponseBody
-	public List<String> saveQuestions(@Parameter(name = "body") @RequestBody List<QuestionEnvelop> questions,
+	public List<QuestionResponse> saveQuestions(@Parameter(name = "body") @RequestBody List<QuestionEnvelop> questions,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		List<String> responseMessage = questionService.saveQuestions(questions, UserHelper.getUserId(request), null);
+		List<QuestionResponse> responseMessage = questionService.saveQuestions(questions, UserHelper.getUserId(request), null);
 		response.setStatus(HttpServletResponse.SC_CREATED);
 		return responseMessage;
 

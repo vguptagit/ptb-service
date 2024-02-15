@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +24,7 @@ import com.pearson.ptb.framework.LogWrapper;
 import com.pearson.ptb.mapper.ModelMapperProvider;
 import com.pearson.ptb.proxy.AmazonS3Service;
 import com.pearson.ptb.proxy.QuestionDelegate;
+import com.pearson.ptb.proxy.aws.bean.QuestionResponse;
 import com.pearson.ptb.proxy.aws.util.Converter;
 
 @Repository("questions")
@@ -61,24 +63,25 @@ public class QuestionRepo implements QuestionDelegate {
 	@Override
 	public String saveQuestion(QuestionEnvelop question, String bookTitle,
 			String chapterTitle) {
+		// Convert Question Bean to AWS Question Envelop to add additional Metadata
 		com.pearson.ptb.proxy.aws.bean.QuestionEnvelop awsQuestion = ModelMapperProvider.getDestinationBean(question, com.pearson.ptb.proxy.aws.bean.QuestionEnvelop.class);
 		awsQuestion.getMetadata().setBookTitle(bookTitle);
 		awsQuestion.getMetadata().setChapterTitle(chapterTitle);
 		awsQuestion.setGuid(question.getmetadata().getGuid());
 		
-		
+		// Set File Name
 		Map<String, String> awsMetadata = new HashMap<>();
-		String awsFileName = awsQuestion.getMetadata().getGuid();
+		String awsFileName = UUID.randomUUID().toString();
 		
+		// Call Amazon service to upload xml
 		amazonS3Service.upload(bucketName, awsFileName, Optional.of(awsMetadata), IOUtils.toInputStream(awsQuestion.getBody()));
 			
-		
-		Converter.updateBodyWithAwsRefId(awsQuestion, awsFileName);
+		//Save record to DB with the AWS FileName reference
+		Converter.updateBodyWithAwsRefId(awsQuestion, awsFileName); // Change body xml to AWS file Reference
 		questionEnvelopRepoHelper.save(awsQuestion);
-		
+		QuestionResponse awsResponse = new QuestionResponse(awsQuestion.getGuid(), awsQuestion.getBody());
 		Gson gson = new Gson();
-		String payload = gson.toJson(awsQuestion);
-		return payload;
+		return gson.toJson(awsResponse);
 	}
 
 }

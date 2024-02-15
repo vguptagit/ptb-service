@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.bean.QuestionBinding;
 import com.pearson.ptb.bean.QuestionEnvelop;
@@ -23,6 +24,7 @@ import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.ContainerDelegate;
 import com.pearson.ptb.proxy.QuestionDelegate;
+import com.pearson.ptb.proxy.aws.bean.QuestionResponse;
 import com.pearson.ptb.util.CacheKey;
 import com.pearson.ptb.util.SearchHelper;
 
@@ -452,14 +454,15 @@ public class QuestionService {
 		return questionResult;
 	}
 
-	public List<String> saveQuestions(List<QuestionEnvelop> questions,
+	public List<QuestionResponse> saveQuestions(List<QuestionEnvelop> questions,
 			String userId, UserQuestionsFolder myQuestionsFolder) {
 
+		Gson gson = new Gson();
 		if (myQuestionsFolder == null) {
 			myQuestionsFolder = userFolderService.getMyQuestionsFolder(userId);
 		}
 
-		List<String> questionResults = new ArrayList<String>();
+		List<QuestionResponse> questionResults = new ArrayList<>();
 		String questionResult;
 
 		Boolean isAnyQuestionEdited = false;
@@ -483,7 +486,8 @@ public class QuestionService {
 				questionResult = "[{\"guid\":\""
 						+ question.getmetadata().getGuid() + "\"}]";
 			}
-			questionResults.add(questionResult);
+			
+			questionResults.add(gson.fromJson(questionResult, QuestionResponse.class));
 		}
 
 		if (isAnyQuestionEdited) {

@@ -166,9 +166,7 @@ public class UserFolderService {
 	 *            , folder in which test is getting saved.
 	 */
 	public UserFolder updateFolder(UserFolder folder) {
-		List<UserFolder> folders = new ArrayList<UserFolder>();
-		folders.add(folder);
-		userFoldersRepo.saveFolders(folders);
+		userFoldersRepo.updateFolder(folder);
 		return folder;
 	}
 

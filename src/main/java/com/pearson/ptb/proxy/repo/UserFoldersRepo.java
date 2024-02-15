@@ -43,6 +43,9 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 		if(folder.getParentId() != null) folderToUpdate.setParentId(folder.getParentId());
 		folderToUpdate.setSequence(folder.getSequence());
 		if(folder.getTitle() != null) folderToUpdate.setTitle(folder.getTitle());
+		if(CollectionUtils.isNotEmpty(folder.getTestBindings())) {
+			folderToUpdate.setTestBindings(folder.getTestBindings());
+		}
 		genericMongoRepository.save(folderToUpdate);
 	}
 
@@ -86,7 +89,7 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	public UserFolder getMyTestRoot(String userID) {
 		Query query = genericMongoRepository.createDataQuery();
 		query.addCriteria(
-				Criteria.where("USERID").is(userID).and("PARENTID").is(userID));
+				Criteria.where("userId").is(userID).and("parentId").is(userID));
 
 		UserFolder rootFolder = genericMongoRepository.findOne(query,
 				UserFolder.class);
