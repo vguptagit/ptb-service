@@ -38,6 +38,7 @@ import com.pearson.ptb.framework.exception.DuplicateTitleException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.MyTestDelegate;
+import com.pearson.ptb.proxy.aws.bean.QuestionResponse;
 import com.pearson.ptb.util.CacheKey;
 import com.pearson.ptb.util.Converter;
 
@@ -313,7 +314,7 @@ public class MyTestService {
 			}
 
 			try {
-				List<String> questionResults = questionService.saveQuestions(
+				List<QuestionResponse> questionResults = questionService.saveQuestions(
 						questions, userID,
 						(UserQuestionsFolder) questionFolder);
 
@@ -347,7 +348,7 @@ public class MyTestService {
 	 * @return
 	 */
 	private TestEnvelop buildTestEnvelope(final String testTitle,
-			List<String> questionResults) {
+			List<QuestionResponse> questionResults) {
 		TestEnvelop testEnvelop = new TestEnvelop();
 		Metadata metadata = new Metadata();
 		metadata.setCrawlable("true");
@@ -366,14 +367,10 @@ public class MyTestService {
 		JsonArray array;
 		JsonObject object;
 		JsonElement id;
-		for (String result : questionResults) {
-
-			array = (JsonArray) parser.parse(result);
-			object = array.get(0).getAsJsonObject();
-			id = object.get("guid");
+		for (QuestionResponse result : questionResults) {
 
 			AssignmentBinding assignmentBinding = new AssignmentBinding();
-			assignmentBinding.setGuid(id.getAsString());
+			assignmentBinding.setGuid(result.getGuid());
 			assignmentBinding.setActivityFormat(
 					"application/vnd.pearson.qti.v2p1.asi+xml");
 			assignmentBinding.setBindingIndex(i);

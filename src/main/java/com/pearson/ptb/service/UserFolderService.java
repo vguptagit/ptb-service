@@ -166,9 +166,7 @@ public class UserFolderService {
 	 *            , folder in which test is getting saved.
 	 */
 	public UserFolder updateFolder(UserFolder folder) {
-		List<UserFolder> folders = new ArrayList<UserFolder>();
-		folders.add(folder);
-		userFoldersRepo.saveFolders(folders);
+		userFoldersRepo.updateFolder(folder);
 		return folder;
 	}
 
@@ -211,9 +209,9 @@ public class UserFolderService {
 			throw new BadDataException("folderId should not be null or empty");
 		}
 		folder.setUserID(userId);
-
 		
 		folder.validateState();
+		checkForUserFolderDuplicate(folder, userId);
 
 		userFoldersRepo.updateFolder(folder);
 

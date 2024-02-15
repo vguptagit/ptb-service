@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Containers extends Container implements Serializable {
 	@JsonProperty("nodes")
-	private List<Containers> containerList;
+	private List<Containers> containers;
 
 	/**
 	 * Indicate the version id of serialization
@@ -20,11 +20,11 @@ public class Containers extends Container implements Serializable {
 
 	/** Set {@see #containerList}. @param {@link #containerList}. */
 	public void setContainers(List<Containers> containerList) {
-		this.containerList = containerList;
+		this.containers = containerList;
 	}
 
 	/** Get {@see #containerList}. @return {@link #containerList}. */
 	public List<Containers> getContainers() {
-		return containerList;
+		return containers;
 	}
 }
