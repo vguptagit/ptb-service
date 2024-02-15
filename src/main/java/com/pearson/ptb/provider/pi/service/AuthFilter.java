@@ -5,12 +5,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,20 +19,22 @@ import com.pearson.ed.pi.token.exception.TokenParseException;
 import com.pearson.ptb.framework.ConfigurationManager;
 import com.pearson.ptb.framework.LogWrapper;
 
-@ComponentScan
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
 public class AuthFilter implements HandlerInterceptor {
 
 	private static final Logger LOG = LogWrapper.getInstance(AuthFilter.class);
 
 	
-	@Bean
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		
 		boolean requestStatus = false;
 		try {
 			
-			String keyword = "/books/import";
+			String keyword = "/auth";
 			String requestURI = request.getRequestURI();
 			if (requestURI.contains(keyword)) {
 				requestStatus = true;
@@ -82,7 +79,7 @@ public class AuthFilter implements HandlerInterceptor {
 			} else {
 
 				String piAuthtoken = request.getHeader("x-authorization");
-
+				
 				if (piAuthtoken == null || piAuthtoken.isEmpty()) {
 					response.setStatus(HttpStatus.BAD_REQUEST.value());
 					response.getWriter()
@@ -126,8 +123,7 @@ public class AuthFilter implements HandlerInterceptor {
 		return requestStatus;
 	}
 
-	@Bean
-	private boolean logError(Exception e, HttpServletResponse response,
+	public boolean logError(Exception e, HttpServletResponse response,
 			int httpStatus, String exceptionMessage) throws IOException {
 		LOG.error("Error is logged from AuthFilter.preHandle() method", e);
 		response.setStatus(httpStatus);
@@ -140,7 +136,6 @@ public class AuthFilter implements HandlerInterceptor {
 	 * This method is part of handler not required for MyTest
 	 */
 	
-	@Bean
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
@@ -151,7 +146,7 @@ public class AuthFilter implements HandlerInterceptor {
 	 * This method is part of handler not required for MyTest
 	 */
 	
-	@Bean
+//	@Bean
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {

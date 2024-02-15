@@ -56,9 +56,9 @@ public class MyTestService {
 	@Qualifier("userFolderService")
 	private UserFolderService userFolderService;
 
-	@Autowired
-	@Qualifier("imageService")
-	private ImageService imageService;
+//	@Autowired
+//	@Qualifier("imageService")
+//	private ImageService imageService;
 
 	@Autowired
 	@Qualifier("questionService")
@@ -295,7 +295,7 @@ public class MyTestService {
 			String testTitle = "Import - " + importer.getTestTitle();
 			validateDuplicateTestTitle(userID, testTitle);
 
-			saveImages(importer);
+			//saveImages(importer);
 
 			List<QuestionEnvelop> questions = importer.getQuestions();
 
@@ -418,14 +418,14 @@ public class MyTestService {
 	 * 
 	 * @param importer
 	 */
-	private void saveImages(TestImporter importer) {
-		Map<String, MultipartFile> imageMap = importer.getImageMap();
-		String imageUrl;
-		for (Map.Entry<String, MultipartFile> entry : imageMap.entrySet()) {
-			imageUrl = imageService.uploadImage(entry.getValue());
-			importer.addImage(entry.getKey(), imageUrl);
-		}
-	}
+//	private void saveImages(TestImporter importer) {
+//		Map<String, MultipartFile> imageMap = importer.getImageMap();
+//		String imageUrl;
+//		for (Map.Entry<String, MultipartFile> entry : imageMap.entrySet()) {
+//			imageUrl = imageService.uploadImage(entry.getValue());
+//			importer.addImage(entry.getKey(), imageUrl);
+//		}
+//	}
 	/**
 	 * Validating the uploaded test title is already present
 	 * 

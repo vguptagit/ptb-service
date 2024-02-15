@@ -17,10 +17,10 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.tags.Tag;
 
 @SpringBootApplication
-public class MytestApplication extends SpringBootServletInitializer {
+public class PTBApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MytestApplication.class, args);
+		SpringApplication.run(PTBApplication.class, args);
 	}
 
 	@Bean

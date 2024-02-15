@@ -17,6 +17,8 @@ import java.util.zip.ZipOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+//import com.pearson.mytest.proxy.mytest.repo.ArchiveRepo;
+import org.springframework.stereotype.Service;
 
 import com.pearson.ptb.bean.AnswerAreas;
 import com.pearson.ptb.bean.AnswerKeys;
@@ -41,9 +43,6 @@ import com.pearson.ptb.proxy.QuestionDelegate;
 import com.pearson.ptb.proxy.TestDelegate;
 import com.pearson.ptb.proxy.TestVersionDelegate;
 import com.pearson.ptb.proxy.UserSettingsDelegate;
-
-//import com.pearson.mytest.proxy.mytest.repo.ArchiveRepo;
-import org.springframework.stereotype.Service;
 
 /**
  * Download the test or question in the form of mentioned parameter of the
@@ -229,8 +228,8 @@ public class DownloadService {
 		
 		Metadata metadata = metadataService.getMetadata(guid);
 		if (metadata != null) {
-			String versionedTestTitle = parentTestTitle + "_v"
-					+ metadata.getVersion();
+//			String versionedTestTitle = parentTestTitle + "_v"
+//					+ metadata.getVersion();
 
 			/*
 			 * if (archiveRepo.getTestFolder(metadata.getGuid()) == null &&

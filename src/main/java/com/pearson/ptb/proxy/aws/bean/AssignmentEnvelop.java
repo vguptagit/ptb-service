@@ -9,6 +9,10 @@ import com.googlecode.jmapper.annotations.JMap;
 public class AssignmentEnvelop extends BaseEnvelop {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Indicates the Assignment body
 	 */
 	@JMap

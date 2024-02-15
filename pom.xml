@@ -21,7 +21,7 @@
 		<org.aspectj-weaver>1.6.1</org.aspectj-weaver>
 
 		<java.version>17</java.version>
-		<finalName>ptb</finalName>
+		<finalName>api</finalName>
 
 	</properties>
 	<dependencies>
@@ -43,12 +43,12 @@
 			<optional>true</optional>
 		</dependency>
 		
-		<dependency>
+	<!--	<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
 			<version>0.8.1</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency>-->
 		
 
 		<dependency>
@@ -73,11 +73,6 @@
 			<artifactId>metrics-core</artifactId>
 			<version>2.2.0</version>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk15</artifactId>
-			<version>1.40</version>
-		</dependency>-->
 		
 		
 		<dependency>
@@ -94,6 +89,18 @@
 				<exclusion>
 					<groupId>cglib</groupId>
 					<artifactId>cglib-nodep</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15on</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>bouncycastle</groupId>
+					<artifactId>bcprov-jdk16</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>bouncycastle</groupId>
+					<artifactId>bcprov-jdk15</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -124,11 +131,7 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-pool2</artifactId>
-			<version>2.0</version>
-		</dependency>
+	
 		
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -143,34 +146,6 @@
 			<version>2.4</version>
 		</dependency>
 
-		<!-- Logging Start -->
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Logging Start -->
 
 		<!-- AspectJ Start -->
 
@@ -221,11 +196,11 @@
 			<artifactId>jmapper-core</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		<dependency>
+	<!--	<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.6</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>com.aspose</groupId>
 			<artifactId>aspose-words</artifactId>
@@ -304,6 +279,28 @@
 					</execution>
 				</executions>
 			</plugin>
+			    <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>
+                            report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+   
+
 		</plugins>
 	</build>
 	<dependencyManagement>
