@@ -1,11 +1,19 @@
 package com.pearson.ptb.bean;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * The <code>TestEnvelop</code> class is responsible to hold the details of the
  * Test Envelop such as metadata and content body
  *
  */
-public class TestEnvelop {
+@Document(collection = "userTests")
+public class TestEnvelop extends BaseEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The Metadata of the test

@@ -1,5 +1,7 @@
 package com.pearson.ptb.bean;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.googlecode.jmapper.annotations.JMap;
 import com.pearson.ptb.framework.ConfigurationManager;
@@ -43,9 +45,10 @@ public class TestResult extends BaseLinkedDataEntity {
 	@JsonProperty("@id")
 	public String getId() {
 		try {
-			return String.format(Common.TEST_END_POINT_FORMAT,
+			/*return String.format(Common.TEST_END_POINT_FORMAT,
 					ConfigurationManager.getInstance().getMyTestBaseUrl(),
-					this.guid);
+					this.guid); */
+			return StringUtils.EMPTY;
 		} catch (ConfigException e) {
 			throw new InternalException(
 					"TestResultStatus.getId || Not able to read configuration - MyTestBaseUrl",
