@@ -41,7 +41,7 @@ public class AuthFilter implements HandlerInterceptor {
 			    requestStatus = true;
 			}
 
-			else if (requestURI.contains("")) {
+			else if (requestURI.contains("/hello")) {
 
 				SortedMap<String, String> alphaSortedMap = null;
 				alphaSortedMap = new TreeMap<String, String>();
