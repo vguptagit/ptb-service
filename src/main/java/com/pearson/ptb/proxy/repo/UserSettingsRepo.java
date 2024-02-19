@@ -2,6 +2,8 @@ package com.pearson.ptb.proxy.repo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +19,8 @@ import com.pearson.ptb.proxy.UserSettingsDelegate;
 import com.pearson.ptb.util.UserHelper;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation class which got implemented from interface UserPrefDelegate
@@ -104,9 +108,13 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 	@Override
 	public void saveUserDisciplines(String userid, List<String> disciplines) {
-
-		UserSettings userSettings = getUserSettings(userid);
-		userSettings.setDisciplines(disciplines);
+		
+		UserSettings userSettings = genericMongoRepository.findById(userid);
+		List<String> userDiscplines = userSettings.getDisciplines();
+		List<String> updateddiscipline = disciplines.stream().filter(discipline -> !userDiscplines.contains(discipline)).collect(Collectors.toList());
+		userDiscplines.addAll(updateddiscipline);
+		userSettings.setDisciplines(userDiscplines);
+		  genericMongoRepository.save(userSettings);
 	}
 
 	@Override
