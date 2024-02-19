@@ -26,6 +26,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AuthFilter implements HandlerInterceptor {
 
 	private static final Logger LOG = LogWrapper.getInstance(AuthFilter.class);
+	private static final String AUTH_KEYWORD = "/auth";
+	private static final String IMPORT_KEYWORD = "/books/import";
 
 	
 	public boolean preHandle(HttpServletRequest request,
@@ -34,12 +36,12 @@ public class AuthFilter implements HandlerInterceptor {
 		boolean requestStatus = false;
 		try {
 			
-			String keyword = "/auth";
 			String requestURI = request.getRequestURI();
-			if (requestURI.contains(keyword)) {
-				requestStatus = true;
+			if (requestURI.contains(AUTH_KEYWORD) || requestURI.contains(IMPORT_KEYWORD)) {
+			    requestStatus = true;
+			}
 
-			} else if (requestURI.contains("/books/import")) {
+			else if (requestURI.contains("")) {
 
 				SortedMap<String, String> alphaSortedMap = null;
 				alphaSortedMap = new TreeMap<String, String>();
