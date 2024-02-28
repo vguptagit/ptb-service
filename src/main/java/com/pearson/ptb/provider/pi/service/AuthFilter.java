@@ -28,7 +28,8 @@ public class AuthFilter implements HandlerInterceptor {
 	private static final Logger LOG = LogWrapper.getInstance(AuthFilter.class);
 	private static final String AUTH_KEYWORD = "/auth";
 	private static final String IMPORT_KEYWORD = "/books/import";
-
+    private static final String SWAGGER_KEYWORD = "/swagger-ui";
+    private static final String SWAGGER_API = "/v3/api-docs";
 	
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -37,7 +38,7 @@ public class AuthFilter implements HandlerInterceptor {
 		try {
 			
 			String requestURI = request.getRequestURI();
-			if (requestURI.contains(AUTH_KEYWORD) || requestURI.contains(IMPORT_KEYWORD)) {
+			if (requestURI.contains(AUTH_KEYWORD) || requestURI.contains(IMPORT_KEYWORD) || requestURI.startsWith(SWAGGER_KEYWORD) || requestURI.contains(SWAGGER_API)) {
 			    requestStatus = true;
 			}
 
