@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -133,6 +134,13 @@ public class MyTestsController extends BaseController {
 	@ResponseBody
 	public TestResult importTest(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		return myTestService.importTest(file, UserHelper.getUserId(request));
+	}
+	
+	
+	@DeleteMapping("/delete/{folderId}")
+	public void deleteFolder( @PathVariable String  folderId) {
+		myTestService.deleteFolder(folderId);
+		
 	}
 
 }

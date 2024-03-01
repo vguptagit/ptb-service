@@ -469,5 +469,11 @@ public class MyTestService {
 		}
 		return true;
 	}
+	
+	
+	
+	public void deleteFolder(String folderId) {
+		myTestsRepo.deleteTestBindings(folderId);
+	}
 
 }

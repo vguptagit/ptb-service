@@ -49,5 +49,7 @@ public interface MyTestDelegate {
 	 * @param testId
 	 */
 	void delete(String testId);
+	
+	 public void deleteTestBindings(String testId);
 
 }
