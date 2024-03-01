@@ -37,6 +37,7 @@ import com.pearson.ptb.framework.exception.ConfigException;
 import com.pearson.ptb.framework.exception.DuplicateTitleException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
+import com.pearson.ptb.mapper.ModelMapperProvider;
 import com.pearson.ptb.proxy.MyTestDelegate;
 import com.pearson.ptb.proxy.aws.bean.QuestionResponse;
 import com.pearson.ptb.util.CacheKey;
@@ -127,12 +128,14 @@ public class MyTestService {
 
 			result = myTestsRepo.update(test);
 
-			CACHE.delete(String.format(CacheKey.TEST_FORMAT,
-					test.getmetadata().getGuid()));
-			CACHE.delete(String.format(CacheKey.METADATA_FORMAT,
-					test.getmetadata().getGuid()));
-			CACHE.delete(String.format(CacheKey.TEST_QUESTIONS_FORMAT,
-					test.getmetadata().getGuid()));
+			/*
+			 * CACHE.delete(String.format(CacheKey.TEST_FORMAT,
+			 * test.getmetadata().getGuid()));
+			 * CACHE.delete(String.format(CacheKey.METADATA_FORMAT,
+			 * test.getmetadata().getGuid()));
+			 * CACHE.delete(String.format(CacheKey.TEST_QUESTIONS_FORMAT,
+			 * test.getmetadata().getGuid()));
+			 */
 		}
 
 		return result;
@@ -202,14 +205,15 @@ public class MyTestService {
 			if (testId != null) {
 
 				try {
-					Metadata metadata = metadataService.getMetadata(testId);
-					TestMetadata testMetadata = Converter.getDestinationBean(
-							metadata, TestMetadata.class, Metadata.class);
-
-					tests.add(testMetadata);
+					TestEnvelop testEnvelop = myTestsRepo.getTest(testId);
+					if(null == testEnvelop) {
+						throw new NotFoundException("Test with id: " + testId + " not found"); 
+					}
+					TestMetadata metadata = ModelMapperProvider.getDestinationBean(testEnvelop.getmetadata(), TestMetadata.class);
+					tests.add(metadata);
 				} catch (NotFoundException ex) {
 					final Logger LOG = LogWrapper
-							.getInstance(ArchiveService.class);
+							.getInstance(MyTestService.class);
 					LOG.error("Test Id = " + testId + " not found");
 					jakarta.servlet.http.HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder
 							.currentRequestAttributes()).getResponse();
