@@ -50,6 +50,8 @@ public interface MyTestDelegate {
 	 */
 	void delete(String testId);
 	
-	 public void deleteTestBindings(String testId);
+    TestEnvelop getTest(String testId);
+    
+     public void deleteTestBindings(String testId);
 
 }
