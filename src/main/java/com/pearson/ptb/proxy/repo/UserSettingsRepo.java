@@ -108,8 +108,8 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 	@Override
 	public void saveUserDisciplines(String userid, List<String> disciplines) {
-		
-		UserSettings userSettings = genericMongoRepository.findById(userid);
+	
+		UserSettings userSettings = getUserSettings(userid);
 		List<String> userDiscplines = userSettings.getDisciplines();
 		List<String> updateddiscipline = disciplines.stream().filter(discipline -> !userDiscplines.contains(discipline)).collect(Collectors.toList());
 		userDiscplines.addAll(updateddiscipline);
