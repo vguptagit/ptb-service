@@ -54,6 +54,7 @@ public class MyTestRepo implements MyTestDelegate {
 
 	@Override
 	public void delete(String testId) {
+		userTestRepository.deleteById(testId);
 
 	}
 
