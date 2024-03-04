@@ -142,5 +142,10 @@ public class MyTestsController extends BaseController {
 		myTestService.deleteFolder(folderId);
 		
 	}
+	
+	@DeleteMapping("/testDelete/{testId}")
+	public void deleteTest(@PathVariable String testId ) {
+		myTestService.deleteTest(testId);
+	}
 
 }
