@@ -50,7 +50,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 		UserSettings userSettings = null;
 
-		userSettings = CACHE.get(userid);
+	//	userSettings = CACHE.get(userid);
 		if (userSettings == null) {
 			logger.info("User settings not found in cache for user with ID: {}", userid);
 			userSettings = genericMongoRepository.findById(userid);
@@ -61,7 +61,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 				genericMongoRepository.save(userSettings);
 				logger.info("Default settings saved to MongoDB for user with ID: {}", userid);
 			}
-			CACHE.set(userid, userSettings);
+//			CACHE.set(userid, userSettings);
 		}
 		logger.info("returning the user from user settings");
 		return userSettings;
