@@ -477,11 +477,11 @@ public class MyTestService {
 	
 	
 	public void deleteFolder(String folderId) {
-		myTestsRepo.deleteTestBindings(folderId);
+		myTestsRepo.deleteLinkedDataRecursively(folderId);
 	}
 	
-	public void deleteTest(String testId) {
-		myTestsRepo.delete(testId);
+	public void deleteTest(String folderId , String testId) {
+		myTestsRepo.delete(folderId , testId);
 	}
 
 }

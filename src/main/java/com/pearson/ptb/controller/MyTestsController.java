@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import com.pearson.ptb.bean.TestEnvelop;
 import com.pearson.ptb.bean.TestMetadata;
 import com.pearson.ptb.bean.TestResult;
 import com.pearson.ptb.bean.TestVersionInfo;
+import com.pearson.ptb.dtos.ApiResponseMessage;
 import com.pearson.ptb.service.MyTestService;
 import com.pearson.ptb.service.TestVersionService;
 import com.pearson.ptb.util.UserHelper;
@@ -135,17 +138,34 @@ public class MyTestsController extends BaseController {
 	public TestResult importTest(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		return myTestService.importTest(file, UserHelper.getUserId(request));
 	}
-	
-	
-	@DeleteMapping("/delete/{folderId}")
-	public void deleteFolder( @PathVariable String  folderId) {
+
+	@Operation(summary = "If this folders is deleted all the childern and there test will be deleted")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Folder Deleted successfully"),
+			@ApiResponse(responseCode = "400", description = "folder not found") })
+	@DeleteMapping("/folders/{folderId}")
+	public ResponseEntity<ApiResponseMessage> deleteFolder(@PathVariable String folderId) {
 		myTestService.deleteFolder(folderId);
-		
+		ApiResponseMessage apiResponseMessage = ApiResponseMessage.builder()
+						.status(HttpStatus.OK)
+						.message("folder deleted successfully")
+						.success(true)
+						.build();
+		return new ResponseEntity<>(apiResponseMessage ,HttpStatus.OK);
 	}
+
 	
-	@DeleteMapping("/testDelete/{testId}")
-	public void deleteTest(@PathVariable String testId ) {
-		myTestService.deleteTest(testId);
+	@Operation(summary = "To deletet he test and remove the referece of the testFolder")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Test Deleted successfully"),
+			@ApiResponse(responseCode = "400", description = "Test not found") })
+	@DeleteMapping("folders/{folderId}/tests/{testId}")
+	public ResponseEntity<ApiResponseMessage> deleteTest(@PathVariable String folderId , @PathVariable String testId  ) {
+		myTestService.deleteTest( folderId, testId);
+		ApiResponseMessage apiResponseMessage = ApiResponseMessage.builder()
+				.status(HttpStatus.OK)
+				.message("folder deleted successfully")
+				.success(true)
+				.build();
+		return new ResponseEntity<>(apiResponseMessage ,HttpStatus.OK);
 	}
 
 }
