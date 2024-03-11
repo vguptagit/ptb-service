@@ -48,10 +48,13 @@ public interface MyTestDelegate {
 	 * 
 	 * @param testId
 	 */
-	void delete(String testId);
+	void delete(String folderId ,String testId);
 	
     TestEnvelop getTest(String testId);
     
      public void deleteTestBindings(String testId);
+     
+     public void deleteLinkedDataRecursively(String id);
+    
 
 }
