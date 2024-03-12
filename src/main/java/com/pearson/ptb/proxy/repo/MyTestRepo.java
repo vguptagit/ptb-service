@@ -56,7 +56,7 @@ public class MyTestRepo implements MyTestDelegate {
 	}
 
 	@Override
-	public void delete(String folderId, String testId) {
+	public void deleteTest(String folderId, String testId) {
 
 		UserFolder folder = userTestsFolderRepository.findById(folderId);
 		if (folder != null) {

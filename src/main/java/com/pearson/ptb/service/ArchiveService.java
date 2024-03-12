@@ -133,7 +133,7 @@ public class ArchiveService {
 
 			for (TestBinding testBinding : archivedFolder.getTestBindings()) {
 				
-				myTestsRepo.delete(testBinding.getTestId());
+				//myTestsRepo.delete(testBinding.getTestId());
 			}
 		}
 
@@ -166,7 +166,7 @@ public class ArchiveService {
 			if (testBinding.getTestId().equals(testId)) {
 				indexToRemove = index;
 				
-				myTestsRepo.delete(testBinding.getTestId());
+				//myTestsRepo.delete(testBinding.getTestId());
 				CACHE.delete(String.format(CacheKey.TEST_FORMAT,
 						testBinding.getTestId()));
 			}
