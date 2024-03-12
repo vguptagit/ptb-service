@@ -48,7 +48,9 @@ public interface MyTestDelegate {
 	 * 
 	 * @param testId
 	 */
-	void delete(String folderId ,String testId);
+	//void delete(String folderId ,String testId);
+	
+	public void deleteTest(String folderId, String testId);
 	
     TestEnvelop getTest(String testId);
     
