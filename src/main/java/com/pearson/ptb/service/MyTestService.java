@@ -481,7 +481,7 @@ public class MyTestService {
 	}
 	
 	public void deleteTest(String folderId , String testId) {
-		myTestsRepo.delete(folderId , testId);
+		myTestsRepo.deleteTest(folderId , testId);
 	}
 
 }
