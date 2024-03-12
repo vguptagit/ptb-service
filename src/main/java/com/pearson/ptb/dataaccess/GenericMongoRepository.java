@@ -239,4 +239,13 @@ public class GenericMongoRepository<T, ID> {
         query.addCriteria(Criteria.where("userId").is(userId).and("parentId").is(parentId));
         return mongoOperations.findOne(query, clazz);
     }
+	
+	  public List<T> findByParentId(String parentId) {
+	        Query query = new Query(Criteria.where("parentId").is(parentId));
+	        return mongoOperations.find(query, clazz);
+	    }
+
+	    public void delete(T entity) {
+	        mongoOperations.remove(entity);
+	    }
 }
