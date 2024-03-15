@@ -50,7 +50,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 		UserSettings userSettings = null;
 
-	//	userSettings = CACHE.get(userid);
+//		userSettings = CACHE.get(userid);
 		if (userSettings == null) {
 			logger.info("User settings not found in cache for user with ID: {}", userid);
 			userSettings = genericMongoRepository.findById(userid);
@@ -75,7 +75,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 
 	@Override
 	public List<String> getUserDisciplines(String userid) {
-		logger.info("passing the userId  ID: {}"+userid);
+		logger.info("passing the userId  ID: {}" + userid);
 		return getUserSettings(userid).getDisciplines();
 
 	}
@@ -113,13 +113,7 @@ public class UserSettingsRepo implements UserSettingsDelegate {
 	public void saveUserDisciplines(String userid, List<String> disciplines) {
 		logger.info("user id" + userid);
 		UserSettings userSettings = getUserSettings(userid);
-
-		List<String> userDiscplines = userSettings.getDisciplines();
-		List<String> updateddiscipline = disciplines.stream().filter(discipline -> !userDiscplines.contains(discipline))
-				.collect(Collectors.toList());
-		
-		userDiscplines.addAll(updateddiscipline);
-		userSettings.setDisciplines(userDiscplines);
+		userSettings.setDisciplines(disciplines);
 		genericMongoRepository.save(userSettings);
 		logger.info("Disciplines saved successfully for user with ID: {}", userid);
 
