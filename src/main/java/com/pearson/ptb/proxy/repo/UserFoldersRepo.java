@@ -196,8 +196,10 @@ public class UserFoldersRepo implements UserFoldersDelegate {
 	@Override
 	public UserQuestionsFolder getMyQuestionsFolder(String userID,
 			String folderid) {
-		
-		return null;
+		Query query = userQuestionFolderRepository.createDataQuery();
+		query.addCriteria(Criteria.where(QueryFields.GUID).is(folderid));
+		UserQuestionsFolder userFolder = userQuestionFolderRepository.findOne(query, UserQuestionsFolder.class);
+		return userFolder;
 	}
 
 	@Override
