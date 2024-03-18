@@ -19,6 +19,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.google.gson.Gson;
 import com.pearson.ptb.bean.QuestionEnvelop;
 import com.pearson.ptb.bean.QuestionMetadata;
+import com.pearson.ptb.dataaccess.GenericMongoRepository;
 import com.pearson.ptb.dataaccess.QuestionEnvelopRepoHelper;
 import com.pearson.ptb.framework.LogWrapper;
 import com.pearson.ptb.mapper.ModelMapperProvider;
@@ -39,6 +40,10 @@ public class QuestionRepo implements QuestionDelegate {
 	@Value("${aws.s3.bucket.name}")
 	private String bucketName;
 	
+	@Autowired
+	private GenericMongoRepository<com.pearson.ptb.proxy.aws.bean.QuestionEnvelop, String> questionRepository;
+
+	
 	private static final LogWrapper LOG = LogWrapper
 			.getInstance(QuestionRepo.class);
 
@@ -51,7 +56,10 @@ public class QuestionRepo implements QuestionDelegate {
 
 	@Override
 	public String getQuestionXmlById(String questionId) {
-		S3Object s3Object = amazonS3Service.download(bucketName, questionId);
+		com.pearson.ptb.proxy.aws.bean.QuestionEnvelop byId = questionRepository.findById(questionId);
+		String body = byId.getBody();
+		
+		S3Object s3Object = amazonS3Service.download(bucketName, body);
 		try {
 			return StreamUtils.copyToString(s3Object.getObjectContent(), StandardCharsets.UTF_8);
 		} catch (IOException e) {
@@ -63,18 +71,20 @@ public class QuestionRepo implements QuestionDelegate {
 	@Override
 	public String saveQuestion(QuestionEnvelop question, String bookTitle,
 			String chapterTitle) {
-		// Convert Question Bean to AWS Question Envelop to add additional Metadata
+//		 Convert Question Bean to AWS Question Envelop to add additional Metadata
 		com.pearson.ptb.proxy.aws.bean.QuestionEnvelop awsQuestion = ModelMapperProvider.getDestinationBean(question, com.pearson.ptb.proxy.aws.bean.QuestionEnvelop.class);
 		awsQuestion.getMetadata().setBookTitle(bookTitle);
 		awsQuestion.getMetadata().setChapterTitle(chapterTitle);
 		awsQuestion.setGuid(question.getmetadata().getGuid());
+	//	System.out.println(question.getBody() + "  body" );
+		
 		
 		// Set File Name
 		Map<String, String> awsMetadata = new HashMap<>();
 		String awsFileName = UUID.randomUUID().toString();
 		
 		// Call Amazon service to upload xml
-		amazonS3Service.upload(bucketName, awsFileName, Optional.of(awsMetadata), IOUtils.toInputStream(awsQuestion.getBody()));
+		amazonS3Service.upload(awsFileName, awsFileName , Optional.of(awsMetadata), IOUtils.toInputStream(awsQuestion.getBody()));
 			
 		//Save record to DB with the AWS FileName reference
 		Converter.updateBodyWithAwsRefId(awsQuestion, awsFileName); // Change body xml to AWS file Reference

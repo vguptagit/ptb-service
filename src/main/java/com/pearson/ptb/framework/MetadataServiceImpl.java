@@ -57,7 +57,7 @@ public class MetadataServiceImpl implements MetadataService {
         FileMeta fileMeta = fileMetaRepository.findById(id);
                 
 
-        S3Object s3Object = amazonS3Service.download(fileMeta.getFilePath(), fileMeta.getFileName());
+        S3Object s3Object = amazonS3Service.download(fileMeta.getFilePath(), fileMeta.getId());
 
         String contentType = s3Object.getObjectMetadata().getContentType();
         var inputStream = s3Object.getObjectContent();

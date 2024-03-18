@@ -299,12 +299,13 @@ public class QuestionService {
 	public String getQuestionXmlById(String questionId) {
 		String questionCacheKey = String.format(CacheKey.QUESTION_XML_FORMAT,
 				questionId);
-		String questionXML = CACHE.get(questionCacheKey,
-				cacheExpiryTimeForQuestionXML);
+		//CACHE.get(questionCacheKey,cacheExpiryTimeForQuestionXML);
+		
+		String questionXML = null;
 		if (questionXML == null) {
 			questionXML = questionRepo.getQuestionXmlById(questionId);
-			CACHE.set(questionCacheKey, questionXML,
-					cacheExpiryTimeForQuestionXML);
+//			CACHE.set(questionCacheKey, questionXML,
+//					cacheExpiryTimeForQuestionXML);
 		}
 		return questionXML;
 	}
@@ -373,10 +374,10 @@ public class QuestionService {
 					folderId);
 		}
 
-		String userQuestionsCacheKey = String.format(
-				CacheKey.USER_QUESTIONS_FORMAT, myQuestionsFolder.getGuid());
-
-		List<QuestionOutput> questions = CACHE.get(userQuestionsCacheKey);
+//		String userQuestionsCacheKey = String.format(
+//				CacheKey.USER_QUESTIONS_FORMAT, myQuestionsFolder.getGuid());
+//CACHE.get(userQuestionsCacheKey)
+		List<QuestionOutput> questions = null	;
 
 		if (questions == null) {
 
@@ -384,15 +385,17 @@ public class QuestionService {
 					.getQuestionBindings();
 
 			List<String> questionIds = new ArrayList<String>();
+			List<String> body = new ArrayList<String>();
 
 			for (QuestionBinding questionBinding : questionBindings) {
 				questionIds.add(questionBinding.getQuestionId());
 			}
-
+			
+			
 			questions = getQuestions(questionIds);
 
-			CACHE.set(userQuestionsCacheKey,
-					(ArrayList<QuestionOutput>) questions);
+//			CACHE.set(userQuestionsCacheKey,
+//					(ArrayList<QuestionOutput>) questions);
 		}
 
 		return questions;

@@ -42,12 +42,14 @@ public class MetadataService {
 	 */
 	public Metadata getMetadata(String metadataId) {
 
-		String metadataCacheKey = String.format(CacheKey.METADATA_FORMAT,
-				metadataId);
-		Metadata metadata = CACHE.get(metadataCacheKey);
+//		String metadataCacheKey = String.format(CacheKey.METADATA_FORMAT,
+//				metadataId);
+//		CACHE.get(metadataCacheKey);
+		Metadata metadata = null;
+		
 		if (metadata == null) {
 			metadata = metadataRepo.getMetadata(metadataId);
-			CACHE.set(metadataCacheKey, metadata);
+		//	CACHE.set(metadataCacheKey, metadata);
 		}
 		return metadata;
 	}

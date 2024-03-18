@@ -122,7 +122,8 @@ public class QuestionsController extends BaseController {
 		response.addHeader("X-Return-Count", String.valueOf(userQuestionsCount));
 
 		List<QuestionOutput> questions = null;
-		if (request.getMethod() == RequestMethod.GET.name()) {
+		
+		if (request.getMethod().equals(RequestMethod.GET.name()) ) {
 			questions = questionService.getUserQuestions(userId, folderId, flat);
 		}
 

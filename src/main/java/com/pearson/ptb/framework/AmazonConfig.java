@@ -20,7 +20,7 @@ public class AmazonConfig {
     @Value("${aws.secret.access.key}")
     private String secretKey;
 
-    @Value("${aws.s3.region}")
+    @Value("${cloud.aws.region.static}")
     private String region;
 
     @Bean
