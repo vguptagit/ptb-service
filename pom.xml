@@ -204,14 +204,8 @@
 		<dependency>
 			<groupId>com.aspose</groupId>
 			<artifactId>aspose-words</artifactId>
-			<version>22.11</version>
-			<classifier>jdk17</classifier>
-		</dependency>
-		<dependency>
-			<groupId>com.aspose</groupId>
-			<artifactId>aspose-words</artifactId>
-			<version>22.11</version>
-			<classifier>javadoc</classifier>
+			<version>16.1.0</version>
+			<classifier>jdk16</classifier>
 		</dependency>
 		
 		<dependency>
