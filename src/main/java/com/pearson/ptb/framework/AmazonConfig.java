@@ -21,7 +21,7 @@ public class AmazonConfig {
 	@Value("${cloud.aws.region.static}")
 	private String region;
 	
-	@Value("$cloud.aws.s3.endpoint")
+	@Value("${cloud.aws.s3.endpoint}")
 	private String endpoint;
 
 //	@Bean
