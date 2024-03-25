@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.framework.exception.NotFoundException;
+import com.pearson.ptb.proxy.aws.bean.QuestionEnvelop;
 
 /**
  * This interface defines the contract for accessing the Container with given
@@ -109,4 +110,7 @@ public interface ContainerDelegate {
 	 *            list of nodes
 	 */
 	void save(List<Container> containers);
+	
+	
+	public List<String> getQuestionBinding(String bookId , String containerID);
 }

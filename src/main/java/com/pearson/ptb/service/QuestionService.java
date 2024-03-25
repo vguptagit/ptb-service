@@ -131,16 +131,17 @@ public class QuestionService {
 	 */
 	public List<QuestionMetadata> getQuestions(String bookId) {
 		List<QuestionMetadata> questions;
-		String questionsCacheKey = String.format(
-				CacheKey.BOOKID_QUESTIONS_FORMAT, bookId,
-				cacheExpiryTimeForBookQuestions);
-		questions = CACHE.get(questionsCacheKey);
-		if (questions == null) {
+//		String questionsCacheKey = String.format(
+//				CacheKey.BOOKID_QUESTIONS_FORMAT, bookId,
+//				cacheExpiryTimeForBookQuestions);
+	//	questions =null;
+				//CACHE.get(questionsCacheKey);
+		//if (questions == null) {
 			questions = questionRepo.getQuestions(bookId);
-			CACHE.set(questionsCacheKey,
-					(ArrayList<QuestionMetadata>) questions,
-					cacheExpiryTimeForBookQuestions);
-		}
+//			CACHE.set(questionsCacheKey,
+//					(ArrayList<QuestionMetadata>) questions,
+//					cacheExpiryTimeForBookQuestions);
+	//	}
 		return questions;
 	}
 
@@ -158,16 +159,17 @@ public class QuestionService {
 			Map<String, String> containerParentChild) {
 		String questionsCacheKey = String.format(
 				CacheKey.PUBLISHED_QUESTIONS_FORMAT, bookId, containerId);
-		List<QuestionMetadata> questions = CACHE.get(questionsCacheKey,
-				cacheExpiryTimeForBookContainerQuestions);
+		List<QuestionMetadata> questions =null;
+//				CACHE.get(questionsCacheKey,
+//				cacheExpiryTimeForBookContainerQuestions);
 		if (questions == null || !filterCriteria.isEmpty()) {
 			questions = getContainerQuestions(bookId, containerId,
 					filterCriteria, containerParentChild);
-			if (filterCriteria.isEmpty()) {
-				CACHE.set(questionsCacheKey,
-						(ArrayList<QuestionMetadata>) questions,
-						cacheExpiryTimeForBookContainerQuestions);
-			}
+//			if (filterCriteria.isEmpty()) {
+//				CACHE.set(questionsCacheKey,
+//						(ArrayList<QuestionMetadata>) questions,
+//						cacheExpiryTimeForBookContainerQuestions);
+//			}
 		}
 		getQuestionsHierarchy(questions, containerId, containerParentChild);
 		return questions;
@@ -534,6 +536,13 @@ public class QuestionService {
 			questions.add(questionOutput);
 		}
 		return questions;
+	}
+	
+	
+	public List<QuestionOutput> getQuestionBindings(String bookId, String nodeId) {
+		List<String> questionBinding = containerRepo.getQuestionBinding(bookId , nodeId);
+		return getQuestions(questionBinding);
+		
 	}
 
 }
