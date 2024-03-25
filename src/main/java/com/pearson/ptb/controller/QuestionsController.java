@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pearson.ptb.bean.Container;
 import com.pearson.ptb.bean.QuestionEnvelop;
 import com.pearson.ptb.bean.QuestionMetadata;
 import com.pearson.ptb.bean.QuestionOutput;
@@ -64,7 +66,7 @@ public class QuestionsController extends BaseController {
 
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success") })
 	@Operation(summary = "Returns list of all Questions for given Book and Container", description = Swagger.GET_QUESTIONS_BY_CONTAINER_NOTE)
-	@RequestMapping(value = "/books/{bookid}/nodes/{nodeId}/questions", method = RequestMethod.GET)
+	@RequestMapping(value = "/books/{bookid}/nodes/{nodeId}/questions/removeit", method = RequestMethod.GET)
 
 	@ResponseBody
 	public List<QuestionMetadata> getQuestionsByContainer(@PathVariable String bookid, @PathVariable String nodeId,
@@ -77,6 +79,15 @@ public class QuestionsController extends BaseController {
 				SearchHelper.getQuestionFilterCriteriaMap());
 		SearchHelper.updateSearchValues(filterCriteria);
 		return questionService.getQuestions(bookid, nodeId, filterCriteria, flat);
+	}
+	
+	
+	
+	@GetMapping("/books/{bookId}/nodes/{nodeId}/questions")
+	public List<QuestionOutput> getQuestionsByContainer(@PathVariable String bookId , @PathVariable String nodeId){
+		
+		return 	questionService.getQuestionBindings(bookId , nodeId);
+		
 	}
 
 	/**
