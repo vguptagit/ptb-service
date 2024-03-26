@@ -82,7 +82,9 @@ public class QuestionsController extends BaseController {
 	}
 	
 	
-	
+	@Operation(summary = "Returns list of all Questions for given Book and Container")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Questions found successfully"),
+			@ApiResponse(responseCode = "400", description = "Questions not found") })
 	@GetMapping("/books/{bookId}/nodes/{nodeId}/questions")
 	public List<QuestionOutput> getQuestionsByContainer(@PathVariable String bookId , @PathVariable String nodeId){
 		
