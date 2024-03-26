@@ -488,8 +488,8 @@ public class QuestionService {
 
 				updateUserQuestionsFolder(myQuestionsFolder, guid, userId);
 			} else {
-				questionResult = "[{\"guid\":\""
-						+ question.getmetadata().getGuid() + "\"}]";
+				questionResult = "{\"guid\":\""
+						+ question.getmetadata().getGuid() + "\"}";
 			}
 			
 			questionResults.add(gson.fromJson(questionResult, QuestionResponse.class));

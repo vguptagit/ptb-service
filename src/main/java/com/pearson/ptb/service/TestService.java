@@ -5,19 +5,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.pearson.ptb.bean.AssignmentBinding;
 import com.pearson.ptb.bean.Book;
 import com.pearson.ptb.bean.QuestionOutput;
 import com.pearson.ptb.bean.Test;
+import com.pearson.ptb.bean.TestEnvelop;
 import com.pearson.ptb.framework.CacheWrapper;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
 import com.pearson.ptb.proxy.BookDelegate;
 import com.pearson.ptb.proxy.TestDelegate;
+import com.pearson.ptb.proxy.repo.MyTestRepo;
 import com.pearson.ptb.util.CacheKey;
-
-import org.springframework.stereotype.Service;
 
 /**
  * This <code>TestService</code> is responsible to get the tests, test questions
@@ -29,6 +30,10 @@ public class TestService {
 	@Autowired
 	@Qualifier("tests")
 	private TestDelegate testRepo;
+	
+	@Autowired
+	@Qualifier("myTestsRepo")
+	private MyTestRepo myTestRepo;
 
 	@Autowired
 	@Qualifier("book")
@@ -113,24 +118,28 @@ public class TestService {
 	 */
 	public List<QuestionOutput> getTestQuestions(String testId) {
 
-		String testQuestionsCacheKey = String
-				.format(CacheKey.TEST_QUESTIONS_FORMAT, testId);
+		/*
+		 * String testQuestionsCacheKey = String .format(CacheKey.TEST_QUESTIONS_FORMAT,
+		 * testId);
+		 */
 
-		List<QuestionOutput> questions = CACHE.get(testQuestionsCacheKey);
+		List<QuestionOutput> questions = null;
+		//List<QuestionOutput> questions = CACHE.get(testQuestionsCacheKey);
 
 		if (questions == null) {
 
 			List<String> questionIds = new ArrayList<String>();
-
-			for (AssignmentBinding questionBinding : getTestByID(testId)
+			TestEnvelop testEnvelop = myTestRepo.getTest(testId);
+			for (AssignmentBinding questionBinding : testEnvelop.getBody()
 					.getAssignmentContents().getBinding()) {
 				questionIds.add(questionBinding.getGuid());
 			}
 
 			questions = questionService.getQuestions(questionIds);
 
-			CACHE.set(testQuestionsCacheKey,
-					(ArrayList<QuestionOutput>) questions);
+			/*
+			 * CACHE.set(testQuestionsCacheKey, (ArrayList<QuestionOutput>) questions);
+			 */
 		}
 
 		return questions;
