@@ -67,12 +67,13 @@ public class TestService {
 	 * @throws NotFoundException
 	 */
 	public Test getTestByID(String testId) {
-		CACHE = CacheWrapper.getInstance();
-		String testCacheKey = String.format(CacheKey.TEST_FORMAT, testId);
-		Test test = CACHE.get(testCacheKey);
+//		CACHE = CacheWrapper.getInstance();
+//		String testCacheKey = String.format(CacheKey.TEST_FORMAT, testId);
+		Test test = null;
+//				CACHE.get(testCacheKey);
 		if (test == null) {
 			test = testRepo.getTestByID(testId);
-			CACHE.set(testCacheKey, test);
+//			CACHE.set(testCacheKey, test);
 		}
 		return test;
 	}
@@ -86,9 +87,10 @@ public class TestService {
 	public List<Test> getPublisherTestsByBookId(String bookId) {
 
 		List<Test> tests;
-		String bookTestsCacheKey = String.format(CacheKey.BOOK_TESTS_FORMAT,
-				bookId);
-		tests = CACHE.get(bookTestsCacheKey);
+//		String bookTestsCacheKey = String.format(CacheKey.BOOK_TESTS_FORMAT,
+//				bookId);
+		tests = null;
+				//CACHE.get(bookTestsCacheKey);
 
 		if (tests == null) {
 
@@ -103,7 +105,7 @@ public class TestService {
 				}
 			}
 
-			CACHE.set(bookTestsCacheKey, (ArrayList<Test>) tests);
+			//CACHE.set(bookTestsCacheKey, (ArrayList<Test>) tests);
 		}
 
 		return tests;

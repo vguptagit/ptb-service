@@ -63,22 +63,6 @@ public class AssignmentBinding implements Serializable {
 		this.bindingIndex = bindingIndex;
 	}
 
-	/**
-	 * Get {@see #boundActivity}. @return {@link #boundActivity}.
-	 * 
-	 * @throws InternalException
-	 */
-	@JsonProperty("boundActivity")
-	public String getBoundActivity() {
-		try {
-			return String.format(Common.QUESTION_END_POINT_FORMAT,
-					ConfigurationManager.getInstance().getMyTestBaseUrl(),
-					this.getGuid());
-		} catch (ConfigException e) {
-			throw new InternalException(
-					"Not able to read configuration - AssignmentBinding.getBoundActivity",
-					e);
-		}
-	}
+
 
 }

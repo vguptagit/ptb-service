@@ -4,8 +4,10 @@ import org.springframework.stereotype.Repository;
 
 
 import com.pearson.ptb.bean.Test;
+import com.pearson.ptb.bean.TestEnvelop;
 import com.pearson.ptb.proxy.TestDelegate;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -21,27 +23,23 @@ public class TestRepo implements TestDelegate {
 	private static final String TEST_NOT_FOUND = "Test not found";
     private static final String TEST_ID_NULL = "Test id is set to null";
 
+    @Autowired
+    private ModelMapper mapper;
 
 
     @Autowired
-    private GenericMongoRepository<Assignment, String> assignmentRepository;
+    private GenericMongoRepository<TestEnvelop, String> assignmentRepository;
 
 
 	@Override
 	public Test getTestByID(String testId) {
 		
-		if (testId == null || testId.trim().isEmpty()) {
+		if (testId == null ) {
             throw new IllegalArgumentException(TEST_ID_NULL);
         }
 
-		 Assignment assignment = assignmentRepository.findById(testId);
-
-	        if (assignment == null) {
-	            throw new IllegalArgumentException(TEST_NOT_FOUND);
-	        }
-
-        
-        Test test = ActivityUtil.getMyTest(assignment);
+		  TestEnvelop testEnvelop = assignmentRepository.findById(testId);
+		  	Test test = testEnvelop.getBody();
         test.setGuid(testId);
         return test;
 	}
