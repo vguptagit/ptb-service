@@ -131,7 +131,7 @@ public class DownloadService {
 			DownloadInfo downloadInfo) throws IOException {
 
 		DownloadOutput downloadOutput = null;
-
+		includeRandomizedTests=false;
 		if (includeRandomizedTests) {
 			downloadOutput = downloadAllVersions(stream, testid, downloder,
 					downloadInfo);
