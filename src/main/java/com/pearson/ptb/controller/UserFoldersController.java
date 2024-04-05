@@ -263,7 +263,19 @@ public class UserFoldersController extends BaseController {
 				.build();
 		return new ResponseEntity<>(apiResponseMessage , HttpStatus.OK);
 	}
-	
+	@Operation(summary = "To swap the test between the question folders")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Question swapped successfully"),
+            @ApiResponse(responseCode = "400", description = "Question swap failed") })
+    @PutMapping("my/tests/{sFolderId}/folders/{dFolderId}/{questionID}")
+    public ResponseEntity<ApiResponseMessage> updateTestBindings(@PathVariable String sFolderId, @PathVariable String dFolderId, @PathVariable String questionID , HttpServletRequest request) {
+        userFolderService.updateTestBindings( sFolderId , dFolderId ,questionID);
+        ApiResponseMessage apiResponseMessage = ApiResponseMessage.builder()
+                .status(HttpStatus.OK)
+                .message("test swapped successfully..")
+                .success(true)
+                .build();
+        return new ResponseEntity<>(apiResponseMessage , HttpStatus.OK);
+    }
 	
 
 	
