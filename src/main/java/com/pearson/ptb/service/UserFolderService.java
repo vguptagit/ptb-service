@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.pearson.ptb.bean.QuestionBinding;
+import com.pearson.ptb.bean.TestBinding;
 import com.pearson.ptb.bean.UserFolder;
 import com.pearson.ptb.bean.UserQuestionsFolder;
 import com.pearson.ptb.framework.CacheWrapper;
@@ -16,6 +17,7 @@ import com.pearson.ptb.framework.exception.BadDataException;
 import com.pearson.ptb.framework.exception.DuplicateTitleException;
 import com.pearson.ptb.framework.exception.InternalException;
 import com.pearson.ptb.framework.exception.NotFoundException;
+import com.pearson.ptb.framework.exception.ResourceNotFoundException;
 import com.pearson.ptb.proxy.UserFoldersDelegate;
 import com.pearson.ptb.util.CacheKey;
 
@@ -305,7 +307,7 @@ public class UserFolderService {
 		}
 		String userQuestionsCacheKey = String
 				.format(CacheKey.USER_QUESTIONS_FORMAT, folder.getGuid());
-		CacheWrapper.getInstance().delete(userQuestionsCacheKey);
+//		CacheWrapper.getInstance().delete(userQuestionsCacheKey);
 
 		userFoldersRepo.saveUserQuestionFolders(folders);
 
@@ -332,7 +334,7 @@ public class UserFolderService {
 
 		String userQuestionsCacheKey = String
 				.format(CacheKey.USER_QUESTIONS_FORMAT, folder.getGuid());
-		CacheWrapper.getInstance().delete(userQuestionsCacheKey);
+//		CacheWrapper.getInstance().delete(userQuestionsCacheKey);
 
 		userFoldersRepo.saveUserQuestionFolders(folders);
 
@@ -376,4 +378,44 @@ public class UserFolderService {
 	public void deleteQuestionFolder(String id) {
 		userFoldersRepo.deleteFolder(id);
 	}
+	
+	
+	
+	
+	public void updateQuestionBindings(String userID, String sFolderId, String dFolder, String questionId) {
+
+			UserQuestionsFolder sourceFolder = userFoldersRepo.getMyQuestionsFolder(userID, sFolderId);
+			UserQuestionsFolder destinationFolder = userFoldersRepo.getMyQuestionsFolder(userID, dFolder);
+			if 
+			(sourceFolder == null) {
+				throw new ResourceNotFoundException("Source folder does not exist...");
+			}
+			if (destinationFolder == null) {
+				throw new ResourceNotFoundException("Destination folder does not exist...");
+			}
+			
+			  boolean questionExistsInSource = sourceFolder.getQuestionBindings().stream()
+                      .anyMatch(binding -> binding.getQuestionId().equals(questionId));
+
+			  if (!questionExistsInSource) {
+			        throw new ResourceNotFoundException("Question  ID does not exist in the source folder...");
+			    }
+
+			List<QuestionBinding> questionBindings2 = destinationFolder.getQuestionBindings();
+
+			if (questionBindings2.isEmpty()) {
+				questionBindings2.add(new QuestionBinding(questionId, 1));
+			} else {
+				QuestionBinding lastBinding = questionBindings2.get(questionBindings2.size() - 1);
+				double latestSequence = lastBinding.getSequence() + 1;
+				questionBindings2.add(new QuestionBinding(questionId, latestSequence));
+			}
+
+			sourceFolder.getQuestionBindings().removeIf(binding -> binding.getQuestionId().equals(questionId));
+			userFoldersRepo.saveFolder(sourceFolder);
+			userFoldersRepo.saveFolder(destinationFolder);
+	}
+	
+
+	
 }

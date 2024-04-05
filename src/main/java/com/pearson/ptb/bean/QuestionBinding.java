@@ -16,7 +16,15 @@ public class QuestionBinding {
 	 * Indicates sequence
 	 */
 	private double sequence;
+	
+	   public QuestionBinding(String questionId, double sequence) {
+	        this.questionId = questionId;
+	        this.sequence = sequence;
+	    }
 
+	   public QuestionBinding() {
+		   
+	   }
 	/** Get {@see #questionId}. @return {@link #questionId}. */
 	public String getQuestionId() {
 		return questionId;
