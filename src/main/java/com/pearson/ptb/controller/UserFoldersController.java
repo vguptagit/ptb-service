@@ -252,7 +252,7 @@ public class UserFoldersController extends BaseController {
 	@Operation(summary = "To swap the test between the question folders")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Question swapped successfully"),
 			@ApiResponse(responseCode = "400", description = "Question swap failed") })
-	@PutMapping("my/questions/{sFolderId}/folders/{dFolderId}/{questionID}")
+	@PutMapping("/my/folders/{sFolderId}/folders/{dFolderId}/questions/{questionID}")
 	public ResponseEntity<ApiResponseMessage> updateQuestionBindings(@PathVariable String sFolderId, @PathVariable String dFolderId, @PathVariable String questionID , HttpServletRequest request) {
 		String userId = UserHelper.getUserId(request);
 		userFolderService.updateQuestionBindings(userId , sFolderId , dFolderId ,questionID);
@@ -266,9 +266,9 @@ public class UserFoldersController extends BaseController {
 	@Operation(summary = "To swap the test between the question folders")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Question swapped successfully"),
             @ApiResponse(responseCode = "400", description = "Question swap failed") })
-    @PutMapping("my/tests/{sFolderId}/folders/{dFolderId}/{questionID}")
-    public ResponseEntity<ApiResponseMessage> updateTestBindings(@PathVariable String sFolderId, @PathVariable String dFolderId, @PathVariable String questionID , HttpServletRequest request) {
-        userFolderService.updateTestBindings( sFolderId , dFolderId ,questionID);
+    @PutMapping("/my/folders/{sFolderId}/folders/{dFolderId}/tests/{testID}")
+    public ResponseEntity<ApiResponseMessage> updateTestBindings(@PathVariable String sFolderId, @PathVariable String dFolderId, @PathVariable String testID , HttpServletRequest request) {
+        userFolderService.updateTestBindings( sFolderId , dFolderId ,testID);
         ApiResponseMessage apiResponseMessage = ApiResponseMessage.builder()
                 .status(HttpStatus.OK)
                 .message("test swapped successfully..")
