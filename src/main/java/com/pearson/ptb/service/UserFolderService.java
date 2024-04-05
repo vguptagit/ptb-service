@@ -416,6 +416,42 @@ public class UserFolderService {
 			userFoldersRepo.saveFolder(destinationFolder);
 	}
 	
+	
 
+	public void updateTestBindings( String sFolderId, String dFolder, String testId) {
+
+        UserFolder sourceFolder = userFoldersRepo.getFolder(sFolderId);
+        UserFolder destinationFolder = userFoldersRepo.getFolder(dFolder);
+       if 
+       (sourceFolder == null) {
+           throw new ResourceNotFoundException("Source folder does not exist...");
+       }
+       if (destinationFolder == null) {
+           throw new ResourceNotFoundException("Destination folder does not exist...");
+       }
+       
+       
+         boolean questionExistsInSource = sourceFolder.getTestBindings().stream()
+                 .anyMatch(binding -> binding.getTestId().equals(testId));
+
+         if (!questionExistsInSource) {
+               throw new ResourceNotFoundException("test ID does not exist in the source folder...");
+           }
+
+        List<TestBinding> testBindings = destinationFolder.getTestBindings();
+
+       if (testBindings.isEmpty()) {
+           testBindings.add(new TestBinding(testId, 1));
+           
+       } else {
+           TestBinding lastBinding = testBindings.get(testBindings.size() - 1);
+           double latestSequence = lastBinding.getSequence() + 1;
+           testBindings.add(new TestBinding(testId, latestSequence));
+       }
+
+       sourceFolder.getTestBindings().removeIf(binding -> binding.getTestId().equals(testId));
+       userFoldersRepo.saveFolder(sourceFolder);
+       userFoldersRepo.saveFolder(destinationFolder);
+}
 	
 }
