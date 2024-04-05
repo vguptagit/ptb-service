@@ -17,6 +17,15 @@ public class TestBinding {
 	 */
 	private double sequence;
 
+	public TestBinding(String testId, double sequence) {
+		this.testId=testId;
+		this.sequence=sequence;
+		
+	}
+	public TestBinding() {
+		
+	}
+
 	/** Get {@see #testId}. @return {@link #testId}. */
 	public String getTestId() {
 		return testId;

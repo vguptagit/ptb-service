@@ -6,16 +6,23 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pearson.ptb.util.Swagger;
 import com.pearson.ptb.bean.UserFolder;
 import com.pearson.ptb.bean.UserQuestionsFolder;
+import com.pearson.ptb.dtos.ApiResponseMessage;
 import com.pearson.ptb.service.UserFolderService;
 import com.pearson.ptb.util.UserHelper;
 
@@ -31,7 +38,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 
-@Controller
+@RestController
 @Tag(name = "User folders", description = "User folders API")
 public class UserFoldersController extends BaseController {
 
@@ -240,4 +247,29 @@ public class UserFoldersController extends BaseController {
 		String userId = UserHelper.getUserId(request);
 		return userFolderService.getQuestionFoldersRoot(userId);
 	}
+	
+
+	@Operation(summary = "To swap the test between the question folders")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Question swapped successfully"),
+			@ApiResponse(responseCode = "400", description = "Question swap failed") })
+	@PutMapping("my/questions/{sFolderId}/folders/{dFolderId}/{questionID}")
+	public ResponseEntity<ApiResponseMessage> updateQuestionBindings(@PathVariable String sFolderId, @PathVariable String dFolderId, @PathVariable String questionID , HttpServletRequest request) {
+		String userId = UserHelper.getUserId(request);
+		userFolderService.updateQuestionBindings(userId , sFolderId , dFolderId ,questionID);
+		ApiResponseMessage apiResponseMessage = ApiResponseMessage.builder()
+				.status(HttpStatus.OK)
+				.message("question swapped successfully..")
+				.success(true)
+				.build();
+		return new ResponseEntity<>(apiResponseMessage , HttpStatus.OK);
+	}
+	
+	
+
+	
+	
+	
+	
+	
+	
 }
