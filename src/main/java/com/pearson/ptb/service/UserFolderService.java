@@ -41,10 +41,8 @@ public class UserFolderService {
 	/**
 	 * This method is responsible to get the user folders
 	 * 
-	 * @param userId
-	 *            The instructor user id to get the folder
-	 * @param parentFolderId
-	 *            The parent folder id to get its children folders
+	 * @param userId         The instructor user id to get the folder
+	 * @param parentFolderId The parent folder id to get its children folders
 	 * @return The list of user folders
 	 */
 	public List<UserFolder> getFolders(String userId, String parentFolderId) {
@@ -55,8 +53,7 @@ public class UserFolderService {
 	/**
 	 * To get the My Test Root folder used to store root level test bindings
 	 * 
-	 * @param userId
-	 *            The instructor user id to get the folder
+	 * @param userId The instructor user id to get the folder
 	 * @return User Folder
 	 */
 	public UserFolder getMyTestRoot(String userID) {
@@ -67,8 +64,7 @@ public class UserFolderService {
 	/**
 	 * To get the Question Folders Root folder
 	 * 
-	 * @param userId
-	 *            The instructor user id to get the folder
+	 * @param userId The instructor user id to get the folder
 	 * @return User Folder
 	 */
 	public UserQuestionsFolder getQuestionFoldersRoot(String userID) {
@@ -80,8 +76,7 @@ public class UserFolderService {
 	 * To get User Questions Root folder used to store user created question
 	 * bindings
 	 * 
-	 * @param userId
-	 *            The instructor user id to get the folder
+	 * @param userId The instructor user id to get the folder
 	 * @return User Questions Folder
 	 */
 	public UserQuestionsFolder getMyQuestionsFolder(String userID) {
@@ -92,13 +87,10 @@ public class UserFolderService {
 	/**
 	 * This method is responsible to get the folder of a user created questions
 	 * 
-	 * @param folderId
-	 *            ,folder id
-	 * @param userID
-	 *            , user id
+	 * @param folderId ,folder id
+	 * @param userID   , user id
 	 */
-	public UserQuestionsFolder getMyQuestionsFolder(String userID,
-			String folderId) {
+	public UserQuestionsFolder getMyQuestionsFolder(String userID, String folderId) {
 
 		return userFoldersRepo.getMyQuestionsFolder(userID, folderId);
 	}
@@ -116,9 +108,8 @@ public class UserFolderService {
 	/**
 	 * To get the containing folder for test
 	 * 
-	 * @param testId
-	 *            The PAF guid of the test stored in test bindings property of
-	 *            any user folder
+	 * @param testId The PAF guid of the test stored in test bindings property of
+	 *               any user folder
 	 * @return User Folder
 	 */
 	public UserFolder getTestFolder(String testId) {
@@ -139,10 +130,8 @@ public class UserFolderService {
 	/**
 	 * This method is responsible to get the user folder
 	 * 
-	 * @param userId
-	 *            The instructor user id to get the folder
-	 * @param folderId
-	 *            The folder id to get its details
+	 * @param userId   The instructor user id to get the folder
+	 * @param folderId The folder id to get its details
 	 * @return The folder details
 	 * @throws NotFoundException
 	 */
@@ -164,8 +153,7 @@ public class UserFolderService {
 	/**
 	 * This method is responsible to update the folder on saving the test.
 	 * 
-	 * @param folder
-	 *            , folder in which test is getting saved.
+	 * @param folder , folder in which test is getting saved.
 	 */
 	public UserFolder updateFolder(UserFolder folder) {
 		userFoldersRepo.updateFolder(folder);
@@ -177,7 +165,6 @@ public class UserFolderService {
 	 */
 	public UserFolder saveFolder(UserFolder folder, String userId) {
 
-		
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -186,7 +173,6 @@ public class UserFolderService {
 		}
 		folder.setUserID(userId);
 
-		
 		folder.validateState();
 
 		List<UserFolder> folders = new ArrayList<UserFolder>();
@@ -203,7 +189,6 @@ public class UserFolderService {
 	 */
 	public UserFolder updateFolder(UserFolder folder, String userId) {
 
-		
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -211,7 +196,7 @@ public class UserFolderService {
 			throw new BadDataException("folderId should not be null or empty");
 		}
 		folder.setUserID(userId);
-		
+
 		folder.validateState();
 		checkForUserFolderDuplicate(folder, userId);
 
@@ -221,11 +206,10 @@ public class UserFolderService {
 	}
 
 	/**
-	 * This method will check for duplicate user folders. If duplicate found it
-	 * it throws DuplicateTitleException else it returns false.
+	 * This method will check for duplicate user folders. If duplicate found it it
+	 * throws DuplicateTitleException else it returns false.
 	 */
-	private boolean checkForUserFolderDuplicate(UserFolder folder,
-			String userId) {
+	private boolean checkForUserFolderDuplicate(UserFolder folder, String userId) {
 		List<UserFolder> folders = new ArrayList<UserFolder>();
 		if (folder.getParentId() == null) {
 			folders = userFoldersRepo.getChildFolders(userId, null);
@@ -235,16 +219,14 @@ public class UserFolderService {
 			}
 		}
 
-		if(CollectionUtils.isEmpty(folders)) {
+		if (CollectionUtils.isEmpty(folders)) {
 			return false;
 		}
-		
+
 		for (UserFolder userFolder : folders) {
-			if (!userFolder.getGuid().equals(folder.getGuid())
-					&& userFolder.getTitle().equals(folder.getTitle())) {
+			if (!userFolder.getGuid().equals(folder.getGuid()) && userFolder.getTitle().equals(folder.getTitle())) {
 				throw new DuplicateTitleException(
-						"A folder with " + folder.getTitle()
-								+ " title already exists at this level");
+						"A folder with " + folder.getTitle() + " title already exists at this level");
 			}
 		}
 		return false;
@@ -254,44 +236,37 @@ public class UserFolderService {
 	 * This method will check for duplicate UserQuestions folders. If duplicate
 	 * found it it throws DuplicateTitleException else it returns false.
 	 */
-	private boolean checkForUserQuestionsFolderDuplicate(
-			UserQuestionsFolder folder, String userId) {
+	private boolean checkForUserQuestionsFolderDuplicate(UserQuestionsFolder folder, String userId) {
 		List<UserQuestionsFolder> folders = new ArrayList<UserQuestionsFolder>();
-		UserQuestionsFolder rootFolder = userFoldersRepo
-				.getMyQuestionRoot(userId);
-		if(null == rootFolder) {
+		UserQuestionsFolder rootFolder = userFoldersRepo.getMyQuestionRoot(userId);
+		if (null == rootFolder) {
 			throw new InternalException("Unable to create root folder for question for user Id " + userId);
 		}
-		
+
 		if (folder.getParentId().equals(rootFolder.getGuid())) {
 			folders = userFoldersRepo.getMyQuestionsFolders(userId);
 		} else {
 
 			if (!folder.getParentId().equals(rootFolder.getGuid())) {
-				folders = userFoldersRepo
-						.getChildQuestionFolders(folder.getParentId());
+				folders = userFoldersRepo.getChildQuestionFolders(folder.getParentId());
 			}
 		}
-		
-		if(CollectionUtils.isEmpty(folders)) {
+
+		if (CollectionUtils.isEmpty(folders)) {
 			return false;
 		}
-		
+
 		for (UserQuestionsFolder userFolder : folders) {
-			if (!userFolder.getGuid().equals(folder.getGuid())
-					&& userFolder.getTitle().equals(folder.getTitle())) {
+			if (!userFolder.getGuid().equals(folder.getGuid()) && userFolder.getTitle().equals(folder.getTitle())) {
 				throw new DuplicateTitleException(
-						"A folder with " + folder.getTitle()
-								+ " title already exists at this level");
+						"A folder with " + folder.getTitle() + " title already exists at this level");
 			}
 		}
 		return false;
 	}
 
-	public UserQuestionsFolder saveUserQuestionFolder(
-			UserQuestionsFolder folder, String userId) {
+	public UserQuestionsFolder saveUserQuestionFolder(UserQuestionsFolder folder, String userId) {
 
-	
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -305,8 +280,7 @@ public class UserFolderService {
 		if (!checkForUserQuestionsFolderDuplicate(folder, userId)) {
 			folders.add(folder);
 		}
-		String userQuestionsCacheKey = String
-				.format(CacheKey.USER_QUESTIONS_FORMAT, folder.getGuid());
+		String userQuestionsCacheKey = String.format(CacheKey.USER_QUESTIONS_FORMAT, folder.getGuid());
 //		CacheWrapper.getInstance().delete(userQuestionsCacheKey);
 
 		userFoldersRepo.saveUserQuestionFolders(folders);
@@ -314,10 +288,8 @@ public class UserFolderService {
 		return folder;
 	}
 
-	public UserQuestionsFolder updateUserQuestionFolder(
-			UserQuestionsFolder folder, String userId) {
+	public UserQuestionsFolder updateUserQuestionFolder(UserQuestionsFolder folder, String userId) {
 
-	
 		if (userId == null) {
 			throw new BadDataException("userId should not be null or empty");
 		}
@@ -332,8 +304,7 @@ public class UserFolderService {
 			folders.add(folder);
 		}
 
-		String userQuestionsCacheKey = String
-				.format(CacheKey.USER_QUESTIONS_FORMAT, folder.getGuid());
+		String userQuestionsCacheKey = String.format(CacheKey.USER_QUESTIONS_FORMAT, folder.getGuid());
 //		CacheWrapper.getInstance().delete(userQuestionsCacheKey);
 
 		userFoldersRepo.saveUserQuestionFolders(folders);
@@ -344,8 +315,7 @@ public class UserFolderService {
 	/**
 	 * This method is responsible to get the child folders of a folder
 	 * 
-	 * @param parentFolderId
-	 *            , parent folder id
+	 * @param parentFolderId , parent folder id
 	 */
 	public List<UserFolder> getFolders(String parentFolderId) {
 
@@ -364,10 +334,8 @@ public class UserFolderService {
 	 * @param userid
 	 * @return
 	 */
-	public UserQuestionsFolder getFolderByTitle(String title, String parentId,
-			String userid) {
-		return userFoldersRepo.getQuestionsFolderByTitle(title, parentId,
-				userid);
+	public UserQuestionsFolder getFolderByTitle(String title, String parentId, String userid) {
+		return userFoldersRepo.getQuestionsFolderByTitle(title, parentId, userid);
 	}
 
 	/**
@@ -378,80 +346,74 @@ public class UserFolderService {
 	public void deleteQuestionFolder(String id) {
 		userFoldersRepo.deleteFolder(id);
 	}
-	
-	
-	
-	
+
 	public void updateQuestionBindings(String userID, String sFolderId, String dFolder, String questionId) {
 
-			UserQuestionsFolder sourceFolder = userFoldersRepo.getMyQuestionsFolder(userID, sFolderId);
-			UserQuestionsFolder destinationFolder = userFoldersRepo.getMyQuestionsFolder(userID, dFolder);
-			if 
-			(sourceFolder == null) {
-				throw new ResourceNotFoundException("Source folder does not exist...");
-			}
-			if (destinationFolder == null) {
-				throw new ResourceNotFoundException("Destination folder does not exist...");
-			}
-			
-			  boolean questionExistsInSource = sourceFolder.getQuestionBindings().stream()
-                      .anyMatch(binding -> binding.getQuestionId().equals(questionId));
+		UserQuestionsFolder sourceFolder = userFoldersRepo.getMyQuestionsFolder(userID, sFolderId);
+		UserQuestionsFolder destinationFolder = userFoldersRepo.getMyQuestionsFolder(userID, dFolder);
+		if (sourceFolder == null) {
+			throw new ResourceNotFoundException("Source folder does not exist...");
+		}
+		if (destinationFolder == null) {
+			throw new ResourceNotFoundException("Destination folder does not exist...");
+		}
 
-			  if (!questionExistsInSource) {
-			        throw new ResourceNotFoundException("Question  ID does not exist in the source folder...");
-			    }
+		boolean questionExistsInSource = sourceFolder.getQuestionBindings().stream()
+				.anyMatch(binding -> binding.getQuestionId().equals(questionId));
 
-			List<QuestionBinding> questionBindings2 = destinationFolder.getQuestionBindings();
+		if (!questionExistsInSource) {
+			throw new ResourceNotFoundException("Question  ID does not exist in the source folder...");
+		}
 
-			if (questionBindings2.isEmpty()) {
-				questionBindings2.add(new QuestionBinding(questionId, 1));
-			} else {
-				QuestionBinding lastBinding = questionBindings2.get(questionBindings2.size() - 1);
-				double latestSequence = lastBinding.getSequence() + 1;
-				questionBindings2.add(new QuestionBinding(questionId, latestSequence));
-			}
+		List<QuestionBinding> questionBindings2 = destinationFolder.getQuestionBindings();
 
-			sourceFolder.getQuestionBindings().removeIf(binding -> binding.getQuestionId().equals(questionId));
-			userFoldersRepo.saveFolder(sourceFolder);
-			userFoldersRepo.saveFolder(destinationFolder);
+		if (questionBindings2.isEmpty()) {
+			questionBindings2.add(new QuestionBinding(questionId, 1));
+			destinationFolder.setQuestionBindings(questionBindings2);
+
+		} else {
+			QuestionBinding lastBinding = questionBindings2.get(questionBindings2.size() - 1);
+			double latestSequence = lastBinding.getSequence() + 1;
+			questionBindings2.add(new QuestionBinding(questionId, latestSequence));
+		}
+
+		sourceFolder.getQuestionBindings().removeIf(binding -> binding.getQuestionId().equals(questionId));
+		userFoldersRepo.saveFolder(sourceFolder);
+		userFoldersRepo.saveFolder(destinationFolder);
 	}
-	
-	
 
-	public void updateTestBindings( String sFolderId, String dFolder, String testId) {
+	public void updateTestBindings(String sFolderId, String dFolder, String testId) {
 
-        UserFolder sourceFolder = userFoldersRepo.getFolder(sFolderId);
-        UserFolder destinationFolder = userFoldersRepo.getFolder(dFolder);
-       if 
-       (sourceFolder == null) {
-           throw new ResourceNotFoundException("Source folder does not exist...");
-       }
-       if (destinationFolder == null) {
-           throw new ResourceNotFoundException("Destination folder does not exist...");
-       }
-       
-       
-         boolean questionExistsInSource = sourceFolder.getTestBindings().stream()
-                 .anyMatch(binding -> binding.getTestId().equals(testId));
+		UserFolder sourceFolder = userFoldersRepo.getFolder(sFolderId);
+		UserFolder destinationFolder = userFoldersRepo.getFolder(dFolder);
+		if (sourceFolder == null) {
+			throw new ResourceNotFoundException("Source folder does not exist...");
+		}
+		if (destinationFolder == null) {
+			throw new ResourceNotFoundException("Destination folder does not exist...");
+		}
 
-         if (!questionExistsInSource) {
-               throw new ResourceNotFoundException("test ID does not exist in the source folder...");
-           }
+		boolean questionExistsInSource = sourceFolder.getTestBindings().stream()
+				.anyMatch(binding -> binding.getTestId().equals(testId));
 
-        List<TestBinding> testBindings = destinationFolder.getTestBindings();
+		if (!questionExistsInSource) {
+			throw new ResourceNotFoundException("test ID does not exist in the source folder...");
+		}
 
-       if (testBindings.isEmpty()) {
-           testBindings.add(new TestBinding(testId, 1));
-           
-       } else {
-           TestBinding lastBinding = testBindings.get(testBindings.size() - 1);
-           double latestSequence = lastBinding.getSequence() + 1;
-           testBindings.add(new TestBinding(testId, latestSequence));
-       }
+		List<TestBinding> testBindings = destinationFolder.getTestBindings();
 
-       sourceFolder.getTestBindings().removeIf(binding -> binding.getTestId().equals(testId));
-       userFoldersRepo.saveFolder(sourceFolder);
-       userFoldersRepo.saveFolder(destinationFolder);
-}
-	
+		if (testBindings.isEmpty()) {
+			testBindings.add(new TestBinding(testId, 1));
+			destinationFolder.setTestBindings(testBindings);
+		} else {
+			TestBinding lastBinding = testBindings.get(testBindings.size() - 1);
+			double latestSequence = lastBinding.getSequence() + 1;
+			testBindings.add(new TestBinding(testId, latestSequence));
+		}
+
+		sourceFolder.getTestBindings().removeIf(binding -> binding.getTestId().equals(testId));
+		userFoldersRepo.saveFolder(sourceFolder);
+		userFoldersRepo.saveFolder(destinationFolder);
+	}
+
 }
